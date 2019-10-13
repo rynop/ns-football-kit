@@ -10,19 +10,27 @@ set -o pipefail # exit if any piped cmd returns non-0
 KIT="${1}"  # Comes in as mufc/251562
 KITDASH="${KIT//\//-}"
 
-echo ${KITDASH}
+stitch () {
+    mkdir -p /tmp/stitch
+    cd /tmp/stitch
+    rm -f *.jpg
 
-cd /tmp
-rm -f 1-*.jpg top.jpg bottom.jpg full.jpg
+    wget -q https://kbis-cdn.fanobject.com/${KIT}/img/${KITDASH}${1}/zoom/TileGroup0/1-0-0.jpg   #up left
+    wget -q https://kbis-cdn.fanobject.com/${KIT}/img/${KITDASH}${1}/zoom/TileGroup0/1-1-0.jpg   #up right
+    wget -q https://kbis-cdn.fanobject.com/${KIT}/img/${KITDASH}${1}/zoom/TileGroup0/1-0-1.jpg   #low left
+    wget -q https://kbis-cdn.fanobject.com/${KIT}/img/${KITDASH}${1}/zoom/TileGroup0/1-1-1.jpg   #low right
 
-wget -q https://kbis-cdn.fanobject.com/${KIT}/img/${KITDASH}a/zoom/TileGroup0/1-0-0.jpg   #up left
-wget -q https://kbis-cdn.fanobject.com/${KIT}/img/${KITDASH}a/zoom/TileGroup0/1-1-0.jpg   #up right
-wget -q https://kbis-cdn.fanobject.com/${KIT}/img/${KITDASH}a/zoom/TileGroup0/1-0-1.jpg   #low left
-wget -q https://kbis-cdn.fanobject.com/${KIT}/img/${KITDASH}a/zoom/TileGroup0/1-1-1.jpg   #low right
+    convert +append 1-0-0.jpg 1-1-0.jpg top.jpg
+    convert +append 1-0-1.jpg 1-1-1.jpg bottom.jpg
+    convert -append top.jpg bottom.jpg full.jpg
 
-convert +append 1-0-0.jpg 1-1-0.jpg top.jpg
-convert +append 1-0-1.jpg 1-1-1.jpg bottom.jpg
-convert -append top.jpg bottom.jpg full.jpg
+    mkdir -p ${DIR}/../img/${KITDASH%%-*}
+    echo "moving to img/${KITDASH%%-*}/${2}.jpg"
+    mv full.jpg ${DIR}/../img/${KITDASH%%-*}/${2}.jpg
+}
 
-echo "moving to ${DIR}/../img/${KITDASH%%-*}.jpg"
-mv full.jpg ${DIR}/../img/${KITDASH%%-*}.jpg
+stitch "" "angle"
+stitch "a" "back"
+stitch "b" "front"
+stitch "c" "side"
+
