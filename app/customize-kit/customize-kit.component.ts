@@ -198,17 +198,22 @@ export class CustomizeKitComponent implements OnInit {
         ele.translateX = 0;
         ele.opacity = 1;
 
-        await ele.animate({
-            opacity: 0,
-            translate: { x: -this.screenWidth, y: 0 },
-            duration: 200,
-        });
-        await ele.animate({
-            delay: 200,
-            opacity: 1,
-            translate: { x: 0, y: 0 },
-            duration: 500,
-            curve: AnimationCurve.easeOut,
-        });
+        try {
+            await ele.animate({
+                opacity: 0,
+                translate: { x: -this.screenWidth, y: 0 },
+                duration: 200,
+            });
+            await ele.animate({
+                delay: 200,
+                opacity: 1,
+                translate: { x: 0, y: 0 },
+                duration: 500,
+                curve: AnimationCurve.easeOut,
+            });
+        } catch (error) {
+            console.error(`Problem animating kit`, error)
+        }
+
     }
 }
