@@ -1,0 +1,5 @@
+export const CUSTOMIZEKIT_TAB_NAME = 'CUSTOMIZEKIT';
+
+export const TAB_ORDER = [
+    CUSTOMIZEKIT_TAB_NAME
+];

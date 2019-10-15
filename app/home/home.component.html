@@ -1,53 +1,13 @@
-<ActionBar title="Home" class="action-bar">
+<ActionBar class="action-bar">
+    <Label class="action-bar-title" text="Home"></Label>
 </ActionBar>
 
-<GridLayout>
-    <ScrollView class="page">
-        <StackLayout class="home-panel">
-            <!-- <Image src="font://&#xf51e;" stretch="none" class="fas"></Image> -->
+<GridLayout rows="*, auto" backgroundColor="white">
+	<StackLayout row="0" class="content-container">
+		<router-outlet></router-outlet>
+	</StackLayout>
 
-            <!-- <FlexboxLayout>
-                <Image *ngFor="let slide of kitImages" class="kit" [src]="slide.src"></Image>
-            </FlexboxLayout> -->
-
-            <!-- <FlexboxLayout>
-                <Button *ngFor="let slide of kitImages" [@flyInOut]="'in'" [text]="slide.src"></Button>
-            </FlexboxLayout> -->
-
-            <Label text="cur idx {{currentIndex}}"></Label>
-
-            <!-- <FlexboxLayout [@slideAnimation]="currentIndex" backgroundColor="lightgray" justifyContent="center"
-                flexWrap="nowrap" *ngFor="let slide of kitImages; let i = index">
-                <Image class="slide slide-animation kit" *ngIf="isCurrentSlideIndex(i)" (swipe)="onSwipe($event)"
-                    [src]="slide.src" stretch="none"></Image>
-            </FlexboxLayout> -->
-            <!-- 
-            <FlexboxLayout backgroundColor="yellow" justifyContent="center" flexWrap="wrap">
-                <AbsoluteLayout backgroundColor="lightgray" *ngFor="let slide of kitImages; let i = index">
-                    <FlexboxLayout backgroundColor="green" flexDirection="column" justifyContent="flex-start"
-                        alignContent="center" *ngIf="isCurrentSlideIndex(i)">
-                        <Label text="{{i}}: {{slide.src}}" class="customName"></Label>
-                        <Image width="200" class="kit" (swipe)="onSwipe($event)" [src]="slide.src">
-                        </Image>
-                    </FlexboxLayout>
-                </AbsoluteLayout>
-            </FlexboxLayout> -->
-
-            <StackLayout [@openClose]="isThingOpen()" class="open-close-container">
-                <Label text="The box is now {{ isOpen ? 'Open' : 'Closed' }}!" (tap)="toggle()"></Label>
-            </StackLayout>
-
-            <FlexboxLayout (swipe)="onSwipe($event)" backgroundColor="yellow" justifyContent="center" flexWrap="nowrap">
-                <ng-container backgroundColor="lightgray" *ngFor="let slide of kitImages; let i = index">
-                    <AbsoluteLayout backgroundColor="green" width="400" height="400" *ngIf="isCurrentSlideIndex(i)">
-                        <Label width="400" textAlignment="center" [text]="jerseyName" class="customName"
-                            *ngIf="0==i"></Label>
-                        <Image width="400" height="400" class="kit" [src]="slide.src">
-                        </Image>
-                    </AbsoluteLayout>
-                </ng-container>
-            </FlexboxLayout>
-
-        </StackLayout>
-    </ScrollView>
+    <GridLayout row="1" height="50" verticalAlignment="bottom">
+        <BottomBar (tabSelected)="tabSelected($event)"></BottomBar>
+    </GridLayout>
 </GridLayout>

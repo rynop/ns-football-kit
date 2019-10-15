@@ -1,8 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { Image } from 'tns-core-modules/ui/image';
 import { fromFile } from 'tns-core-modules/image-source';
 import { trigger, style, transition, animate, group, query, state, stagger } from "@angular/animations";
 import { SwipeGestureEventData, SwipeDirection } from "tns-core-modules/ui/gestures";
+import { AnimationDefinition, Animation } from 'ui/animation';
+import { screen } from "platform";
+import { AnimationCurve } from "tns-core-modules/ui/enums";
 
 @Component({
     selector: "CustomizeKit",
@@ -37,6 +40,17 @@ import { SwipeGestureEventData, SwipeDirection } from "tns-core-modules/ui/gestu
             transition("void => *", [
                 style({ transform: "translateX(-100px)" }),
                 animate(300)
+            ]),
+            transition("* => void", [
+                animate(100, style({ transform: "translateX(100px)" }))
+            ])
+        ]),
+
+        trigger("flyKitInOut", [
+            // state("in", style('*')),
+            transition("void => *", [
+                style({ opacity: 0, transform: "translateX(-200px)" }),
+                animate('2s ease-in', style({ opacity: 1 })),
             ]),
             transition("* => void", [
                 animate(100, style({ transform: "translateX(100px)" }))
@@ -115,6 +129,7 @@ import { SwipeGestureEventData, SwipeDirection } from "tns-core-modules/ui/gestu
     ],
 })
 export class CustomizeKitComponent implements OnInit {
+    private screenWidth;
     jerseyName = "";
     currentIndex = 0;
     kitImages = [
@@ -124,7 +139,10 @@ export class CustomizeKitComponent implements OnInit {
         { src: '~/images/cfc-264394/front.jpg' },
     ];
 
+    @ViewChild('kitContainer', { static: false }) kitContainerElement: ElementRef;
+
     constructor() {
+        this.screenWidth = screen.mainScreen.widthDIPs;
         this.preloadImages();
     }
 
@@ -171,5 +189,26 @@ export class CustomizeKitComponent implements OnInit {
 
     isThingOpen() {
         return this.isOpen ? 'open' : 'closed';
+    }
+
+    async doAnimate() {
+        const ele = this.kitContainerElement.nativeElement;
+
+        //reset
+        ele.translateX = 0;
+        ele.opacity = 1;
+
+        await ele.animate({
+            opacity: 0,
+            translate: { x: -this.screenWidth, y: 0 },
+            duration: 200,
+        });
+        await ele.animate({
+            delay: 200,
+            opacity: 1,
+            translate: { x: 0, y: 0 },
+            duration: 500,
+            curve: AnimationCurve.easeOut,
+        });
     }
 }

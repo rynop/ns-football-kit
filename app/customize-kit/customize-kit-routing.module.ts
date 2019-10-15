@@ -12,4 +12,4 @@ const routes: Routes = [
     imports: [NativeScriptRouterModule.forChild(routes)],
     exports: [NativeScriptRouterModule]
 })
-export class HomeRoutingModule { }
+export class CustomizeKitRoutingModule { }
