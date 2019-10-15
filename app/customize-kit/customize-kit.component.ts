@@ -5,10 +5,10 @@ import { trigger, style, transition, animate, group, query, state, stagger } fro
 import { SwipeGestureEventData, SwipeDirection } from "tns-core-modules/ui/gestures";
 
 @Component({
-    selector: "Home",
+    selector: "CustomizeKit",
     moduleId: module.id,
-    templateUrl: "./home.component.html",
-    styleUrls: ["./home.component.css"],
+    templateUrl: "./customize-kit.component.html",
+    styleUrls: ["./customize-kit.component.css"],
     animations: [
         trigger('openClose', [
             // ...
@@ -114,7 +114,7 @@ import { SwipeGestureEventData, SwipeDirection } from "tns-core-modules/ui/gestu
         ])
     ],
 })
-export class HomeComponent implements OnInit {
+export class CustomizeKitComponent implements OnInit {
     jerseyName = "";
     currentIndex = 0;
     kitImages = [

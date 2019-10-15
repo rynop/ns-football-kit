@@ -24,9 +24,9 @@ stitch () {
     convert +append 1-0-1.jpg 1-1-1.jpg bottom.jpg
     convert -append top.jpg bottom.jpg full.jpg
 
-    mkdir -p ${DIR}/../img/${KITDASH%%-*}
-    echo "moving to img/${KITDASH%%-*}/${2}.jpg"
-    mv full.jpg ${DIR}/../img/${KITDASH%%-*}/${2}.jpg
+    mkdir -p ${DIR}/../app/images/${KITDASH}
+    echo "moving to ../app/images/${KITDASH}/${2}.jpg"
+    mv full.jpg ${DIR}/../app/images/${KITDASH}/${2}.jpg
 }
 
 stitch "" "angle"
