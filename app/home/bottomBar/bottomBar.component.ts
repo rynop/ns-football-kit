@@ -30,7 +30,9 @@ export class BottomBarComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+
+    }
 
     selectTab(selTab: string) {
         const previousTab = this.selectedTab;
@@ -61,9 +63,9 @@ export class BottomBarComponent implements OnInit {
         }
     }
 
-    animateCurrentImage(arg: any) {
+    animateCurrentImage(arg: ElementRef) {
         arg.nativeElement.animate({
-            scale: { x: 1.2, y: 1.2 },
+            scale: { x: 1.3, y: 1.3 },
             curve: AnimationCurve.cubicBezier(1, 0.02, 0.45, 0.93),
             duration: 300
         });

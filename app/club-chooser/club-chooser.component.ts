@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { screen } from "platform";
 import { Page } from "tns-core-modules/ui/page";
 
-import { KitsService, Kit, ClubKit, KitType } from "~/shared/services/kits.service";
+import { KitsService, Kit, Club, KitType } from "~/shared/services/kits.service";
 
 @Component({
     selector: "ClubChooser",
@@ -14,7 +14,6 @@ import { KitsService, Kit, ClubKit, KitType } from "~/shared/services/kits.servi
 })
 export class ClubChooserComponent implements OnInit {
     private screenWidth;
-    clubKits: ClubKit[];
 
     constructor(
         private _page: Page,
@@ -25,6 +24,5 @@ export class ClubChooserComponent implements OnInit {
     ngOnInit(): void {
         this._page.actionBarHidden = true;
         this.screenWidth = screen.mainScreen.widthDIPs;
-        this.clubKits = this.kitsSvc.getClubKits();
     }
 }

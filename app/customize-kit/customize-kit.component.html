@@ -1,22 +1,23 @@
-<!-- <GridLayout>
+<GridLayout>
     <ScrollView class="page">
         <StackLayout class="home-panel">
-            <Image src="font://&#xf51e;" stretch="none" class="fas"></Image>
 
-            <Label text="cur idx {{currentIndex}}"></Label>
+            <Label text="Club {{(currentClub$ | async).clubName}}"></Label>
 
-            <StackLayout [@openClose]="isThingOpen()" class="open-close-container">
+            <Label text="cur img idx {{currentKitImgSrcIdx}}"></Label>
+
+            <!-- <StackLayout [@openClose]="isThingOpen()" class="open-close-container">
                 <Label text="The box is now {{ isOpen ? 'Open' : 'Closed' }}!" (tap)="toggle()"></Label>
-            </StackLayout>
+            </StackLayout> -->
 
-            <button text="Next Kit" (tap)="setKit(1)"></button>
+            <button text="Next Kit" (tap)="setKit('away')"></button>
 
             <FlexboxLayout #kitContainer (swipe)="onSwipe($event)" backgroundColor="yellow" justifyContent="center"
                 flexWrap="nowrap">
-                <ng-container backgroundColor="lightgray" *ngFor="let src of currentKitImgSrcs; let i = index">
-                    <AbsoluteLayout backgroundColor="green" width="400" height="400" *ngIf="isCurrentClubKitIdx(i)">
+                <ng-container backgroundColor="lightgray" *ngFor="let src of currentKit.imgSrcs; let i = index">
+                    <AbsoluteLayout backgroundColor="green" width="400" height="400" *ngIf="isCurImgIdx(i)">
                         <Label width="400" textAlignment="center" [text]="jerseyName" class="customName" *ngIf="0==i"
-                            [color]="currentKitFontColor"></Label>
+                            [color]="currentKit.font.color"></Label>
                         <Image width="400" height="400" class="kit" [src]="src">
                         </Image>
                     </AbsoluteLayout>
@@ -25,9 +26,9 @@
 
         </StackLayout>
     </ScrollView>
-</GridLayout> -->
+</GridLayout>
 
-<GridLayout #pageView backgroundColor="orange">
+<!-- <GridLayout #pageView backgroundColor="orange">
     <GridLayout class="gradientWrapper">
         <VideoPlayer src="https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" height="100%" autoplay="true" fill="true"
             controls="false" muted="true" loop="true"></VideoPlayer>
@@ -63,4 +64,4 @@
             </GridLayout>
         </GridLayout>
     </GridLayout>
-</GridLayout>
+</GridLayout> -->

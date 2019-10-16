@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 
 export interface KitFont {
     className?: string;
@@ -18,7 +19,7 @@ export enum KitType {
     Thrid = "third",    // ClubKit thrid is optional
 }
 
-export interface ClubKit {
+export interface Club {
     clubName: string;
     home: Kit;
     away: Kit;
@@ -29,8 +30,8 @@ export interface ClubKit {
     providedIn: 'root'
 })
 export class KitsService {
-    // back.jpg always needs to be first
-    private clubKits: ClubKit[] = [
+    // imgSrcs need to be in order back,angle,front
+    private clubs: Club[] = [
         {
             clubName: 'Chelsea',
             home: {
@@ -39,9 +40,7 @@ export class KitsService {
                 font: {
                     color: '#FFFFFF',
                 },
-                imgSrcs: ['~/images/cfc-264397/back.jpg',
-                    '~/images/cfc-264397/angle.jpg',
-                    '~/images/cfc-264397/front.jpg']
+                imgSrcs: ['~/images/cfc-264397/back.jpg', '~/images/cfc-264397/angle.jpg', '~/images/cfc-264397/front.jpg']
             },
             away: {
                 name: 'Vapor Match',
@@ -49,9 +48,7 @@ export class KitsService {
                 font: {
                     color: '#013871',
                 },
-                imgSrcs: ['~/images/cfc-264394/back.jpg',
-                    '~/images/cfc-264394/angle.jpg',
-                    '~/images/cfc-264394/front.jpg']
+                imgSrcs: ['~/images/cfc-264394/back.jpg', '~/images/cfc-264394/angle.jpg', '~/images/cfc-264394/front.jpg']
             },
             third: {
                 name: 'Stadium',
@@ -59,14 +56,36 @@ export class KitsService {
                 font: {
                     color: '#FFFFFF',
                 },
-                imgSrcs: ['~/images/cfc/264497/back.jpg',
-                    '~/images/cfc/264497/angle.jpg',
-                    '~/images/cfc/264497/front.jpg']
+                imgSrcs: ['~/images/cfc/264497/back.jpg', '~/images/cfc/264497/angle.jpg', '~/images/cfc/264497/front.jpg']
             },
         },
     ];
 
-    getClubKits(): ClubKit[] {
-        return this.clubKits;
+    getClubs(): Club[] {
+        return this.clubs;
+    }
+
+    private currentClubIdx = 0;
+    public currentClub$ = new BehaviorSubject<Club>(this.clubs[this.currentClubIdx]);
+
+    private currentClubKitType: KitType = KitType.Home;
+    public currentClubKit$ = new BehaviorSubject<Kit>(this.clubs[this.currentClubIdx][this.currentClubKitType]);
+
+    getClub(idx: number): Club {
+        return this.clubs[idx];
+    }
+
+    getCurrentClub(): Club {
+        return this.clubs[this.currentClubIdx];
+    }
+
+    setCurrentClub(idx: number) {
+        this.currentClubIdx = idx;
+        this.currentClub$.next(this.getClub(idx));
+    }
+
+    setCurrentClubKit(kitType: KitType) {
+        this.currentClubKitType = kitType;
+        this.currentClubKit$.next(this.getCurrentClub()[this.currentClubKitType]);
     }
 }

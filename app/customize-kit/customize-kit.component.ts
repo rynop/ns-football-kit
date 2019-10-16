@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from "@angular/core";
 import { trigger, style, transition, animate, group, query, state, stagger } from "@angular/animations";
 import { SwipeGestureEventData, SwipeDirection } from "tns-core-modules/ui/gestures";
 import { screen } from "platform";
@@ -6,8 +6,10 @@ import { AnimationCurve } from "tns-core-modules/ui/enums";
 import { Page } from "tns-core-modules/ui/page";
 import { registerElement } from "nativescript-angular/element-registry";
 import { Video } from 'nativescript-videoplayer';
+import { Observable, Subscription } from "rxjs";
 
-import { KitsService, Kit, ClubKit, KitType } from "~/shared/services/kits.service";
+
+import { KitsService, Kit, Club, KitType } from "~/shared/services/kits.service";
 
 registerElement("VideoPlayer", () => Video);
 
@@ -132,13 +134,13 @@ registerElement("VideoPlayer", () => Video);
         ])
     ],
 })
-export class CustomizeKitComponent implements OnInit {
+export class CustomizeKitComponent implements OnInit, OnDestroy {
     private screenWidth;
-    clubKits: ClubKit[];
 
-    currentClubIdx = 0;
-    currentClubKitType: KitType = KitType.Home;
-    currentClubKitImgIdx = 0;
+    private subscriptions: Subscription;
+    currentClub$: Observable<Club>;
+    currentKit: Kit;
+    currentKitImgSrcIdx = 0;
 
     jerseyName = "Pendergast";
 
@@ -153,8 +155,17 @@ export class CustomizeKitComponent implements OnInit {
     ngOnInit(): void {
         this._page.actionBarHidden = true;
         this.screenWidth = screen.mainScreen.widthDIPs;
-        this.clubKits = this.kitsSvc.getClubKits();
+        this.subscriptions = this.kitsSvc.currentClubKit$.subscribe(clubKit => {
+            this.currentKit = clubKit;
+        });
+        // TODO: more subscriptions? just do this.subscriptions.add() per https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
+
+        this.currentClub$ = this.kitsSvc.currentClub$;
         // this.preloadImages();
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.unsubscribe();
     }
 
     // preloadImages() {
@@ -163,37 +174,17 @@ export class CustomizeKitComponent implements OnInit {
     //     });
     // }
 
-    isCurrentClubKitIdx(index) {
+    isCurImgIdx(index) {
         // console.log(`${index}: ${this.currentIndex === index}`);
-        return this.currentClubKitImgIdx === index;
-    }
-
-    get currentClub(): ClubKit {
-        return this.clubKits[this.currentClubIdx];
-    }
-
-    get currentKit(): Kit {
-        return this.currentClub[this.currentClubKitType];
-    }
-
-    get currentKitImgSrcs(): string[] {
-        return this.currentKit.imgSrcs;
-    }
-
-    get currentKitFontColor(): string {
-        return this.currentKit.font.color;
-    }
-
-    get currentKitFontCSSName(): string {
-        return this.currentKit.font.className || "";
+        return this.currentKitImgSrcIdx === index;
     }
 
     prevImg() {
-        this.currentClubKitImgIdx = (this.currentClubKitImgIdx < this.currentKitImgSrcs.length - 1) ? ++this.currentClubKitImgIdx : 0;
+        this.currentKitImgSrcIdx = (this.currentKitImgSrcIdx + 1) % this.currentKit.imgSrcs.length;
     }
 
     nextImg() {
-        this.currentClubKitImgIdx = (this.currentClubKitImgIdx > 0) ? --this.currentClubKitImgIdx : this.currentKitImgSrcs.length - 1;
+        this.currentKitImgSrcIdx = (this.currentKitImgSrcIdx > 0) ? --this.currentKitImgSrcIdx : this.currentKit.imgSrcs.length - 1;
     }
 
     onSwipe(args: SwipeGestureEventData) {
@@ -230,7 +221,7 @@ export class CustomizeKitComponent implements OnInit {
             });
 
             //Replace the new kit
-            this.currentClubKitType = kitType;
+            this.kitsSvc.setCurrentClubKit(kitType);
 
             await ele.animate({
                 delay: 200,
