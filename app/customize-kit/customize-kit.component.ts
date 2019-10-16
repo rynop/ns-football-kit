@@ -8,7 +8,6 @@ import { registerElement } from "nativescript-angular/element-registry";
 import { Video } from 'nativescript-videoplayer';
 import { Observable, Subscription } from "rxjs";
 
-
 import { KitsService, Kit, Club, KitType } from "~/shared/services/kits.service";
 
 registerElement("VideoPlayer", () => Video);

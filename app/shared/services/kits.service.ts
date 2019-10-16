@@ -21,6 +21,8 @@ export enum KitType {
 
 export interface Club {
     clubName: string;
+    logo: string;
+    bkgColor: string;
     home: Kit;
     away: Kit;
     third?: Kit;
@@ -33,7 +35,9 @@ export class KitsService {
     // imgSrcs need to be in order back,angle,front
     private clubs: Club[] = [
         {
-            clubName: 'Chelsea',
+            clubName: 'Chelsea FC',
+            logo: '~/images/chelsea.png',
+            bkgColor: '#4377a6',
             home: {
                 name: 'Stadium',
                 year: '\'19-\'20',

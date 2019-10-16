@@ -5,6 +5,9 @@ import { NativeScriptAnimationsModule } from "nativescript-angular/animations";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
+//Ones that must be changed on play.ns.org
+import { PagerModule } from "nativescript-pager/angular";
+
 @NgModule({
     bootstrap: [
         AppComponent
@@ -13,6 +16,7 @@ import { AppComponent } from "./app.component";
         NativeScriptModule,
         AppRoutingModule,
         NativeScriptAnimationsModule,
+        PagerModule
     ],
     declarations: [
         AppComponent

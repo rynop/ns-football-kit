@@ -1,7 +1,32 @@
-<GridLayout>
-    <ScrollView class="page">
-        <StackLayout class="home-panel">
-            <Image src="font://&#xf51e;" stretch="none" class="fas"></Image>
+<GridLayout class="gradientWrapper">
+    <GridLayout verticalAlignment="top">
+        <StackLayout orientation="vertical" class="titleSection">
+            <Label textWrap="true" text="Custom" class="title top-part"></Label>
+            <Label textWrap="true" text="Kits" class="title bottom-part"></Label>
         </StackLayout>
-    </ScrollView>
+        <Image #clubLogo horizontalAlignment="right" src="{{(currentClub$ | async).logo}}" class="club-logo"
+            width="300">
+        </Image>
+    </GridLayout>
+    <GridLayout class="cardSection">
+        <GridLayout class="pager-item">
+            <GridLayout #cardWrapperView>
+                <GridLayout #fakeCardView class="fake-card"></GridLayout>
+                <GridLayout columns="*,auto" class="card">
+                    <ScrollView #contentView col="0" class="scrollSection">
+                        <StackLayout class="contentSection">
+                            <Label text="Title" class="title top-part"></Label>
+                            <Label text="TheModel" class="title bottom-part"></Label>
+                            <Label text="excerpt" textWrap="true" class="text"></Label>
+                            <StackLayout class="specs">
+                                <Label text="spec.title" class="spec-title"></Label>
+                                <Label text="spec.value" class="spec-value"></Label>
+                            </StackLayout>
+                            <Label text="info.description" class="text" textWrap="true"></Label>
+                        </StackLayout>
+                    </ScrollView>
+                </GridLayout>
+            </GridLayout>
+        </GridLayout>
+    </GridLayout>
 </GridLayout>
