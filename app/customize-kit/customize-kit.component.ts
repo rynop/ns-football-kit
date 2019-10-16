@@ -1,11 +1,15 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import { Image } from 'tns-core-modules/ui/image';
-import { fromFile } from 'tns-core-modules/image-source';
 import { trigger, style, transition, animate, group, query, state, stagger } from "@angular/animations";
 import { SwipeGestureEventData, SwipeDirection } from "tns-core-modules/ui/gestures";
-import { AnimationDefinition, Animation } from 'ui/animation';
 import { screen } from "platform";
 import { AnimationCurve } from "tns-core-modules/ui/enums";
+import { Page } from "tns-core-modules/ui/page";
+import { registerElement } from "nativescript-angular/element-registry";
+import { Video } from 'nativescript-videoplayer';
+
+import { KitsService, Kit, ClubKit, KitType } from "~/shared/services/kits.service";
+
+registerElement("VideoPlayer", () => Video);
 
 @Component({
     selector: "CustomizeKit",
@@ -130,54 +134,74 @@ import { AnimationCurve } from "tns-core-modules/ui/enums";
 })
 export class CustomizeKitComponent implements OnInit {
     private screenWidth;
-    jerseyName = "";
-    currentIndex = 0;
-    kitImages = [
-        { src: '~/images/cfc-264394/back.jpg' },
-        { src: '~/images/cfc-264394/side.jpg' },
-        { src: '~/images/cfc-264394/angle.jpg' },
-        { src: '~/images/cfc-264394/front.jpg' },
-    ];
+    clubKits: ClubKit[];
+
+    currentClubIdx = 0;
+    currentClubKitType: KitType = KitType.Home;
+    currentClubKitImgIdx = 0;
+
+    jerseyName = "Pendergast";
 
     @ViewChild('kitContainer', { static: false }) kitContainerElement: ElementRef;
 
-    constructor() {
-        this.screenWidth = screen.mainScreen.widthDIPs;
-        this.preloadImages();
+    constructor(
+        private _page: Page,
+        private kitsSvc: KitsService,
+    ) {
     }
 
     ngOnInit(): void {
+        this._page.actionBarHidden = true;
+        this.screenWidth = screen.mainScreen.widthDIPs;
+        this.clubKits = this.kitsSvc.getClubKits();
+        // this.preloadImages();
     }
 
-    preloadImages() {
-        this.kitImages.forEach(kitImage => {
-            (new Image()).imageSource = fromFile(kitImage.src);
-        });
-    }
+    // preloadImages() {
+    //     this.kits.forEach(kit => {
+    //         kit.imgSrcs.forEach(src => (new Image()).imageSource = fromFile(src));
+    //     });
+    // }
 
-    setCurrentSlideIndex(index) {
-        this.currentIndex = index;
-    }
-
-    isCurrentSlideIndex(index) {
+    isCurrentClubKitIdx(index) {
         // console.log(`${index}: ${this.currentIndex === index}`);
-        return this.currentIndex === index;
+        return this.currentClubKitImgIdx === index;
     }
 
-    prevSlide() {
-        this.currentIndex = (this.currentIndex < this.kitImages.length - 1) ? ++this.currentIndex : 0;
+    get currentClub(): ClubKit {
+        return this.clubKits[this.currentClubIdx];
     }
 
-    nextSlide() {
-        this.currentIndex = (this.currentIndex > 0) ? --this.currentIndex : this.kitImages.length - 1;
+    get currentKit(): Kit {
+        return this.currentClub[this.currentClubKitType];
+    }
+
+    get currentKitImgSrcs(): string[] {
+        return this.currentKit.imgSrcs;
+    }
+
+    get currentKitFontColor(): string {
+        return this.currentKit.font.color;
+    }
+
+    get currentKitFontCSSName(): string {
+        return this.currentKit.font.className || "";
+    }
+
+    prevImg() {
+        this.currentClubKitImgIdx = (this.currentClubKitImgIdx < this.currentKitImgSrcs.length - 1) ? ++this.currentClubKitImgIdx : 0;
+    }
+
+    nextImg() {
+        this.currentClubKitImgIdx = (this.currentClubKitImgIdx > 0) ? --this.currentClubKitImgIdx : this.currentKitImgSrcs.length - 1;
     }
 
     onSwipe(args: SwipeGestureEventData) {
         if (args.direction === SwipeDirection.left) {
-            this.nextSlide();
+            this.nextImg();
         }
         else if (args.direction === SwipeDirection.right) {
-            this.prevSlide();
+            this.prevImg();
         }
     }
 
@@ -191,7 +215,7 @@ export class CustomizeKitComponent implements OnInit {
         return this.isOpen ? 'open' : 'closed';
     }
 
-    async doAnimate() {
+    async setKit(kitType: KitType) {
         const ele = this.kitContainerElement.nativeElement;
 
         //reset
@@ -204,6 +228,10 @@ export class CustomizeKitComponent implements OnInit {
                 translate: { x: -this.screenWidth, y: 0 },
                 duration: 200,
             });
+
+            //Replace the new kit
+            this.currentClubKitType = kitType;
+
             await ele.animate({
                 delay: 200,
                 opacity: 1,

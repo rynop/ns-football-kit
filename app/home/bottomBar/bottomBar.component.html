@@ -1,21 +1,15 @@
-<GridLayout columns="*" height="50" backgroundColor="rgba(57,50,88,0.9)" class="bottomIcon">
+<GridLayout columns="*,*" height="50" backgroundColor="rgba(57,50,88,0.9)" class="bottomIcon">
 	<GridLayout #tabHighlight col="0" backgroundColor="#F8A200"></GridLayout>
-	<GridLayout col="0" (tap)="selectTab('CUSTOMIZEKIT')">
+	<GridLayout col="0" (tap)="selectTab('CLUBCHOOSER')">
+		<Image #clubChooser src="font://&#xf0c0;" stretch="none" class="fas h2 m-x-auto"
+			[ngClass]="{'active': selectedTab === 'CLUBCHOOSER'}"></Image>
+		<Label text="Choose Club" class="bottomText m-x-auto"
+			[ngClass]="{'active': selectedTab === 'CLUBCHOOSER'}"></Label>
+	</GridLayout>
+	<GridLayout col="1" (tap)="selectTab('CUSTOMIZEKIT')">
 		<Image #customizeKit src="font://&#xf553;" stretch="none" class="fas h2 m-x-auto"
 			[ngClass]="{'active': selectedTab === 'CUSTOMIZEKIT'}"></Image>
 		<Label text="Customize" class="bottomText m-x-auto"
 			[ngClass]="{'active': selectedTab === 'CUSTOMIZEKIT'}"></Label>
 	</GridLayout>
-	<!-- <GridLayout col="1" (tap)="selectTab('LOGIN')">
-		<Label #login [text]="'fa-sign-in-alt' | fonticon" textWrap="true" class="fas h2 m-x-auto" [ngClass]="{'active': selectedTab === 'LOGIN'}"></Label>
-		<Label text="Login" class="bottomText m-x-auto" [ngClass]="{'active': selectedTab === 'LOGIN'}"></Label>
-	</GridLayout>
-	<GridLayout col="2" (tap)="selectTab('MENU')">
-		<Label #menu [text]="'fa-list' | fonticon" textWrap="true" class="fas h2 m-x-auto" [ngClass]="{'active': selectedTab === 'MENU'}"></Label>
-		<Label text="Menu" class="bottomText m-x-auto" [ngClass]="{'active': selectedTab === 'MENU'}"></Label>
-	</GridLayout>
-	<GridLayout col="3" (tap)="selectTab('TAB')">
-		<Label #tab [text]="'fa-file-invoice-dollar' | fonticon" textWrap="true" class="fas h2 m-x-auto" [ngClass]="{'active': selectedTab === 'TAB'}"></Label>
-		<Label text="Tab" class="bottomText m-x-auto" [ngClass]="{'active': selectedTab === 'TAB'}"></Label>
-	</GridLayout> -->
 </GridLayout>

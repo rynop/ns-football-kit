@@ -4,6 +4,7 @@ import { NativeScriptRouterModule } from 'nativescript-angular/router';
 
 import { HomeComponent } from './home.component';
 import { CustomizeKitComponent } from '../customize-kit/customize-kit.component';
+import { ClubChooserComponent } from '../club-chooser/club-chooser.component';
 
 const routes: Routes = [
     {
@@ -12,7 +13,11 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                component: CustomizeKitComponent
+                component: ClubChooserComponent
+            },
+            {
+                path: 'clubchooser',
+                component: ClubChooserComponent
             },
             {
                 path: 'customizekit',
@@ -29,5 +34,5 @@ const routes: Routes = [
 export class HomeRoutingModule { }
 
 export const navigatableHomeComponents = [
-    CustomizeKitComponent,
+    ClubChooserComponent, CustomizeKitComponent,
 ];

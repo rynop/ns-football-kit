@@ -32,5 +32,5 @@ stitch () {
 stitch "" "angle"
 stitch "a" "back"
 stitch "b" "front"
-stitch "c" "side"
+# stitch "c" "side"
 
