@@ -35,7 +35,7 @@ export class KitsService {
     // imgSrcs need to be in order back,angle,front
     private clubs: Club[] = [
         {
-            clubName: 'Chelsea FC',
+            clubName: 'Chelsea F.C.',
             logo: '~/images/chelsea.png',
             bkgColor: '#4377a6',
             home: {
@@ -63,6 +63,35 @@ export class KitsService {
                 imgSrcs: ['~/images/cfc/264497/back.jpg', '~/images/cfc/264497/angle.jpg', '~/images/cfc/264497/front.jpg']
             },
         },
+        {
+            clubName: 'Manchester United F.C.',
+            logo: '~/images/manchester.png',
+            bkgColor: '#4377a6',
+            home: {
+                name: 'Home',
+                year: '\'19-\'20',
+                font: {
+                    color: '#FFFFFF',
+                },
+                imgSrcs: ['~/images/mufc-251562/back.jpg', '~/images/mufc-251562/angle.jpg', '~/images/mufc-251562/front.jpg']
+            },
+            away: {
+                name: 'Cup',
+                year: '\'19-\'20',
+                font: {
+                    color: '#000000',
+                },
+                imgSrcs: ['~/images/kb-251564/back.jpg', '~/images/kb-251564/angle.jpg', '~/images/kb-251564/front.jpg']
+            },
+            third: {
+                name: 'Third',
+                year: '\'19-\'20',
+                font: {
+                    color: '#E7472F',
+                },
+                imgSrcs: ['~/images/mufc-251565/back.jpg', '~/images/mufc-251565/angle.jpg', '~/images/mufc-251565/front.jpg']
+            },
+        },
     ];
 
     getClubs(): Club[] {
@@ -81,6 +110,10 @@ export class KitsService {
 
     getCurrentClub(): Club {
         return this.clubs[this.currentClubIdx];
+    }
+
+    getCurrentClubIdx(): number {
+        return this.currentClubIdx;
     }
 
     setCurrentClub(idx: number) {

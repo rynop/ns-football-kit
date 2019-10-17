@@ -174,24 +174,23 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
     // }
 
     isCurImgIdx(index) {
-        // console.log(`${index}: ${this.currentIndex === index}`);
         return this.currentKitImgSrcIdx === index;
     }
 
     prevImg() {
-        this.currentKitImgSrcIdx = (this.currentKitImgSrcIdx + 1) % this.currentKit.imgSrcs.length;
+        this.currentKitImgSrcIdx = (this.currentKitImgSrcIdx - 1 + this.currentKit.imgSrcs.length) % this.currentKit.imgSrcs.length;
     }
 
     nextImg() {
-        this.currentKitImgSrcIdx = (this.currentKitImgSrcIdx > 0) ? --this.currentKitImgSrcIdx : this.currentKit.imgSrcs.length - 1;
+        this.currentKitImgSrcIdx = (this.currentKitImgSrcIdx + 1) % this.currentKit.imgSrcs.length;
     }
 
     onSwipe(args: SwipeGestureEventData) {
         if (args.direction === SwipeDirection.left) {
-            this.nextImg();
+            this.prevImg();
         }
         else if (args.direction === SwipeDirection.right) {
-            this.prevImg();
+            this.nextImg();
         }
     }
 
