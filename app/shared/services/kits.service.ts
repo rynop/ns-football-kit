@@ -57,6 +57,15 @@ export class KitsService {
                 },
                 imgSrcs: ['~/images/cfc-264394/back.jpg', '~/images/cfc-264394/angle.jpg', '~/images/cfc-264394/front.jpg']
             },
+            third: {
+                kitType: KitType.Thrid,
+                name: 'Stadium',
+                year: '\'19-\'20',
+                font: {
+                    color: '#FFFFFF',
+                },
+                imgSrcs: ['~/images/cfc-264497/back.jpg', '~/images/cfc-264497/angle.jpg', '~/images/cfc-264497/front.jpg']
+            },
         },
         {
             clubName: 'Manchester United F.C.',

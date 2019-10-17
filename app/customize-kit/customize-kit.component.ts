@@ -5,10 +5,11 @@ import { screen } from "platform";
 import { AnimationCurve } from "tns-core-modules/ui/enums";
 import { Page } from "tns-core-modules/ui/page";
 import { registerElement } from "nativescript-angular/element-registry";
+// TODO: update in play.ns.org
 import { Video } from 'nativescript-videoplayer';
 import { Observable, Subscription } from "rxjs";
 
-import { KitsService, Kit, Club, KitType } from "~/shared/services/kits.service";
+import { KitsService, Kit, Club, KitType } from "../shared/services/kits.service";
 
 registerElement("VideoPlayer", () => Video);
 
@@ -229,7 +230,9 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
                 curve: AnimationCurve.easeOut,
             });
         } catch (error) {
-            console.error(`Problem animating kit`, error)
+            if (-1 === error.message.indexOf('Animation cancelled')) {
+                console.error(`Problem animating kit`, error);
+            }
         }
 
     }
