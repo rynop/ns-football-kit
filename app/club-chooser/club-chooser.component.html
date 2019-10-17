@@ -1,4 +1,4 @@
-<GridLayout class="gradientWrapper">
+<GridLayout class="gradientWrapper" (swipe)="onClubCarouselSwipe($event)">
     <GridLayout verticalAlignment="top">
         <StackLayout orientation="vertical" class="titleSection">
             <Label textWrap="true" text="Custom" class="title top-part"></Label>
@@ -7,24 +7,21 @@
         <Image #clubLogo horizontalAlignment="right" [src]="currentClub.logo" class="club-logo" width="300">
         </Image>
     </GridLayout>
-    <GridLayout #clubCarouselContent class="cardSection" (swipe)="onClubCarouselSwipe($event)">
+    <GridLayout #clubCarouselContent>
         <ng-container *ngFor="let club of clubs; let i = index">
             <GridLayout class="pager-item" [class.hidden]="i!==currentClubIdx">
-                <GridLayout #cardWrapperView>
-                    <GridLayout #fakeCardView class="fake-card"></GridLayout>
-                    <GridLayout class="card">
-                        <ScrollView #contentView class="scrollSection">
-                            <StackLayout class="contentSection">
-                                <Label [text]="club.clubName" class="title top-part" textWrap="true"></Label>
-                                <Image [src]="club.home.imgSrcs[2]" class="kit-preview" width="300"
-                                    horizontalAlignment="left"></Image>
-                                <StackLayout class="specs">
-                                    <Label text="Available Kits" class="spec-title"></Label>
-                                    <Label [text]="availKitsForClub" class="spec-value"></Label>
-                                </StackLayout>
-                            </StackLayout>
-                        </ScrollView>
-                    </GridLayout>
+                <GridLayout #fakeCardView class="fake-card"></GridLayout>
+                <GridLayout class="card">
+                    <StackLayout class="contentSection">
+                        <Label [text]="club.clubName" class="title top-part" textWrap="true"
+                            horizontalAlignment="center"></Label>
+                        <Image [src]="club.home.imgSrcs[2]" class="kit-preview" width="200"
+                            horizontalAlignment="center"></Image>
+                        <StackLayout class="specs">
+                            <Label text="Available Kits" class="spec-title"></Label>
+                            <Label [text]="availKitsForClub" class="spec-value"></Label>
+                        </StackLayout>
+                    </StackLayout>
                 </GridLayout>
             </GridLayout>
         </ng-container>

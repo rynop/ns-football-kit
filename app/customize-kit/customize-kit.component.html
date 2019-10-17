@@ -1,31 +1,34 @@
 <GridLayout>
     <VideoPlayer src="https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" height="100%" autoplay="true" fill="true"
         controls="false" muted="true" loop="true"></VideoPlayer>
-    <ScrollView class="page">
-        <StackLayout class="home-panel">
+    <StackLayout class="home-panel">
 
-            <Label text="Club {{(currentClub$ | async).clubName}}"></Label>
+        <Label text="{{(currentClub$ | async).clubName}}" backgroundColor="lightgray"></Label>
 
-            <Label text="cur img idx {{currentKitImgSrcIdx}}"></Label>
+        <!-- <Label text="cur img idx {{currentKitImgSrcIdx}}"></Label> -->
 
-            <!-- <StackLayout [@openClose]="isThingOpen()" class="open-close-container">
+        <!-- <StackLayout [@openClose]="isThingOpen()" class="open-close-container">
                 <Label text="The box is now {{ isOpen ? 'Open' : 'Closed' }}!" (tap)="toggle()"></Label>
             </StackLayout> -->
 
-            <button text="Next Kit" (tap)="setKit('away')"></button>
 
-            <FlexboxLayout #kitContainer (swipe)="onSwipe($event)" backgroundColor="yellow" justifyContent="center"
-                flexWrap="nowrap">
-                <ng-container backgroundColor="lightgray" *ngFor="let src of currentKit.imgSrcs; let i = index">
-                    <AbsoluteLayout backgroundColor="green" width="400" height="400" *ngIf="isCurImgIdx(i)">
-                        <Label width="400" textAlignment="center" [text]="jerseyName" class="customName" *ngIf="0==i"
-                            [color]="currentKit.font.color"></Label>
-                        <Image width="400" height="400" class="kit" [src]="src">
-                        </Image>
-                    </AbsoluteLayout>
-                </ng-container>
-            </FlexboxLayout>
+        <FlexboxLayout justifyContent="space-around" flexDirection="row">
+            <Button text="Home Kit" (tap)="setKit('home')" *ngIf="currentKit.kitType != 'home'"></Button>
+            <button text="Away Kit" (tap)="setKit('away')" *ngIf="currentKit.kitType != 'away'"></button>
+            <button text="Third Kit" (tap)="setKit('third')"
+                *ngIf="(currentClub$ | async).third && currentKit.kitType != 'third'"></button>
+        </FlexboxLayout>
 
-        </StackLayout>
-    </ScrollView>
+        <FlexboxLayout #kitContainer (swipe)="onSwipe($event)" justifyContent="center" flexWrap="nowrap">
+            <ng-container *ngFor="let src of currentKit.imgSrcs; let i = index">
+                <AbsoluteLayout width="400" height="400" *ngIf="isCurImgIdx(i)">
+                    <Label width="400" textAlignment="center" [text]="jerseyName" class="customName" *ngIf="0==i"
+                        [color]="currentKit.font.color"></Label>
+                    <Image width="400" height="400" class="kit" [src]="src">
+                    </Image>
+                </AbsoluteLayout>
+            </ng-container>
+        </FlexboxLayout>
+
+    </StackLayout>
 </GridLayout>

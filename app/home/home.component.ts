@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page';
-// import * as bbCommon from './bottomBar/bottomBar.common';
+import { android as androidApp } from 'tns-core-modules/application';
 import { RouterExtensions } from 'nativescript-angular';
+import { device } from 'tns-core-modules/platform';
+
+declare var android: any;
 
 @Component({
     selector: 'Home',
@@ -9,14 +12,31 @@ import { RouterExtensions } from 'nativescript-angular';
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
     constructor(
         private page: Page,
         private routerExtensions: RouterExtensions
-    ) { }
+    ) {
+        // // Get rid of stats bar on android
+        // if (androidApp && device.sdkVersion >= '21') {
+        //     console.log('Disabling status bar');
+        //     const View = android.view.View;
+        //     const window = androidApp.startActivity.getWindow();
+        //     const decorView = window.getDecorView();
+        //     decorView.setSystemUiVisibility(
+        //         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+        //         View.SYSTEM_UI_FLAG_FULLSCREEN |
+        //         View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        //     );
+        // }
+    }
 
     ngOnInit(): void {
         this.page.actionBarHidden = true;
+    }
+
+    ngAfterViewInit(): void {
+
     }
 
     tabSelected(tabName: string) {
@@ -32,9 +52,9 @@ export class HomeComponent implements OnInit {
                 break;
         }
 
-        console.log(
-            `HomeComponent: routing to ${route} clearHistory: ${clearHistory}`
-        );
+        // console.log(
+        //     `HomeComponent: routing to ${route} clearHistory: ${clearHistory}`
+        // );
 
         this.routerExtensions.navigate([route], { clearHistory });
     }

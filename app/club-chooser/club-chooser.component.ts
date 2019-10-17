@@ -53,9 +53,6 @@ export class ClubChooserComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngAfterViewInit() {
         this.setupAnimations();
-        // this.slideElement.nativeElement.getChildAt(0).opacity = 0;
-        console.log('0 opactiy', this.clubCarouselEle.nativeElement.getChildAt(0).opacity);
-        console.log('1 opactiy', this.clubCarouselEle.nativeElement.getChildAt(1).opacity);
     }
 
     ngOnDestroy(): void {
