@@ -6,7 +6,7 @@ import { screen } from "platform";
 import { SwipeGestureEventData, SwipeDirection } from "tns-core-modules/ui/gestures";
 import { AnimationCurve } from "tns-core-modules/ui/enums";
 
-import { KitsService, Club } from "~/shared/services/kits.service";
+import { KitsService, Club } from "../shared/services/kits.service";
 
 const CAROUSEL_SLIDE_DURATION = 250;
 
@@ -102,9 +102,11 @@ export class ClubChooserComponent implements OnInit, AfterViewInit, OnDestroy {
             this.currentClub = club;
         } else if (!this.clubAnimationsBeforeSwitch.isPlaying) {
             try {
-                await this.clubAnimationsBeforeSwitch.play();
-                this.currentClub = club;
-                await this.clubAnimationsAfterSwitch.play();
+                // WTF does await work in local `tns preview` but not from the preview web app!?!?!
+                await this.clubAnimationsBeforeSwitch.play()
+                    .then(() => this.currentClub = club)
+                    .then(() => this.clubAnimationsAfterSwitch.play());
+
             } catch (error) {
                 if (-1 === error.message.indexOf('Animation cancelled')) {
                     console.error(`Provlem doing onClubChanged animations`, error);
