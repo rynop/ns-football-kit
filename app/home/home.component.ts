@@ -1,8 +1,10 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page';
+import { NavigationTransition } from 'tns-core-modules/ui/frame';
 import { android as androidApp } from 'tns-core-modules/application';
 import { RouterExtensions } from 'nativescript-angular';
 import { device } from 'tns-core-modules/platform';
+import { KitsService, Club } from '../shared/services/kits.service';
 
 declare var android: any;
 
@@ -13,9 +15,12 @@ declare var android: any;
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
+    clubs: Club[];
+
     constructor(
         private page: Page,
-        private routerExtensions: RouterExtensions
+        private routerExtensions: RouterExtensions,
+        private kitsSvc: KitsService,
     ) {
         // // Get rid of stats bar on android
         // if (androidApp && device.sdkVersion >= '21') {
@@ -33,10 +38,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.page.actionBarHidden = true;
+        this.clubs = this.kitsSvc.getClubs();
     }
 
     ngAfterViewInit(): void {
 
+    }
+
+    chooseClub(idx: number) {
+        console.log(`ChooseClub ${idx}`);
+
+        this.kitsSvc.setCurrentClub(idx);
+        this.routerExtensions.navigate(['/customizekit'], { clearHistory: false, animated: true, transition: { name: 'explode' } });
     }
 
     tabSelected(tabName: string) {

@@ -1,13 +1,35 @@
-<ActionBar class="action-bar">
-    <Label class="action-bar-title" text="Home"></Label>
-</ActionBar>
+<ScrollView class="page">
+    <StackLayout>
+        <GridLayout columns="110,*" class="top-nav">
+            <Label col="0" text="Home" class="nav-title" horizontalAlignment="left"></Label>
+            <FlexboxLayout col="1" flexDirection="row" justifyContent="flex-end" alignItems="center" flexWrap="nowrap"
+                class="nav-actions">
+                <Image src="font://&#xf002;" stretch="none" class="fas"></Image>
+                <Image src="font://&#xf004;" stretch="none" class="fas"></Image>
+                <Image src="font://&#xf07a;" stretch="none" class="fas"></Image>
+            </FlexboxLayout>
+        </GridLayout>
 
-<GridLayout rows="*, auto" backgroundColor="white">
-	<StackLayout row="0" class="content-container">
-		<router-outlet></router-outlet>
-	</StackLayout>
+        <GridLayout columns="110,*" class="top-details">
+            <Label col="0" text="Trending" class="title" horizontalAlignment="left"></Label>
+            <Label col="1" text="See most purchased kits &#xf054;" class="action fas"
+                horizontalAlignment="right"></Label>
+        </GridLayout>
+        <ScrollView class="jersey-scroll hScroller" height="110" orientation="horizontal">
+            <FlexboxLayout flexDirection="row" justifyContent="flex-start" alignItems="stretch" flexWrap="nowrap"
+                backgroundColor="pink">
+                <ng-container *ngFor="let club of clubs; let i = index">
+                    <GridLayout class="jersey-card" (tap)="chooseClub(i)" [background]="club.background">
+                        <Image horizontalAlignment="right" [src]="club.home.imgSrcs[1]" class="club-jersey">
+                        </Image>
+                        <StackLayout class="jersey-card-content" horizontalAlignment="left" verticalAlignment="bottom">
+                            <Label [text]="club.clubName" class="team-name" textWrap="true"></Label>
+                            <Label text="{{club.home.name}} {{club.home.year}}" class="jersey-name"></Label>
+                        </StackLayout>
+                    </GridLayout>
+                </ng-container>
+            </FlexboxLayout>
+        </ScrollView>
 
-    <GridLayout row="1" height="50" verticalAlignment="bottom">
-        <BottomBar (tabSelected)="tabSelected($event)"></BottomBar>
-    </GridLayout>
-</GridLayout>
+    </StackLayout>
+</ScrollView>

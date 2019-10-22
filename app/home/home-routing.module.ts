@@ -15,14 +15,14 @@ const routes: Routes = [
                 path: '',
                 component: ClubChooserComponent
             },
-            {
-                path: 'clubchooser',
-                component: ClubChooserComponent
-            },
-            {
-                path: 'customizekit',
-                component: CustomizeKitComponent
-            }
+            // {
+            //     path: 'clubchooser',
+            //     component: ClubChooserComponent
+            // },
+            // {
+            //     path: 'customizekit',
+            //     component: CustomizeKitComponent
+            // }
         ]
     }
 ];
@@ -34,5 +34,6 @@ const routes: Routes = [
 export class HomeRoutingModule { }
 
 export const navigatableHomeComponents = [
-    ClubChooserComponent, CustomizeKitComponent,
+    ClubChooserComponent,
+    // CustomizeKitComponent,
 ];

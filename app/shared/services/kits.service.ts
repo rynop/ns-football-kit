@@ -23,7 +23,7 @@ export interface Kit {
 export interface Club {
     clubName: string;
     logo: string;
-    bkgColor: string;
+    background: string;
     home: Kit;
     away: Kit;
     third?: Kit;
@@ -36,9 +36,41 @@ export class KitsService {
     // imgSrcs need to be in order back,angle,front
     private clubs: Club[] = [
         {
-            clubName: 'Chelsea F.C.',
+            clubName: 'Real Madrid',
+            logo: '~/images/rm.png',
+            background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
+            home: {
+                kitType: KitType.Home,
+                name: 'Home',
+                year: '\'19-\'20',
+                font: {
+                    color: '#8C734B',
+                },
+                imgSrcs: ['~/images/rm-251330/back.jpg', '~/images/rm-251330/angle.jpg', '~/images/rm-251330/front.jpg']
+            },
+            away: {
+                kitType: KitType.Away,
+                name: 'Away',
+                year: '\'19-\'20',
+                font: {
+                    color: '#8C734B',
+                },
+                imgSrcs: ['~/images/rm-251335/back.jpg', '~/images/rm-251335/angle.jpg', '~/images/rm-251335/front.jpg']
+            },
+            third: {
+                kitType: KitType.Thrid,
+                name: 'Third',
+                year: '\'19-\'20',
+                font: {
+                    color: '#21323A',
+                },
+                imgSrcs: ['~/images/cfc-251397/back.jpg', '~/images/cfc-251397/angle.jpg', '~/images/cfc-251397/front.jpg']
+            },
+        },
+        {
+            clubName: 'Chelsea',
             logo: '~/images/chelsea.png',
-            bkgColor: '#4377a6',
+            background: '#4377a6',
             home: {
                 kitType: KitType.Home,
                 name: 'Stadium',
@@ -68,9 +100,9 @@ export class KitsService {
             },
         },
         {
-            clubName: 'Manchester United F.C.',
+            clubName: 'Manchester United',
             logo: '~/images/manchester.png',
-            bkgColor: '#4377a6',
+            background: '#4377a6',
             home: {
                 kitType: KitType.Home,
                 name: 'Home',
