@@ -5,6 +5,7 @@ import { screen } from "platform";
 import { AnimationCurve } from "tns-core-modules/ui/enums";
 import { Page } from "tns-core-modules/ui/page";
 import { registerElement } from "nativescript-angular/element-registry";
+import { RouterExtensions } from "nativescript-angular";
 // TODO: update in play.ns.org
 import { Video } from 'nativescript-videoplayer';
 import { Observable, Subscription } from "rxjs";
@@ -148,12 +149,13 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
 
     constructor(
         private _page: Page,
+        private routerExtensions: RouterExtensions,
         private kitsSvc: KitsService,
     ) {
     }
 
     ngOnInit(): void {
-        this._page.actionBarHidden = true;
+        // this._page.actionBarHidden = true;
         this.screenWidth = screen.mainScreen.widthDIPs;
         this.subscriptions = this.kitsSvc.currentClubKit$.subscribe(clubKit => {
             this.currentKit = clubKit;
@@ -166,6 +168,10 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.subscriptions.unsubscribe();
+    }
+
+    goBack() {
+        this.routerExtensions.back();
     }
 
     // preloadImages() {

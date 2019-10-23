@@ -10,16 +10,25 @@
             </FlexboxLayout>
         </GridLayout>
 
+        <GridLayout class="top-ad">
+            <VideoPlayer src="https://www.dropbox.com/s/wyswosra4btvbs1/real-ad.mp4?raw=1" width="100%" autoplay="true"
+                fill="false" controls="false" muted="true" loop="false"></VideoPlayer>
+            <StackLayout horizontalAlignment="left" verticalAlignment="bottom" class="text-container">
+                <Label text="New Arrivals" class="attention" textWrap="true"></Label>
+                <Label text="Real Madrid" class="text" textWrap="true"></Label>
+                <Label text="2019/2020 Home Jersey" class="text"></Label>
+            </StackLayout>
+        </GridLayout>
+
         <GridLayout columns="110,*" class="top-details">
             <Label col="0" text="Trending" class="title" horizontalAlignment="left"></Label>
-            <Label col="1" text="See most purchased kits &#xf054;" class="action fas"
+            <Label col="1" text="See Most Purchased Kits &#xf054;" class="action fas"
                 horizontalAlignment="right"></Label>
         </GridLayout>
-        <ScrollView class="jersey-scroll hScroller" height="110" orientation="horizontal">
-            <FlexboxLayout flexDirection="row" justifyContent="flex-start" alignItems="stretch" flexWrap="nowrap"
-                backgroundColor="pink">
+        <ScrollView class="jersey-scroll" height="110" orientation="horizontal">
+            <FlexboxLayout flexDirection="row" justifyContent="flex-start" alignItems="stretch" flexWrap="nowrap">
                 <ng-container *ngFor="let club of clubs; let i = index">
-                    <GridLayout class="jersey-card" (tap)="chooseClub(i)" [background]="club.background">
+                    <GridLayout class="jersey-card" (tap)="chooseClub(i)" [background]="club.home.background">
                         <Image horizontalAlignment="right" [src]="club.home.imgSrcs[1]" class="club-jersey">
                         </Image>
                         <StackLayout class="jersey-card-content" horizontalAlignment="left" verticalAlignment="bottom">
@@ -31,5 +40,35 @@
             </FlexboxLayout>
         </ScrollView>
 
+        <GridLayout columns="110,*" class="top-details">
+            <Label col="0" text="Choose By Team" class="title" horizontalAlignment="left"></Label>
+            <Label col="1" text="All Teams &#xf054;" class="action fas" horizontalAlignment="right"></Label>
+        </GridLayout>
+        <ScrollView height="54" orientation="horizontal">
+            <FlexboxLayout flexDirection="row" justifyContent="flex-start" alignItems="stretch" flexWrap="nowrap">
+                <ng-container *ngFor="let club of clubs; let i = index">
+                    <GridLayout class="small-card" (tap)="chooseClub(i)" [background]="club.background">
+                        <Image horizontalAlignment="center" verticalAlignment="center" [src]="club.logo">
+                        </Image>
+                    </GridLayout>
+                </ng-container>
+            </FlexboxLayout>
+        </ScrollView>
+
+        <GridLayout columns="110,*" class="top-details">
+            <Label col="0" text="Choose By Brand" class="title" horizontalAlignment="left"></Label>
+            <Label col="1" text="All Brands &#xf054;" class="action fas" horizontalAlignment="right"></Label>
+        </GridLayout>
+        <ScrollView height="54" orientation="horizontal">
+            <FlexboxLayout flexDirection="row" justifyContent="flex-start" alignItems="stretch" flexWrap="nowrap">
+                <ng-container
+                    *ngFor="let brand of ['adidas','nike','newbalance','ua','fila','lacoste','levis','jordan']; let i = index">
+                    <GridLayout class="small-card" backgroundColor="#F2F2F2">
+                        <Image horizontalAlignment="center" verticalAlignment="center"
+                            src="~/images/brands/{{brand}}.png"></Image>
+                    </GridLayout>
+                </ng-container>
+            </FlexboxLayout>
+        </ScrollView>
     </StackLayout>
 </ScrollView>

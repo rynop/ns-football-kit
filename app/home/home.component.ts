@@ -1,10 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page';
-import { NavigationTransition } from 'tns-core-modules/ui/frame';
-import { android as androidApp } from 'tns-core-modules/application';
 import { RouterExtensions } from 'nativescript-angular';
-import { device } from 'tns-core-modules/platform';
+import { registerElement } from "nativescript-angular/element-registry";
 import { KitsService, Club } from '../shared/services/kits.service';
+
+import { Video } from 'nativescript-videoplayer';
+registerElement("VideoPlayer", () => Video);
 
 declare var android: any;
 

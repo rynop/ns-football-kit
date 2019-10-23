@@ -18,6 +18,7 @@ export interface Kit {
     font: KitFont;
     imgSrcs: string[];
     kitType: KitType;
+    background: string;
 }
 
 export interface Club {
@@ -38,8 +39,9 @@ export class KitsService {
         {
             clubName: 'Real Madrid',
             logo: '~/images/rm.png',
-            background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
+            background: '#00529F',
             home: {
+                background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Home,
                 name: 'Home',
                 year: '\'19-\'20',
@@ -49,6 +51,7 @@ export class KitsService {
                 imgSrcs: ['~/images/rm-251330/back.jpg', '~/images/rm-251330/angle.jpg', '~/images/rm-251330/front.jpg']
             },
             away: {
+                background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Away,
                 name: 'Away',
                 year: '\'19-\'20',
@@ -58,6 +61,7 @@ export class KitsService {
                 imgSrcs: ['~/images/rm-251335/back.jpg', '~/images/rm-251335/angle.jpg', '~/images/rm-251335/front.jpg']
             },
             third: {
+                background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Thrid,
                 name: 'Third',
                 year: '\'19-\'20',
@@ -72,6 +76,7 @@ export class KitsService {
             logo: '~/images/chelsea.png',
             background: '#4377a6',
             home: {
+                background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Home,
                 name: 'Stadium',
                 year: '\'19-\'20',
@@ -81,6 +86,7 @@ export class KitsService {
                 imgSrcs: ['~/images/cfc-264397/back.jpg', '~/images/cfc-264397/angle.jpg', '~/images/cfc-264397/front.jpg']
             },
             away: {
+                background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Away,
                 name: 'Vapor Match',
                 year: '\'19-\'20',
@@ -90,6 +96,7 @@ export class KitsService {
                 imgSrcs: ['~/images/cfc-264394/back.jpg', '~/images/cfc-264394/angle.jpg', '~/images/cfc-264394/front.jpg']
             },
             third: {
+                background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Thrid,
                 name: 'Stadium',
                 year: '\'19-\'20',
@@ -104,6 +111,7 @@ export class KitsService {
             logo: '~/images/manchester.png',
             background: '#4377a6',
             home: {
+                background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Home,
                 name: 'Home',
                 year: '\'19-\'20',
@@ -113,6 +121,7 @@ export class KitsService {
                 imgSrcs: ['~/images/mufc-251562/back.jpg', '~/images/mufc-251562/angle.jpg', '~/images/mufc-251562/front.jpg']
             },
             away: {
+                background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Away,
                 name: 'Cup',
                 year: '\'19-\'20',
@@ -122,6 +131,7 @@ export class KitsService {
                 imgSrcs: ['~/images/mufc-251563/back.jpg', '~/images/mufc-251563/angle.jpg', '~/images/mufc-251563/front.jpg']
             },
             third: {
+                background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Thrid,
                 name: 'Third',
                 year: '\'19-\'20',
