@@ -1,14 +1,16 @@
-<ActionBar>
-    <!-- TODO: back button with chevron -->
-    <NavigationButton android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
-</ActionBar>
+<ScrollView class="page">
+    <StackLayout>
+        <GridLayout columns="110,*" class="top-nav" height="40">
+            <Image col="0" src="font://&#xf053;" stretch="none" class="back fas" horizontalAlignment="left"
+                verticalAlignment="center" (tap)="goBack()" background="pink" width="30"></Image>
+            <FlexboxLayout col="1" flexDirection="row" justifyContent="flex-end" class="nav-actions"
+                alignItems="center">
+                <Image src="font://&#xf004;" stretch="none" class="fas"></Image>
+                <Image src="font://&#xf07a;" stretch="none" class="fas"></Image>
+            </FlexboxLayout>
+        </GridLayout>
 
-<GridLayout>
-    <VideoPlayer src="https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" height="100%" autoplay="true" fill="true"
-        controls="false" muted="true" loop="true"></VideoPlayer>
-    <StackLayout class="home-panel">
-
-        <Label text="{{(currentClub$ | async).clubName}}" backgroundColor="lightgray"></Label>
+        <Label marginTop="20" text="{{(currentClub$ | async).clubName}}" backgroundColor="lightgray"></Label>
 
         <!-- <Label text="cur img idx {{currentKitImgSrcIdx}}"></Label> -->
 
@@ -37,4 +39,4 @@
 
         <Label text="<< Swipe for other views of kit >>" backgroundColor="lightgray"></Label>
     </StackLayout>
-</GridLayout>
+</ScrollView>

@@ -7,12 +7,9 @@ import { Page } from "tns-core-modules/ui/page";
 import { registerElement } from "nativescript-angular/element-registry";
 import { RouterExtensions } from "nativescript-angular";
 // TODO: update in play.ns.org
-import { Video } from 'nativescript-videoplayer';
 import { Observable, Subscription } from "rxjs";
 
 import { KitsService, Kit, Club, KitType } from "../shared/services/kits.service";
-
-registerElement("VideoPlayer", () => Video);
 
 @Component({
     selector: "CustomizeKit",
@@ -155,7 +152,7 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        // this._page.actionBarHidden = true;
+        this._page.actionBarHidden = true;
         this.screenWidth = screen.mainScreen.widthDIPs;
         this.subscriptions = this.kitsSvc.currentClubKit$.subscribe(clubKit => {
             this.currentKit = clubKit;

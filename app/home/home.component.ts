@@ -53,6 +53,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.routerExtensions.navigate(['/customizekit'], { clearHistory: false, animated: true, transition: { name: 'explode' } });
     }
 
+    doTrans(idx: number) {
+        const trans = ['fade',
+            'flipRight',
+            'flipLeft',
+            'slideLeft',
+            'slideRight',
+            'slideTop',
+            'slideBottom',];
+
+        this.kitsSvc.setCurrentClub(0);
+        this.routerExtensions.navigate(['/customizekit'], { clearHistory: false, animated: true, transition: { name: trans[idx] } });
+    }
+
     tabSelected(tabName: string) {
         let route: string;
         const clearHistory = true;
