@@ -1,6 +1,9 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page';
 import { RouterExtensions } from 'nativescript-angular';
+import { android as androidApp } from 'tns-core-modules/application';
+import { device } from 'tns-core-modules/platform';
+
 import { KitsService, Club } from '../shared/services/kits.service';
 
 declare var android: any;
@@ -84,18 +87,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
         private routerExtensions: RouterExtensions,
         private kitsSvc: KitsService,
     ) {
-        // // Get rid of stats bar on android
-        // if (androidApp && device.sdkVersion >= '21') {
-        //     console.log('Disabling status bar');
-        //     const View = android.view.View;
-        //     const window = androidApp.startActivity.getWindow();
-        //     const decorView = window.getDecorView();
-        //     decorView.setSystemUiVisibility(
-        //         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-        //         View.SYSTEM_UI_FLAG_FULLSCREEN |
-        //         View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        //     );
-        // }
     }
 
     ngOnInit(): void {
@@ -104,14 +95,25 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-
+        // Get rid of stats bar on android
+        if (androidApp && device.sdkVersion >= '21') {
+            console.log('Disabling status bar');
+            const View = android.view.View;
+            const window = androidApp.startActivity.getWindow();
+            const decorView = window.getDecorView();
+            decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                View.SYSTEM_UI_FLAG_FULLSCREEN |
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            );
+        }
     }
 
     chooseClub(idx: number) {
         console.log(`ChooseClub ${idx}`);
 
         this.kitsSvc.setCurrentClub(idx);
-        this.routerExtensions.navigate(['/customizekit'], { clearHistory: false, animated: true, transition: { name: 'explode' } });
+        this.routerExtensions.navigate(['/customizekit'], { clearHistory: false, animated: true, transition: { name: 'slideTop' } });
     }
 
     doTrans(idx: number) {
