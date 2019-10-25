@@ -48,7 +48,7 @@ export class KitsService {
                 font: {
                     color: '#8C734B',
                 },
-                imgSrcs: ['~/images/rm-251330/back.jpg', '~/images/rm-251330/angle.jpg', '~/images/rm-251330/front.jpg']
+                imgSrcs: ['~/images/rm-home/back.jpg', '~/images/rm-home/angle.jpg', '~/images/rm-home/front.png']
             },
             away: {
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
@@ -58,7 +58,7 @@ export class KitsService {
                 font: {
                     color: '#8C734B',
                 },
-                imgSrcs: ['~/images/rm-251335/back.jpg', '~/images/rm-251335/angle.jpg', '~/images/rm-251335/front.jpg']
+                imgSrcs: ['~/images/rm-away/back.jpg', '~/images/rm-away/angle.jpg', '~/images/rm-away/front.jpg']
             },
             third: {
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
@@ -68,7 +68,7 @@ export class KitsService {
                 font: {
                     color: '#21323A',
                 },
-                imgSrcs: ['~/images/cfc-251397/back.jpg', '~/images/cfc-251397/angle.jpg', '~/images/cfc-251397/front.jpg']
+                imgSrcs: ['~/images/rm-third/back.jpg', '~/images/rm-third/angle.jpg', '~/images/rm-third/front.jpg']
             },
         },
         {

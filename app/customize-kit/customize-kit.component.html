@@ -1,12 +1,12 @@
 <ScrollView class="page">
     <StackLayout>
         <GridLayout columns="110,*" class="top-nav" height="40">
-            <Image col="0" src="font://&#xf053;" stretch="none" class="back fas" horizontalAlignment="left"
-                verticalAlignment="center" (tap)="goBack()" background="pink" width="30"></Image>
+            <Label col="0" text="&#xf053;" class="back fas" horizontalAlignment="left" verticalAlignment="center"
+                (tap)="goBack()" background="pink"></Label>
             <FlexboxLayout col="1" flexDirection="row" justifyContent="flex-end" class="nav-actions"
                 alignItems="center">
-                <Image src="font://&#xf004;" stretch="none" class="fas"></Image>
-                <Image src="font://&#xf07a;" stretch="none" class="fas"></Image>
+                <Label text="&#xf004;" stretch="none" class="far"></Label>
+                <Label text="&#xf07a;" stretch="none" class="fas"></Label>
             </FlexboxLayout>
         </GridLayout>
 

@@ -4,9 +4,7 @@ import { SwipeGestureEventData, SwipeDirection } from "tns-core-modules/ui/gestu
 import { screen } from "platform";
 import { AnimationCurve } from "tns-core-modules/ui/enums";
 import { Page } from "tns-core-modules/ui/page";
-import { registerElement } from "nativescript-angular/element-registry";
 import { RouterExtensions } from "nativescript-angular";
-// TODO: update in play.ns.org
 import { Observable, Subscription } from "rxjs";
 
 import { KitsService, Kit, Club, KitType } from "../shared/services/kits.service";
