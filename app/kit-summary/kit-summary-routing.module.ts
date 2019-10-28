@@ -2,14 +2,14 @@ import { NgModule } from "@angular/core";
 import { Routes } from "@angular/router";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 
-import { ClubChooserComponent } from "./club-chooser.component";
+import { KitSummaryComponent } from "./kit-summary.component";
 
 const routes: Routes = [
-    { path: "", component: ClubChooserComponent }
+    { path: "", component: KitSummaryComponent }
 ];
 
 @NgModule({
     imports: [NativeScriptRouterModule.forChild(routes)],
     exports: [NativeScriptRouterModule]
 })
-export class ClubChooserRoutingModule { }
+export class KitSummaryRoutingModule { }

@@ -1,0 +1,36 @@
+<ScrollView class="page" iosOverflowSafeArea="false">
+    <StackLayout>
+        <GridLayout columns="110,*" class="top-nav" height="40">
+            <Label col="0" text="&#xf053;" class="back fas" horizontalAlignment="left" verticalAlignment="center"
+                (tap)="goBack()"></Label>
+            <FlexboxLayout col="1" flexDirection="row" justifyContent="flex-end" class="nav-actions"
+                alignItems="center">
+                <Label text="&#xf004;" stretch="none" class="far"></Label>
+                <Label text="&#xf07a;" stretch="none" class="fas"></Label>
+            </FlexboxLayout>
+        </GridLayout>
+
+        <!-- <Label [text]="currentCarouselIdx"></Label> -->
+
+        <GridLayout #clubCarouselContent (swipe)="onCarouselSwipe($event)">
+            <GridLayout class="card round-border" [class.hidden]="0!==currentCarouselIdx">
+                <AbsoluteLayout width="305" height="305" backgroundColor="lightgray">
+                    <Image top="0" left="0" width="250" [src]="(currentKit$ | async).imgSrcs[0]"></Image>
+                    <Image top="50" left="90" width="250" [src]="(currentKit$ | async).imgSrcs[2]"></Image>
+                </AbsoluteLayout>
+            </GridLayout>
+            <GridLayout class="card round-border" [class.hidden]="1!==currentCarouselIdx">
+                <Image [src]="(currentKit$ | async).imgSrcs[2]" horizontalAlignment="center"></Image>
+            </GridLayout>
+            <GridLayout class="card round-border" [class.hidden]="2!==currentCarouselIdx">
+                <Image [src]="(currentKit$ | async).imgSrcs[0]" horizontalAlignment="center"></Image>
+            </GridLayout>
+        </GridLayout>
+
+        <FlexboxLayout class="carousel-dots" flexDirection="row" justifyContent="center" alignItems="center">
+            <GridLayout class="carousel-dot" [class.carousel-dot-active]="0==currentCarouselIdx"></GridLayout>
+            <GridLayout class="carousel-dot" [class.carousel-dot-active]="1==currentCarouselIdx"></GridLayout>
+            <GridLayout class="carousel-dot" [class.carousel-dot-active]="2==currentCarouselIdx"></GridLayout>
+        </FlexboxLayout>
+    </StackLayout>
+</ScrollView>

@@ -113,7 +113,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         console.log(`ChooseClub ${idx}`);
 
         this.kitsSvc.setCurrentClub(idx);
-        this.routerExtensions.navigate(['/customizekit'], { clearHistory: false, animated: true, transition: { name: 'slideTop' } });
+        this.routerExtensions.navigate(['/kitsummary'], { clearHistory: false, animated: true, transition: { name: 'slideTop' } });
     }
 
     doTrans(idx: number) {
@@ -126,7 +126,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             'slideBottom',];
 
         this.kitsSvc.setCurrentClub(0);
-        this.routerExtensions.navigate(['/customizekit'], { clearHistory: false, animated: true, transition: { name: trans[idx % trans.length] } });
+        this.routerExtensions.navigate(['/kitsummary'], { clearHistory: false, animated: true, transition: { name: trans[idx % trans.length] } });
     }
 
     tabSelected(tabName: string) {

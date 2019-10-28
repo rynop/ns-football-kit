@@ -207,36 +207,36 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
     }
 
     async setKit(kitType: KitType) {
-        const ele = this.kitContainerElement.nativeElement;
+        // const ele = this.kitContainerElement.nativeElement;
 
-        //reset
-        ele.translateX = 0;
-        ele.opacity = 1;
+        // //reset
+        // ele.translateX = 0;
+        // ele.opacity = 1;
 
-        try {
-            // WTF does await work in local `tns preview` but not from the preview web app!?!?!
-            await ele.animate({
-                opacity: 0,
-                translate: { x: -this.screenWidth, y: 0 },
-                duration: 200,
-            })
-                .then(() => {
-                    //Replace the new kit
-                    this.kitsSvc.setCurrentClubKit(kitType);
-                })
-                .then(() => ele.animate({
-                    delay: 200,
-                    opacity: 1,
-                    translate: { x: 0, y: 0 },
-                    duration: 500,
-                    curve: AnimationCurve.easeOut,
-                }));
-        } catch (error) {
-            if (-1 === error.message.indexOf('Animation cancelled')) {
-                console.error(`Problem animating kit`, error);
-            }
-            this.kitsSvc.setCurrentClubKit(kitType);
-        }
+        // try {
+        //     // WTF does await work in local `tns preview` but not from the preview web app!?!?!
+        //     await ele.animate({
+        //         opacity: 0,
+        //         translate: { x: -this.screenWidth, y: 0 },
+        //         duration: 200,
+        //     })
+        //         .then(() => {
+        //             //Replace the new kit
+        //             this.kitsSvc.setCurrentClubKit(kitType);
+        //         })
+        //         .then(() => ele.animate({
+        //             delay: 200,
+        //             opacity: 1,
+        //             translate: { x: 0, y: 0 },
+        //             duration: 500,
+        //             curve: AnimationCurve.easeOut,
+        //         }));
+        // } catch (error) {
+        //     if (-1 === error.message.indexOf('Animation cancelled')) {
+        //         console.error(`Problem animating kit`, error);
+        //     }
+        //     this.kitsSvc.setCurrentClubKit(kitType);
+        // }
 
     }
 }

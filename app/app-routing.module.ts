@@ -5,6 +5,7 @@ import { NativeScriptRouterModule } from 'nativescript-angular/router';
 const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
+    { path: 'kitsummary', loadChildren: () => import('./kit-summary/kit-summary.module').then(m => m.KitSummaryModule) },
     { path: 'customizekit', loadChildren: () => import('./customize-kit/customize-kit.module').then(m => m.CustomizeKitModule) },
 ];
 

@@ -25,9 +25,7 @@ export interface Club {
     clubName: string;
     logo: string;
     background: string;
-    home: Kit;
-    away: Kit;
-    third?: Kit;
+    kits: Kit[];
 }
 
 @Injectable({
@@ -40,7 +38,7 @@ export class KitsService {
             clubName: 'Real Madrid',
             logo: '~/images/rm.png',
             background: '#00529F',
-            home: {
+            kits: [{
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Home,
                 name: 'Home',
@@ -50,7 +48,7 @@ export class KitsService {
                 },
                 imgSrcs: ['~/images/rm-home/back.jpg', '~/images/rm-home/angle.jpg', '~/images/rm-home/front.png']
             },
-            away: {
+            {
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Away,
                 name: 'Away',
@@ -60,7 +58,7 @@ export class KitsService {
                 },
                 imgSrcs: ['~/images/rm-away/back.jpg', '~/images/rm-away/angle.jpg', '~/images/rm-away/front.jpg']
             },
-            third: {
+            {
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Thrid,
                 name: 'Third',
@@ -69,13 +67,13 @@ export class KitsService {
                     color: '#21323A',
                 },
                 imgSrcs: ['~/images/rm-third/back.jpg', '~/images/rm-third/angle.jpg', '~/images/rm-third/front.jpg']
-            },
+            }],
         },
         {
             clubName: 'Chelsea',
             logo: '~/images/chelsea.png',
             background: '#4377a6',
-            home: {
+            kits: [{
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Home,
                 name: 'Stadium',
@@ -85,7 +83,7 @@ export class KitsService {
                 },
                 imgSrcs: ['~/images/cfc-264397/back.jpg', '~/images/cfc-264397/angle.jpg', '~/images/cfc-264397/front.jpg']
             },
-            away: {
+            {
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Away,
                 name: 'Vapor Match',
@@ -95,7 +93,7 @@ export class KitsService {
                 },
                 imgSrcs: ['~/images/cfc-264394/back.jpg', '~/images/cfc-264394/angle.jpg', '~/images/cfc-264394/front.jpg']
             },
-            third: {
+            {
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Thrid,
                 name: 'Stadium',
@@ -104,13 +102,13 @@ export class KitsService {
                     color: '#FFFFFF',
                 },
                 imgSrcs: ['~/images/cfc-264497/back.jpg', '~/images/cfc-264497/angle.jpg', '~/images/cfc-264497/front.jpg']
-            },
+            }],
         },
         {
             clubName: 'Manchester United',
             logo: '~/images/manchester.png',
             background: '#4377a6',
-            home: {
+            kits: [{
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Home,
                 name: 'Home',
@@ -120,7 +118,7 @@ export class KitsService {
                 },
                 imgSrcs: ['~/images/mufc-251562/back.jpg', '~/images/mufc-251562/angle.jpg', '~/images/mufc-251562/front.jpg']
             },
-            away: {
+            {
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Away,
                 name: 'Cup',
@@ -130,7 +128,7 @@ export class KitsService {
                 },
                 imgSrcs: ['~/images/mufc-251563/back.jpg', '~/images/mufc-251563/angle.jpg', '~/images/mufc-251563/front.jpg']
             },
-            third: {
+            {
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 kitType: KitType.Thrid,
                 name: 'Third',
@@ -139,7 +137,7 @@ export class KitsService {
                     color: '#E7472F',
                 },
                 imgSrcs: ['~/images/mufc-251565/back.jpg', '~/images/mufc-251565/angle.jpg', '~/images/mufc-251565/front.jpg']
-            },
+            }],
         },
     ];
 
@@ -150,8 +148,8 @@ export class KitsService {
     private currentClubIdx = 0;
     public currentClub$ = new BehaviorSubject<Club>(this.clubs[this.currentClubIdx]);
 
-    private currentClubKitType: KitType = KitType.Home;
-    public currentClubKit$ = new BehaviorSubject<Kit>(this.clubs[this.currentClubIdx][this.currentClubKitType]);
+    private currentClubKitIdx: number = 0;
+    public currentClubKit$ = new BehaviorSubject<Kit>(this.clubs[this.currentClubIdx].kits[this.currentClubKitIdx]);
 
     getClub(idx: number): Club {
         return this.clubs[idx];
@@ -168,11 +166,16 @@ export class KitsService {
     setCurrentClub(idx: number) {
         this.currentClubIdx = idx;
         this.currentClub$.next(this.getClub(idx));
-        this.setCurrentClubKit(KitType.Home);
+        this.setCurrentClubKit(0);
     }
 
-    setCurrentClubKit(kitType: KitType) {
-        this.currentClubKitType = kitType;
-        this.currentClubKit$.next(this.getCurrentClub()[this.currentClubKitType]);
+    setCurrentClubKit(idx: number) {
+        const kit = this.getCurrentClub().kits[idx];
+        this.currentClubKitIdx = idx;
+        this.currentClubKit$.next(kit);
+    }
+
+    getCurrentClubKitIdx(): number {
+        return this.currentClubIdx;
     }
 }

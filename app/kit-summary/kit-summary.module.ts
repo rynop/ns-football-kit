@@ -2,20 +2,20 @@ import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
-import { ClubChooserRoutingModule } from "./club-chooser-routing.module";
-import { ClubChooserComponent } from "./club-chooser.component";
+import { KitSummaryRoutingModule } from "./kit-summary-routing.module";
+import { KitSummaryComponent } from "./kit-summary.component";
 
 @NgModule({
     imports: [
         NativeScriptCommonModule,
-        ClubChooserRoutingModule,
+        KitSummaryRoutingModule,
         NativeScriptFormsModule
     ],
     declarations: [
-        ClubChooserComponent
+        KitSummaryComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA
     ]
 })
-export class CustomizeKitModule { }
+export class KitSummaryModule { }
