@@ -2,12 +2,13 @@ import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from "@angular/co
 import { trigger, style, transition, animate, group, query, state, stagger } from "@angular/animations";
 import { SwipeGestureEventData, SwipeDirection } from "tns-core-modules/ui/gestures";
 import { screen } from "platform";
-import { AnimationCurve } from "tns-core-modules/ui/enums";
 import { Page } from "tns-core-modules/ui/page";
 import { RouterExtensions } from "nativescript-angular";
 import { Observable, Subscription } from "rxjs";
 
 import { KitsService, Kit, Club, KitType } from "../shared/services/kits.service";
+
+declare var UIBarStyle: any;
 
 @Component({
     selector: "CustomizeKit",

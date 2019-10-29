@@ -1,42 +1,43 @@
-<ScrollView class="page">
-    <StackLayout>
-        <GridLayout columns="110,*" class="top-nav" height="40">
-            <Label col="0" text="&#xf053;" class="back fas" horizontalAlignment="left" verticalAlignment="center"
-                (tap)="goBack()"></Label>
-            <FlexboxLayout col="1" flexDirection="row" justifyContent="flex-end" class="nav-actions"
-                alignItems="center">
-                <Label text="&#xf004;" stretch="none" class="far"></Label>
-                <Label text="&#xf07a;" stretch="none" class="fas"></Label>
+<GridLayout rows="*">
+    <ScrollView row="0" class="page" iosOverflowSafeArea="true">
+        <StackLayout style="margin: 0 20;">
+            <GridLayout class="top-nav" height="40" style="color: white;">
+                <Label text="&#xf053;" class="back fas" horizontalAlignment="left" verticalAlignment="center"
+                    (tap)="goBack()"></Label>
+                <Label text="Save and Continue" horizontalAlignment="right" verticalAlignment="center"
+                    style="font-size: 14; font-weight: 500;" (tap)="goBack()"></Label>
+            </GridLayout>
+
+            <Label marginTop="20" text="{{(currentClub$ | async).name}}" backgroundColor="lightgray"></Label>
+
+            <!-- <Label text="cur img idx {{currentKitImgSrcIdx}}"></Label> -->
+
+            <!-- <StackLayout [@openClose]="isThingOpen()" class="open-close-container">
+                            <Label text="The box is now {{ isOpen ? 'Open' : 'Closed' }}!" (tap)="toggle()"></Label>
+                        </StackLayout> -->
+
+
+            <!-- <FlexboxLayout justifyContent="space-around" flexDirection="row">
+                        <Button text="Home Kit" (tap)="setKit('home')" *ngIf="currentKit.kitType != 'home'"></Button>
+                        <button text="Away Kit" (tap)="setKit('away')" *ngIf="currentKit.kitType != 'away'"></button>
+                        <button text="Third Kit" (tap)="setKit('third')"
+                            *ngIf="(currentClub$ | async).third && currentKit.kitType != 'third'"></button>
+                    </FlexboxLayout> -->
+
+            <FlexboxLayout #kitContainer (swipe)="onSwipe($event)" justifyContent="center" flexWrap="nowrap">
+                <ng-container *ngFor="let src of currentKit.imgSrcs; let i = index">
+                    <AbsoluteLayout width="400" height="400" *ngIf="isCurImgIdx(i)">
+                        <Label width="400" textAlignment="center" [text]="jerseyName" class="customName" *ngIf="0==i"
+                            [color]="currentKit.font.color"></Label>
+                        <Image width="400" height="400" class="kit" [src]="src">
+                        </Image>
+                    </AbsoluteLayout>
+                </ng-container>
             </FlexboxLayout>
-        </GridLayout>
 
-        <Label marginTop="20" text="{{(currentClub$ | async).name}}" backgroundColor="lightgray"></Label>
+            <Label text="<< Swipe for other views of kit >>" backgroundColor="lightgray"></Label>
+        </StackLayout>
+    </ScrollView>
 
-        <!-- <Label text="cur img idx {{currentKitImgSrcIdx}}"></Label> -->
-
-        <!-- <StackLayout [@openClose]="isThingOpen()" class="open-close-container">
-                <Label text="The box is now {{ isOpen ? 'Open' : 'Closed' }}!" (tap)="toggle()"></Label>
-            </StackLayout> -->
-
-
-        <!-- <FlexboxLayout justifyContent="space-around" flexDirection="row">
-            <Button text="Home Kit" (tap)="setKit('home')" *ngIf="currentKit.kitType != 'home'"></Button>
-            <button text="Away Kit" (tap)="setKit('away')" *ngIf="currentKit.kitType != 'away'"></button>
-            <button text="Third Kit" (tap)="setKit('third')"
-                *ngIf="(currentClub$ | async).third && currentKit.kitType != 'third'"></button>
-        </FlexboxLayout> -->
-
-        <FlexboxLayout #kitContainer (swipe)="onSwipe($event)" justifyContent="center" flexWrap="nowrap">
-            <ng-container *ngFor="let src of currentKit.imgSrcs; let i = index">
-                <AbsoluteLayout width="400" height="400" *ngIf="isCurImgIdx(i)">
-                    <Label width="400" textAlignment="center" [text]="jerseyName" class="customName" *ngIf="0==i"
-                        [color]="currentKit.font.color"></Label>
-                    <Image width="400" height="400" class="kit" [src]="src">
-                    </Image>
-                </AbsoluteLayout>
-            </ng-container>
-        </FlexboxLayout>
-
-        <Label text="<< Swipe for other views of kit >>" backgroundColor="lightgray"></Label>
-    </StackLayout>
-</ScrollView>
+    <GridLayout row="0" backgroundColor="White" opacity="0.4" height="0" verticalAlignment="top"></GridLayout>
+</GridLayout>

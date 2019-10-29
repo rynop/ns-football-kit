@@ -148,4 +148,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
         this.routerExtensions.navigate([route], { clearHistory });
     }
+
+    showCustomize() {
+        this.routerExtensions.navigate(['/customizekit'], { clearHistory: false });
+    }
 }

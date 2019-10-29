@@ -5,8 +5,8 @@
                 (tap)="goBack()"></Label>
             <FlexboxLayout col="1" flexDirection="row" justifyContent="flex-end" class="nav-actions"
                 alignItems="center">
-                <Label text="&#xf004;" stretch="none" class="far"></Label>
-                <Label text="&#xf07a;" stretch="none" class="fas"></Label>
+                <Label text="&#xf004;" class="far"></Label>
+                <Label text="&#xf07a;" class="fas"></Label>
             </FlexboxLayout>
         </GridLayout>
 
@@ -69,13 +69,14 @@
             </FlexboxLayout>
             <FlexboxLayout col="1" orientation="horizontal" justifyContent="center">
                 <Label text="&#xf044;" class="far m-r-10"></Label>
-                <Label text="Customize"></Label>
+                <Label text="Customize" (tap)="showCustomize()"></Label>
             </FlexboxLayout>
         </GridLayout>
 
         <GridLayout columns="*,*" class="add round-border">
-            <Label col="0" text="Add to Cart" class="title p-l-10" horizontalAlignment="left"></Label>
-            <Label col="1" text="$150" class="p-r-10" horizontalAlignment="right"></Label>
+            <Label col="0" text="Add to Cart" class="title p-l-10" horizontalAlignment="left"
+                verticalAlignment="center"></Label>
+            <Label col="1" text="$150" class="p-r-10" horizontalAlignment="right" verticalAlignment="center"></Label>
         </GridLayout>
     </StackLayout>
 </ScrollView>

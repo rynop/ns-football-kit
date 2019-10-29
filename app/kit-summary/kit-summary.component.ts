@@ -55,6 +55,10 @@ export class KitSummaryComponent implements OnInit, AfterViewInit, OnDestroy {
         this.routerExtensions.back();
     }
 
+    showCustomize() {
+        this.routerExtensions.navigate(['/customizekit'], { clearHistory: false });
+    }
+
     //
     // Carousel
     //
