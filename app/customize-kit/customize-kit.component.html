@@ -10,7 +10,7 @@
             </FlexboxLayout>
         </GridLayout>
 
-        <Label marginTop="20" text="{{(currentClub$ | async).clubName}}" backgroundColor="lightgray"></Label>
+        <Label marginTop="20" text="{{(currentClub$ | async).name}}" backgroundColor="lightgray"></Label>
 
         <!-- <Label text="cur img idx {{currentKitImgSrcIdx}}"></Label> -->
 
@@ -19,12 +19,12 @@
             </StackLayout> -->
 
 
-        <FlexboxLayout justifyContent="space-around" flexDirection="row">
+        <!-- <FlexboxLayout justifyContent="space-around" flexDirection="row">
             <Button text="Home Kit" (tap)="setKit('home')" *ngIf="currentKit.kitType != 'home'"></Button>
             <button text="Away Kit" (tap)="setKit('away')" *ngIf="currentKit.kitType != 'away'"></button>
             <button text="Third Kit" (tap)="setKit('third')"
                 *ngIf="(currentClub$ | async).third && currentKit.kitType != 'third'"></button>
-        </FlexboxLayout>
+        </FlexboxLayout> -->
 
         <FlexboxLayout #kitContainer (swipe)="onSwipe($event)" justifyContent="center" flexWrap="nowrap">
             <ng-container *ngFor="let src of currentKit.imgSrcs; let i = index">

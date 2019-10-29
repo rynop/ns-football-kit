@@ -12,25 +12,70 @@
 
         <!-- <Label [text]="currentCarouselIdx"></Label> -->
 
-        <GridLayout #clubCarouselContent (swipe)="onCarouselSwipe($event)">
-            <GridLayout class="card round-border" [class.hidden]="0!==currentCarouselIdx">
-                <AbsoluteLayout width="305" height="305" backgroundColor="lightgray">
-                    <Image top="0" left="0" width="250" [src]="(currentKit$ | async).imgSrcs[0]"></Image>
-                    <Image top="50" left="90" width="250" [src]="(currentKit$ | async).imgSrcs[2]"></Image>
-                </AbsoluteLayout>
+        <ng-container *ngIf="(currentKit$ | async) as kit">
+            <GridLayout #clubCarouselContent (swipe)="onCarouselSwipe($event)">
+                <GridLayout class="card round-border" [class.hidden]="0!==currentCarouselIdx">
+                    <AbsoluteLayout width="305" height="305" backgroundColor="lightgray">
+                        <Image top="0" left="0" width="250" src="{{kit.imgSrcs[0]}}"></Image>
+                        <Image top="50" left="90" width="250" src="{{kit.imgSrcs[2]}}"></Image>
+                    </AbsoluteLayout>
+                </GridLayout>
+                <GridLayout class="card round-border" [class.hidden]="1!==currentCarouselIdx">
+                    <Image src="{{kit.imgSrcs[2]}}" horizontalAlignment="center"></Image>
+                </GridLayout>
+                <GridLayout class="card round-border" [class.hidden]="2!==currentCarouselIdx">
+                    <Image src="{{kit.imgSrcs[0]}}" horizontalAlignment="center"></Image>
+                </GridLayout>
             </GridLayout>
-            <GridLayout class="card round-border" [class.hidden]="1!==currentCarouselIdx">
-                <Image [src]="(currentKit$ | async).imgSrcs[2]" horizontalAlignment="center"></Image>
-            </GridLayout>
-            <GridLayout class="card round-border" [class.hidden]="2!==currentCarouselIdx">
-                <Image [src]="(currentKit$ | async).imgSrcs[0]" horizontalAlignment="center"></Image>
-            </GridLayout>
-        </GridLayout>
+        </ng-container>
 
         <FlexboxLayout class="carousel-dots" flexDirection="row" justifyContent="center" alignItems="center">
             <GridLayout class="carousel-dot" [class.carousel-dot-active]="0==currentCarouselIdx"></GridLayout>
             <GridLayout class="carousel-dot" [class.carousel-dot-active]="1==currentCarouselIdx"></GridLayout>
             <GridLayout class="carousel-dot" [class.carousel-dot-active]="2==currentCarouselIdx"></GridLayout>
         </FlexboxLayout>
+
+        <ng-container *ngIf="(currentKit$ | async) as kit">
+            <GridLayout columns="*, *" height="170">
+                <StackLayout col="0" class="summary">
+                    <Label class="title" text="Club"></Label>
+                    <Label class="detail" [text]="(currentClub$ | async).name"></Label>
+
+                    <Label class="title" text="Type"></Label>
+                    <Label class="detail" text="{{(currentKit$ | async).kitType | titlecase}}"></Label>
+
+                    <Label class="title" text="Season"></Label>
+                    <Label class="detail" text="{{(currentKit$ | async).year}}"></Label>
+                </StackLayout>
+
+                <StackLayout col="1" class="summary">
+                    <Label class="title" text="Brand"></Label>
+                    <Label class="detail" text="{{(currentKit$ | async).brand}}"></Label>
+
+                    <Label class="title" text="Name and Number"></Label>
+                    <Label class="detail" text="{{(currentKit$ | async).kitType}}"></Label>
+
+                    <Label class="title" text="Size"></Label>
+                    <Label class="detail" text="{{(currentKit$ | async).year}}"></Label>
+                </StackLayout>
+            </GridLayout>
+        </ng-container>
+
+        <GridLayout columns="*,*" class="actions">
+            <FlexboxLayout col="0" flexDirection="row" justifyContent="center"
+                style="border-right-color: #C4C4C4; border-right-width: 1;">
+                <Label text="&#xf004;" class="far m-r-10"></Label>
+                <Label text="Favorite"></Label>
+            </FlexboxLayout>
+            <FlexboxLayout col="1" orientation="horizontal" justifyContent="center">
+                <Label text="&#xf044;" class="far m-r-10"></Label>
+                <Label text="Customize"></Label>
+            </FlexboxLayout>
+        </GridLayout>
+
+        <GridLayout columns="*,*" class="add round-border">
+            <Label col="0" text="Add to Cart" class="title p-l-10" horizontalAlignment="left"></Label>
+            <Label col="1" text="$150" class="p-r-10" horizontalAlignment="right"></Label>
+        </GridLayout>
     </StackLayout>
 </ScrollView>
