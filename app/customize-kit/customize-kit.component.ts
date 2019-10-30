@@ -1,14 +1,15 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from "@angular/core";
 import { trigger, style, transition, animate, group, query, state, stagger } from "@angular/animations";
-import { SwipeGestureEventData, SwipeDirection } from "tns-core-modules/ui/gestures";
-import { screen } from "platform";
 import { Page } from "tns-core-modules/ui/page";
 import { RouterExtensions } from "nativescript-angular";
-import { Observable, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 
-import { KitsService, Kit, Club, KitType } from "../shared/services/kits.service";
+import { KitsService, Kit, Club } from "../shared/services/kits.service";
 
-declare var UIBarStyle: any;
+interface CustomizationButton {
+    label: string;
+    icon: string;
+}
 
 @Component({
     selector: "CustomizeKit",
@@ -132,14 +133,43 @@ declare var UIBarStyle: any;
     ],
 })
 export class CustomizeKitComponent implements OnInit, OnDestroy {
-    private screenWidth;
 
     private subscriptions: Subscription;
-    currentClub$: Observable<Club>;
+    currentClub: Club;
+    currentClubKitIdx: number;
     currentKit: Kit;
     currentKitImgSrcIdx = 0;
 
-    jerseyName = "Pendergast";
+    currentSize: string;
+    currentNumber: string;
+    currentName: string;
+    armBadgeOn: boolean;
+    armBadgeSrc: string;
+    chestBadgeOn: boolean;
+    chestBadgeSrc: string
+
+    sizes: string[];
+    kitFrontShowing = true;
+
+    activeCustomizationButton: CustomizationButton;
+    customizationButtons: CustomizationButton[] = [
+        {
+            label: 'Size',
+            icon: String.fromCharCode(0xf337),
+        },
+        {
+            label: 'Color',
+            icon: String.fromCharCode(0xf53f),
+        },
+        {
+            label: 'Name & Number',
+            icon: String.fromCharCode(0xf031),
+        },
+        {
+            label: 'Badges',
+            icon: String.fromCharCode(0xf3ed),
+        },
+    ];
 
     @ViewChild('kitContainer', { static: false }) kitContainerElement: ElementRef;
 
@@ -152,13 +182,23 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this._page.actionBarHidden = true;
-        this.screenWidth = screen.mainScreen.widthDIPs;
-        this.subscriptions = this.kitsSvc.currentClubKit$.subscribe(clubKit => {
-            this.currentKit = clubKit;
-        });
-        // TODO: more subscriptions? just do this.subscriptions.add() per https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
-        this.currentClub$ = this.kitsSvc.currentClub$;
+        const ks = this.kitsSvc;
+        // We dont set this.current* to the observable becuase we don't want to 
+        // set the new observable value until "Save and continue" is pressed
+        this.subscriptions = ks.currentClub$.subscribe(v => {
+            this.currentClub = v;
+        });
+        this.subscriptions.add(ks.currentClubKit$.subscribe(v => this.currentKit = v));
+        this.subscriptions.add(ks.currentSize$.subscribe(v => this.currentSize = v));
+        this.subscriptions.add(ks.currentNumber$.subscribe(v => this.currentNumber = v));
+        this.subscriptions.add(ks.currentName$.subscribe(v => this.currentName = v));
+        this.subscriptions.add(ks.armBadgeOn$.subscribe(v => this.armBadgeOn = v));
+        this.subscriptions.add(ks.chestBadgeOn$.subscribe(v => this.chestBadgeOn = v));
+
+        this.sizes = ks.sizes;
+        this.chestBadgeSrc = ks.chestBadgeSrc;
+        this.armBadgeSrc = ks.armBadgeSrc;
         // this.preloadImages();
     }
 
@@ -170,44 +210,50 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
         this.routerExtensions.back();
     }
 
+    showCustomizationOptions() {
+        this.activeCustomizationButton = undefined;
+        this.kitFrontShowing = true;
+    }
+    showCustomization(b: CustomizationButton) {
+        this.activeCustomizationButton = b;
+
+        if (this.isNameBtnActive) {
+            this.kitFrontShowing = false;
+        }
+    }
+
+    toggleFrontBackKit() {
+        this.kitFrontShowing = !this.kitFrontShowing;
+    }
+
+    get nameFontClass() {
+        return this.currentKit.font.nameFontClass;
+    }
+    get numberFontClass() {
+        return this.currentKit.font.numberFontClass;
+    }
+    get isSizeBtnActive(): boolean {
+        return this.activeCustomizationButton === this.customizationButtons[0];
+    }
+    get isColorBtnActive(): boolean {
+        return this.activeCustomizationButton === this.customizationButtons[1];
+    }
+    get isNameBtnActive(): boolean {
+        return this.activeCustomizationButton === this.customizationButtons[2];
+    }
+    get isBadgesBtnActive(): boolean {
+        return this.activeCustomizationButton === this.customizationButtons[3];
+    }
+
     // preloadImages() {
     //     this.kits.forEach(kit => {
     //         kit.imgSrcs.forEach(src => (new Image()).imageSource = fromFile(src));
     //     });
     // }
 
-    isCurImgIdx(index) {
-        return this.currentKitImgSrcIdx === index;
-    }
+    setKit(kit: Kit) {
+        this.currentKit = kit;
 
-    prevImg() {
-        this.currentKitImgSrcIdx = (this.currentKitImgSrcIdx - 1 + this.currentKit.imgSrcs.length) % this.currentKit.imgSrcs.length;
-    }
-
-    nextImg() {
-        this.currentKitImgSrcIdx = (this.currentKitImgSrcIdx + 1) % this.currentKit.imgSrcs.length;
-    }
-
-    onSwipe(args: SwipeGestureEventData) {
-        if (args.direction === SwipeDirection.left) {
-            this.prevImg();
-        }
-        else if (args.direction === SwipeDirection.right) {
-            this.nextImg();
-        }
-    }
-
-    isOpen = true;
-
-    toggle() {
-        this.isOpen = !this.isOpen;
-    }
-
-    isThingOpen() {
-        return this.isOpen ? 'open' : 'closed';
-    }
-
-    async setKit(kitType: KitType) {
         // const ele = this.kitContainerElement.nativeElement;
 
         // //reset
@@ -239,5 +285,31 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
         //     this.kitsSvc.setCurrentClubKit(kitType);
         // }
 
+    }
+
+    setSize(v: string) {
+        this.currentSize = v;
+    }
+    setNumber(v: string) {
+        this.currentNumber = v;
+    }
+    setName(v: string) {
+        this.currentName = v;
+    }
+    toggleChestBadge() {
+        this.chestBadgeOn = !this.chestBadgeOn;
+    }
+    toggleArmBadge() {
+        this.armBadgeOn = !this.armBadgeOn;
+    }
+
+    save() {
+        this.kitsSvc.setCurrentClubKit(this.currentKit);
+        this.kitsSvc.setCurrentSize(this.currentSize);
+        this.kitsSvc.setCurrentNumber(this.currentNumber);
+        this.kitsSvc.setCurrentName(this.currentName);
+        this.kitsSvc.setArmBadgeOn(this.armBadgeOn);
+        this.kitsSvc.setChestBadgeOn(this.chestBadgeOn);
+        this.goBack();
     }
 }

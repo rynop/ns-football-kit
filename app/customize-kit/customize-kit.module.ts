@@ -4,6 +4,7 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 import { CustomizeKitRoutingModule } from "./customize-kit-routing.module";
 import { CustomizeKitComponent } from "./customize-kit.component";
+import { SelectButtonComponent } from "./select-button/select-button.component";
 
 @NgModule({
     imports: [
@@ -12,7 +13,8 @@ import { CustomizeKitComponent } from "./customize-kit.component";
         NativeScriptFormsModule
     ],
     declarations: [
-        CustomizeKitComponent
+        CustomizeKitComponent,
+        SelectButtonComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA

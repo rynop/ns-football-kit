@@ -42,7 +42,7 @@
                     <Label class="detail" [text]="(currentClub$ | async).name"></Label>
 
                     <Label class="title" text="Type"></Label>
-                    <Label class="detail" text="{{(currentKit$ | async).kitType | titlecase}}"></Label>
+                    <Label class="detail" text="{{(currentKit$ | async).name | titlecase}}"></Label>
 
                     <Label class="title" text="Season"></Label>
                     <Label class="detail" text="{{(currentKit$ | async).year}}"></Label>
@@ -53,7 +53,7 @@
                     <Label class="detail" text="{{(currentKit$ | async).brand}}"></Label>
 
                     <Label class="title" text="Name and Number"></Label>
-                    <Label class="detail" text="{{(currentKit$ | async).kitType}}"></Label>
+                    <Label class="detail" [text]="(currentNumber$ | async) + ' ' + (currentName$ | async)"></Label>
 
                     <Label class="title" text="Size"></Label>
                     <Label class="detail" text="{{(currentKit$ | async).year}}"></Label>
@@ -67,9 +67,9 @@
                 <Label text="&#xf004;" class="far m-r-10"></Label>
                 <Label text="Favorite"></Label>
             </FlexboxLayout>
-            <FlexboxLayout col="1" orientation="horizontal" justifyContent="center">
+            <FlexboxLayout col="1" orientation="horizontal" justifyContent="center" (tap)="showCustomize()">
                 <Label text="&#xf044;" class="far m-r-10"></Label>
-                <Label text="Customize" (tap)="showCustomize()"></Label>
+                <Label text="Customize"></Label>
             </FlexboxLayout>
         </GridLayout>
 

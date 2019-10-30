@@ -2,14 +2,9 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
 export interface KitFont {
-    className?: string;
+    nameFontClass?: string;
+    numberFontClass?: string;
     color: string;
-}
-
-export enum KitType {
-    Home = "home",
-    Away = "away",
-    Thrid = "third",    // ClubKit thrid is optional
 }
 
 export interface Kit {
@@ -17,9 +12,9 @@ export interface Kit {
     year: string;
     font: KitFont;
     imgSrcs: string[];
-    kitType: KitType;
     background: string;
     brand: string;
+    color: string; // main jersey color
 }
 
 export interface Club {
@@ -40,46 +35,71 @@ export class KitsService {
             logo: '~/images/rm.png',
             background: '#00529F',
             kits: [{
+                color: 'white',
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
-                kitType: KitType.Home,
                 name: 'Home',
                 year: '\'19-\'20',
                 font: {
                     color: '#8C734B',
+                    nameFontClass: 'rm-name-font', numberFontClass: 'rm-number-font',
                 },
                 imgSrcs: ['~/images/rm-home/back.jpg', '~/images/rm-home/angle.jpg', '~/images/rm-home/front.png'],
                 brand: 'Adidas',
             },
             {
+                color: '#171E30',
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
-                kitType: KitType.Away,
                 name: 'Away',
                 year: '\'19-\'20',
                 font: {
-                    color: '#8C734B',
+                    color: '#F8F1C3',
+                    nameFontClass: 'rm-name-font', numberFontClass: 'rm-number-font',
                 },
                 imgSrcs: ['~/images/rm-away/back.jpg', '~/images/rm-away/angle.jpg', '~/images/rm-away/front.jpg'],
                 brand: 'Adidas',
             },
             {
+                color: '#42C6B1',
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
-                kitType: KitType.Thrid,
                 name: 'Third',
                 year: '\'19-\'20',
                 font: {
                     color: '#21323A',
+                    nameFontClass: 'rm-name-font', numberFontClass: 'rm-number-font',
                 },
                 imgSrcs: ['~/images/rm-third/back.jpg', '~/images/rm-third/angle.jpg', '~/images/rm-third/front.jpg'],
                 brand: 'Adidas',
-            }],
+            }, {
+                color: '#D68B13',
+                background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
+                name: 'Home GK',
+                year: '\'19-\'20',
+                font: {
+                    color: '#372E29',
+                    nameFontClass: 'rm-name-font', numberFontClass: 'rm-number-font',
+                },
+                imgSrcs: ['~/images/rm-home-gk/back.jpg', '~/images/rm-home-gk/angle.jpg', '~/images/rm-home-gk/front.jpg'],
+                brand: 'Adidas',
+            }, {
+                color: '#324A4E',
+                background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
+                name: 'Away GK',
+                year: '\'19-\'20',
+                font: {
+                    color: '#FBF2AF',
+                    nameFontClass: 'rm-name-font', numberFontClass: 'rm-number-font',
+                },
+                imgSrcs: ['~/images/rm-away-gk/back.jpg', '~/images/rm-away-gk/angle.jpg', '~/images/rm-away-gk/front.jpg'],
+                brand: 'Adidas',
+            },],
         },
         {
             name: 'Chelsea',
             logo: '~/images/chelsea.png',
             background: '#4377a6',
             kits: [{
+                color: '#42C6B1',
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
-                kitType: KitType.Home,
                 name: 'Stadium',
                 year: '\'19-\'20',
                 font: {
@@ -89,8 +109,8 @@ export class KitsService {
                 brand: 'Nike',
             },
             {
+                color: '#42C6B1',
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
-                kitType: KitType.Away,
                 name: 'Vapor Match',
                 year: '\'19-\'20',
                 font: {
@@ -100,8 +120,8 @@ export class KitsService {
                 brand: 'Nike',
             },
             {
+                color: '#42C6B1',
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
-                kitType: KitType.Thrid,
                 name: 'Stadium',
                 year: '\'19-\'20',
                 font: {
@@ -116,8 +136,8 @@ export class KitsService {
             logo: '~/images/manchester.png',
             background: '#4377a6',
             kits: [{
+                color: '#42C6B1',
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
-                kitType: KitType.Home,
                 name: 'Home',
                 year: '\'19-\'20',
                 font: {
@@ -127,8 +147,8 @@ export class KitsService {
                 brand: 'Adidas',
             },
             {
+                color: '#42C6B1',
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
-                kitType: KitType.Away,
                 name: 'Cup',
                 year: '\'19-\'20',
                 font: {
@@ -138,8 +158,8 @@ export class KitsService {
                 brand: 'Adidas',
             },
             {
+                color: '#42C6B1',
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
-                kitType: KitType.Thrid,
                 name: 'Third',
                 year: '\'19-\'20',
                 font: {
@@ -151,15 +171,42 @@ export class KitsService {
         },
     ];
 
-    getClubs(): Club[] {
-        return this.clubs;
-    }
-
     private currentClubIdx = 0;
     public currentClub$ = new BehaviorSubject<Club>(this.clubs[this.currentClubIdx]);
 
     private currentClubKitIdx: number = 0;
     public currentClubKit$ = new BehaviorSubject<Kit>(this.clubs[this.currentClubIdx].kits[this.currentClubKitIdx]);
+
+    public sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+    public currentSize$ = new BehaviorSubject<string>(this.sizes[1]);
+    setCurrentSize(v: string) {
+        this.currentSize$.next(v);
+    }
+
+    public currentNumber$ = new BehaviorSubject<string>('7');
+    setCurrentNumber(v: string) {
+        this.currentNumber$.next(v);
+    }
+    public currentName$ = new BehaviorSubject<string>('NAME');
+    setCurrentName(v: string) {
+        this.currentName$.next(v);
+    }
+
+    public armBadgeOn$ = new BehaviorSubject<boolean>(true);
+    setArmBadgeOn(o: boolean) {
+        this.armBadgeOn$.next(o);
+    }
+    public chestBadgeOn$ = new BehaviorSubject<boolean>(true);
+    setChestBadgeOn(o: boolean) {
+        this.chestBadgeOn$.next(o);
+    }
+
+    public armBadgeSrc = '~/images/laliga-badge.png';
+    public chestBadgeSrc = '~/images/fifa-badge.png';
+
+    getClubs(): Club[] {
+        return this.clubs;
+    }
 
     getClub(idx: number): Club {
         return this.clubs[idx];
@@ -176,10 +223,14 @@ export class KitsService {
     setCurrentClub(idx: number) {
         this.currentClubIdx = idx;
         this.currentClub$.next(this.getClub(idx));
-        this.setCurrentClubKit(0);
+        this.setCurrentClubKitByIdx(0);
     }
 
-    setCurrentClubKit(idx: number) {
+    setCurrentClubKit(kit: Kit) {
+        this.setCurrentClubKitByIdx(this.getCurrentClub().kits.indexOf(kit));
+    }
+
+    setCurrentClubKitByIdx(idx: number) {
         const kit = this.getCurrentClub().kits[idx];
         this.currentClubKitIdx = idx;
         this.currentClubKit$.next(kit);

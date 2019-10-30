@@ -5,37 +5,71 @@
                 <Label text="&#xf053;" class="back fas" horizontalAlignment="left" verticalAlignment="center"
                     (tap)="goBack()"></Label>
                 <Label text="Save and Continue" horizontalAlignment="right" verticalAlignment="center"
-                    style="font-size: 14; font-weight: 500;" (tap)="goBack()"></Label>
+                    style="font-size: 14; font-weight: 500;" (tap)="save()"></Label>
             </GridLayout>
 
-            <Label marginTop="20" text="{{(currentClub$ | async).name}}" backgroundColor="lightgray"></Label>
-
-            <!-- <Label text="cur img idx {{currentKitImgSrcIdx}}"></Label> -->
-
-            <!-- <StackLayout [@openClose]="isThingOpen()" class="open-close-container">
-                            <Label text="The box is now {{ isOpen ? 'Open' : 'Closed' }}!" (tap)="toggle()"></Label>
-                        </StackLayout> -->
-
-
-            <!-- <FlexboxLayout justifyContent="space-around" flexDirection="row">
-                        <Button text="Home Kit" (tap)="setKit('home')" *ngIf="currentKit.kitType != 'home'"></Button>
-                        <button text="Away Kit" (tap)="setKit('away')" *ngIf="currentKit.kitType != 'away'"></button>
-                        <button text="Third Kit" (tap)="setKit('third')"
-                            *ngIf="(currentClub$ | async).third && currentKit.kitType != 'third'"></button>
-                    </FlexboxLayout> -->
-
-            <FlexboxLayout #kitContainer (swipe)="onSwipe($event)" justifyContent="center" flexWrap="nowrap">
-                <ng-container *ngFor="let src of currentKit.imgSrcs; let i = index">
-                    <AbsoluteLayout width="400" height="400" *ngIf="isCurImgIdx(i)">
-                        <Label width="400" textAlignment="center" [text]="jerseyName" class="customName" *ngIf="0==i"
-                            [color]="currentKit.font.color"></Label>
-                        <Image width="400" height="400" class="kit" [src]="src">
+            <GridLayout columns="50,*" class="customize-chooser-container" *ngIf="!activeCustomizationButton">
+                <FlexboxLayout col="0" flexDirection="column" justifyContent="space-between" alignItems="center">
+                    <GridLayout *ngFor="let action of customizationButtons">
+                        <FlexboxLayout flexDirection="column" justifyContent="center" alignItems="center"
+                            class="main-action" (tap)="showCustomization(action)">
+                            <Label [text]="action.icon" class="fas icon"></Label>
+                            <Label [text]="action.label" class="label" textWrap="true" textAlignment="center"></Label>
+                        </FlexboxLayout>
+                    </GridLayout>
+                </FlexboxLayout>
+                <FlexboxLayout col="1" #kitContainer (swipe)="toggleFrontBackKit()" (tap)="toggleFrontBackKit()"
+                    justifyContent="center">
+                    <AbsoluteLayout width="400" height="400">
+                        <Label width="400" textAlignment="center" [text]="currentName" class="customName"
+                            *ngIf="!kitFrontShowing" [color]="currentKit.font.color" [ngClass]="nameFontClass"></Label>
+                        <Image width="400" height="400" class="kit"
+                            src="{{kitFrontShowing?currentKit.imgSrcs[2]:currentKit.imgSrcs[0]}}">
                         </Image>
                     </AbsoluteLayout>
-                </ng-container>
-            </FlexboxLayout>
+                </FlexboxLayout>
+            </GridLayout>
 
-            <Label text="<< Swipe for other views of kit >>" backgroundColor="lightgray"></Label>
+            <GridLayout rows="400,85,*" class="customize-container" *ngIf="activeCustomizationButton">
+                <AbsoluteLayout row="0" width="400" height="400">
+                    <Label width="400" textAlignment="center" text="{{currentName | uppercase}}" class="customName"
+                        *ngIf="!kitFrontShowing" [color]="currentKit.font.color" [ngClass]="nameFontClass"></Label>
+                    <Image width="400" height="400" class="kit"
+                        src="{{kitFrontShowing?currentKit.imgSrcs[2]:currentKit.imgSrcs[0]}}">
+                    </Image>
+                </AbsoluteLayout>
+                <StackLayout row="1" class="active-icon">
+                    <FlexboxLayout width="50" horizontalAlignment="left" flexDirection="column" justifyContent="center"
+                        alignItems="center" class="main-action" (tap)="showCustomizationOptions()">
+                        <Label text="&#xf077;" class="up fas" (tap)="showCustomizationOptions()"></Label>
+                        <Label [text]="activeCustomizationButton.icon" class="fas icon"></Label>
+                        <Label [text]="activeCustomizationButton.label" class="label" textWrap="true"
+                            textAlignment="center"></Label>
+                    </FlexboxLayout>
+                </StackLayout>
+                <StackLayout orientation="horizontal" row="2" class="sub-action">
+                    <ng-container *ngIf="isSizeBtnActive">
+                        <GridLayout columns="auto" class="box" *ngFor="let size of sizes" (tap)="setSize(size)">
+                            <select-button text="{{size | uppercase}}" [selected]="currentSize === size">
+                            </select-button>
+                        </GridLayout>
+                    </ng-container>
+                    <ng-container *ngIf="isColorBtnActive">
+                        <GridLayout columns="auto" class="box" *ngFor="let kit of currentClub.kits" (tap)="setKit(kit)">
+                            <select-button [bkg]="kit.color" [selected]="currentKit === kit"></select-button>
+                        </GridLayout>
+                    </ng-container>
+                    <!-- TODO: start here, name & number -->
+                    <ng-container *ngIf="isBadgesBtnActive">
+                        <GridLayout columns="auto" class="box" (tap)="toggleChestBadge()">
+                            <select-button [imgSrc]="chestBadgeSrc" [selected]="chestBadgeOn"></select-button>
+                        </GridLayout>
+                        <GridLayout columns="auto" class="box" (tap)="toggleArmBadge()">
+                            <select-button [imgSrc]="armBadgeSrc" [selected]="armBadgeOn"></select-button>
+                        </GridLayout>
+                    </ng-container>
+                </StackLayout>
+            </GridLayout>
         </StackLayout>
     </ScrollView>
 
