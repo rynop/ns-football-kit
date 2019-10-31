@@ -26,6 +26,7 @@ export class KitSummaryComponent implements OnInit, AfterViewInit, OnDestroy {
     currentKit$: Observable<Kit>;
     currentName$: Observable<string>;
     currentNumber$: Observable<string>;
+    currentSize$: Observable<string>;
     numImagesPerKit = 3;    //front,back,front over back
     currentCarouselIdx: number = 0;
     carouselAnimations: Animation;
@@ -46,6 +47,7 @@ export class KitSummaryComponent implements OnInit, AfterViewInit, OnDestroy {
         this.currentKit$ = this.kitsSvc.currentClubKit$;
         this.currentName$ = this.kitsSvc.currentName$;
         this.currentNumber$ = this.kitsSvc.currentNumber$;
+        this.currentSize$ = this.kitsSvc.currentSize$;
     }
 
     ngAfterViewInit() {

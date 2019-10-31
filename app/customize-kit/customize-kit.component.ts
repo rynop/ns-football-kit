@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from "@angular/core";
 import { trigger, style, transition, animate, group, query, state, stagger } from "@angular/animations";
 import { Page } from "tns-core-modules/ui/page";
+import { TextField } from "tns-core-modules/ui/text-field";
+import { alert } from "tns-core-modules/ui/dialogs";
 import { RouterExtensions } from "nativescript-angular";
 import { Subscription } from "rxjs";
 
@@ -142,7 +144,9 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
 
     currentSize: string;
     currentNumber: string;
+    numberValid = true;
     currentName: string;
+    nameValid = true;
     armBadgeOn: boolean;
     armBadgeSrc: string;
     chestBadgeOn: boolean;
@@ -199,6 +203,8 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
         this.sizes = ks.sizes;
         this.chestBadgeSrc = ks.chestBadgeSrc;
         this.armBadgeSrc = ks.armBadgeSrc;
+        this.numberValid = true;
+        this.nameValid = true;
         // this.preloadImages();
     }
 
@@ -291,11 +297,42 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
         this.currentSize = v;
     }
     setNumber(v: string) {
-        this.currentNumber = v;
+        if (this.isNumberValid(v)) {
+            this.currentNumber = v;
+        }
     }
+    onNumberChange(event: any) {
+        const tf = <TextField>event.object;
+        this.setNumber(tf.text);
+    }
+    isNumberValid(v: string): boolean {
+        if (!!v) {
+            const num = +v;
+            this.numberValid = !(!Number.isInteger(num) || v.length > 2);
+        } else {    //empty is OK
+            this.numberValid = true;
+        }
+        return this.numberValid;
+    }
+
     setName(v: string) {
-        this.currentName = v;
+        if (this.isNameValid(v)) {
+            this.currentName = v;
+        }
     }
+    onNameChange(event: any) {
+        const tf = <TextField>event.object;
+        this.setName(tf.text);
+    }
+    isNameValid(v: string): boolean {
+        if (!!v) {
+            this.nameValid = (this.currentName.length < 11);
+        } else {    //empty is OK
+            this.nameValid = true;
+        }
+        return this.nameValid;
+    }
+
     toggleChestBadge() {
         this.chestBadgeOn = !this.chestBadgeOn;
     }
@@ -304,6 +341,15 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
     }
 
     save() {
+        if (!this.nameValid || !this.numberValid) {
+            alert({
+                title: 'Oops!',
+                message: 'Please fix input error(s)',
+                okButtonText: 'OK'
+            });
+            return;
+        }
+
         this.kitsSvc.setCurrentClubKit(this.currentKit);
         this.kitsSvc.setCurrentSize(this.currentSize);
         this.kitsSvc.setCurrentNumber(this.currentNumber);

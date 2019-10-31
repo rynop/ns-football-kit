@@ -39,7 +39,7 @@
                     </Image>
                 </AbsoluteLayout>
                 <StackLayout row="1" class="active-icon">
-                    <FlexboxLayout width="50" horizontalAlignment="left" flexDirection="column" justifyContent="center"
+                    <FlexboxLayout width="100" horizontalAlignment="left" flexDirection="column" justifyContent="center"
                         alignItems="center" class="main-action" (tap)="showCustomizationOptions()">
                         <Label text="&#xf077;" class="up fas" (tap)="showCustomizationOptions()"></Label>
                         <Label [text]="activeCustomizationButton.icon" class="fas icon"></Label>
@@ -59,7 +59,43 @@
                             <select-button [bkg]="kit.color" [selected]="currentKit === kit"></select-button>
                         </GridLayout>
                     </ng-container>
-                    <!-- TODO: start here, name & number -->
+                    <GridLayout *ngIf="isNameBtnActive" columns="130,*" rows="auto,auto" class="name-number-container">
+                        <StackLayout row="0" col="0" orientation="horizontal" class="no-option" (tap)="setNumber('')"
+                            style="margin-right: 20;">
+                            <GridLayout class="no-option-dot" [class.no-option-dot-active]="''==currentNumber">
+                            </GridLayout>
+                            <Label text="No Number"></Label>
+                        </StackLayout>
+                        <StackLayout row="0" col="1" orientation="horizontal" class="no-option" (tap)="setName('')">
+                            <GridLayout class="no-option-dot" [class.no-option-dot-active]="''==currentName">
+                            </GridLayout>
+                            <Label text="No Name"></Label>
+                        </StackLayout>
+                        <GridLayout row="1" col="0" class="text-input" style="margin-right: 20;"
+                            [class.invalid-input]="!numberValid" [class.valid-input]="!!currentNumber && numberValid">
+                            <Label text="Number (0-99)" class="hint"></Label>
+                            <TextField [text]="currentNumber" (textChange)="onNumberChange($event)" secure="false"
+                                keyboardType="number" returnKeyType="done" autocorrect="false" maxLength="2">
+                            </TextField>
+                            <GridLayout *ngIf="!!currentNumber || !numberValid" class="validation-circle"
+                                verticalAlignment="bottom" horizontalAlignment="right">
+                                <Label text="{{!numberValid?'&#xf12a;':'&#xf00c;'}}" class="fas"
+                                    textAlignment="center"></Label>
+                            </GridLayout>
+                        </GridLayout>
+                        <GridLayout row="1" col="1" class="text-input" [class.invalid-input]="!nameValid"
+                            [class.valid-input]="!!currentName && nameValid">
+                            <Label text="Name (10 Characters Max)" class="hint"></Label>
+                            <TextField [text]="currentName" (textChange)="onNameChange($event)" secure="false"
+                                returnKeyType="done" autocorrect="false" maxLength="10">
+                            </TextField>
+                            <GridLayout *ngIf="!!currentName || !nameValid" class="validation-circle"
+                                verticalAlignment="bottom" horizontalAlignment="right">
+                                <Label text="{{!nameValid?'&#xf12a;':'&#xf00c;'}}" class="fas"
+                                    textAlignment="center"></Label>
+                            </GridLayout>
+                        </GridLayout>
+                    </GridLayout>
                     <ng-container *ngIf="isBadgesBtnActive">
                         <GridLayout columns="auto" class="box" (tap)="toggleChestBadge()">
                             <select-button [imgSrc]="chestBadgeSrc" [selected]="chestBadgeOn"></select-button>
