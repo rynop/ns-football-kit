@@ -10,26 +10,34 @@
             </FlexboxLayout>
         </GridLayout>
 
-        <!-- <Label [text]="currentCarouselIdx"></Label> -->
-
         <ng-container *ngIf="(currentKit$ | async) as kit">
             <GridLayout #clubCarouselContent (swipe)="onCarouselSwipe($event)">
-                <GridLayout class="card round-border" [class.hidden]="0!==currentCarouselIdx">
-                    <AbsoluteLayout width="305" height="305" backgroundColor="lightgray">
-                        <Image top="0" left="0" width="250" src="{{kit.imgSrcs[0]}}"></Image>
-                        <Image top="50" left="90" width="250" src="{{kit.imgSrcs[2]}}"></Image>
-                    </AbsoluteLayout>
+                <GridLayout class="card round-border back-and-front" [class.hidden]="0!==currentCarouselIdx">
+                    <GridLayout width="325" height="305">
+                        <GridLayout width="250" height="250" horizontalAlignment="left" verticalAlignment="top">
+                            <Image width="250" height="250" src="{{kit.imgSrcs[0]}}"
+                                style="z-index: 98;margin-left: -60;" horizontalAlignment="center"
+                                verticalAlignment="top"></Image>
+                            <Label text="{{(currentName$ | async) | uppercase}}" class="customName"
+                                [color]="(currentKit$ | async).font.color"
+                                [ngClass]="(currentKit$ | async).font.nameFontClass"></Label>
+                            <Label text="{{(currentNumber$ | async)}}" class="customNumber"
+                                [color]="(currentKit$ | async).font.color"
+                                [ngClass]="(currentKit$ | async).font.numberFontClass"></Label>
+                        </GridLayout>
+
+                        <Image width="250" src="{{kit.imgSrcs[2]}}" horizontalAlignment="right"
+                            verticalAlignment="bottom" style="z-index: 100; margin-right: -15;"></Image>
+                    </GridLayout>
                 </GridLayout>
                 <GridLayout class="card round-border" [class.hidden]="1!==currentCarouselIdx">
                     <Image src="{{kit.imgSrcs[2]}}" horizontalAlignment="center"></Image>
                 </GridLayout>
-                <GridLayout class="card round-border" [class.hidden]="2!==currentCarouselIdx">
-                    <Label textAlignment="center" horizontalAlignment="center" verticalAlignment="top"
-                        text="{{(currentName$ | async) | uppercase}}" class="customName"
+                <GridLayout class="card round-border full-back" [class.hidden]="2!==currentCarouselIdx">
+                    <Label text="{{(currentName$ | async) | uppercase}}" class="customName"
                         [color]="(currentKit$ | async).font.color"
                         [ngClass]="(currentKit$ | async).font.nameFontClass"></Label>
-                    <Label textAlignment="center" horizontalAlignment="center" verticalAlignment="top"
-                        text="{{(currentNumber$ | async)}}" class="customNumber"
+                    <Label text="{{(currentNumber$ | async)}}" class="customNumber"
                         [color]="(currentKit$ | async).font.color"
                         [ngClass]="(currentKit$ | async).font.numberFontClass"></Label>
 

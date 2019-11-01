@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from "@angular/core";
 import { Page } from "tns-core-modules/ui/page";
-import { Observable, Subscription } from "rxjs";
+import { Observable } from "rxjs";
 import { Animation, AnimationDefinition } from "tns-core-modules/ui/animation";
 import { screen } from "platform";
 import { SwipeGestureEventData, SwipeDirection } from "tns-core-modules/ui/gestures";
-import { AnimationCurve } from "tns-core-modules/ui/enums";
 import { RouterExtensions } from "nativescript-angular";
 
 import { KitsService, Club, Kit } from "../shared/services/kits.service";
@@ -21,7 +20,6 @@ const CAROUSEL_SLIDE_DURATION = 250;
 })
 export class KitSummaryComponent implements OnInit, AfterViewInit, OnDestroy {
     private screenWidth;
-    private subscriptions: Subscription;
     currentClub$: Observable<Club>;
     currentKit$: Observable<Kit>;
     currentName$: Observable<string>;
@@ -58,7 +56,7 @@ export class KitSummaryComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     goBack() {
-        this.routerExtensions.navigate(['/home'], { clearHistory: true });
+        this.routerExtensions.navigate(['/home'], { clearHistory: true, animated: true, transition: { name: 'slideBottom' } });
     }
 
     showCustomize() {

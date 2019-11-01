@@ -3,10 +3,15 @@ import { trigger, style, transition, animate, group, query, state, stagger } fro
 import { Page } from "tns-core-modules/ui/page";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { alert } from "tns-core-modules/ui/dialogs";
+import { SwipeGestureEventData, SwipeDirection } from "tns-core-modules/ui/gestures/gestures";
+import { Animation, AnimationDefinition } from "tns-core-modules/ui/animation";
 import { RouterExtensions } from "nativescript-angular";
+import { screen } from "platform";
 import { Subscription } from "rxjs";
 
 import { KitsService, Kit, Club } from "../shared/services/kits.service";
+
+const CAROUSEL_SLIDE_DURATION = 250;
 
 interface CustomizationButton {
     label: string;
@@ -135,6 +140,7 @@ interface CustomizationButton {
     ],
 })
 export class CustomizeKitComponent implements OnInit, OnDestroy {
+    private screenWidth;
 
     private subscriptions: Subscription;
     currentClub: Club;
@@ -175,6 +181,10 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
         },
     ];
 
+    currentCarouselIdx: number = 0;
+    carouselAnimations: Animation;
+    numKitSlides = 2;
+
     @ViewChild('kitContainer', { static: false }) kitContainerElement: ElementRef;
 
     constructor(
@@ -182,6 +192,7 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
         private routerExtensions: RouterExtensions,
         private kitsSvc: KitsService,
     ) {
+        this.screenWidth = screen.mainScreen.widthDIPs;
     }
 
     ngOnInit(): void {
@@ -220,15 +231,12 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
     }
     showCustomization(b: CustomizationButton) {
         this.activeCustomizationButton = b;
-
-        if (this.isNameBtnActive) {
-            this.kitFrontShowing = false;
-        }
+        this.kitFrontShowing = !(this.isNameBtnActive);
     }
 
-    toggleFrontBackKit() {
-        this.kitFrontShowing = !this.kitFrontShowing;
-    }
+    // toggleFrontBackKit() {
+    //     this.kitFrontShowing = !this.kitFrontShowing;
+    // }
 
     get nameFontClass() {
         return this.currentKit.font.nameFontClass;
@@ -257,38 +265,6 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
 
     setKit(kit: Kit) {
         this.currentKit = kit;
-
-        // const ele = this.kitContainerElement.nativeElement;
-
-        // //reset
-        // ele.translateX = 0;
-        // ele.opacity = 1;
-
-        // try {
-        //     // WTF does await work in local `tns preview` but not from the preview web app!?!?!
-        //     await ele.animate({
-        //         opacity: 0,
-        //         translate: { x: -this.screenWidth, y: 0 },
-        //         duration: 200,
-        //     })
-        //         .then(() => {
-        //             //Replace the new kit
-        //             this.kitsSvc.setCurrentClubKit(kitType);
-        //         })
-        //         .then(() => ele.animate({
-        //             delay: 200,
-        //             opacity: 1,
-        //             translate: { x: 0, y: 0 },
-        //             duration: 500,
-        //             curve: AnimationCurve.easeOut,
-        //         }));
-        // } catch (error) {
-        //     if (-1 === error.message.indexOf('Animation cancelled')) {
-        //         console.error(`Problem animating kit`, error);
-        //     }
-        //     this.kitsSvc.setCurrentClubKit(kitType);
-        // }
-
     }
 
     setSize(v: string) {
@@ -355,5 +331,62 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
         this.kitsSvc.setArmBadgeOn(this.armBadgeOn);
         this.kitsSvc.setChestBadgeOn(this.chestBadgeOn);
         this.goBack();
+    }
+
+    //
+    // Carousel
+    //
+    onCarouselSwipe(args: SwipeGestureEventData) {
+        this.moveCarousel(args.direction);
+    }
+
+    moveCarousel(direction: SwipeDirection) {
+        const prevIdx = this.currentCarouselIdx;
+        if (SwipeDirection.right === direction) {
+            this.currentCarouselIdx = (this.currentCarouselIdx - 1 + this.numKitSlides) % this.numKitSlides;
+        } else if (SwipeDirection.left === direction) {
+            this.currentCarouselIdx = (this.currentCarouselIdx + 1) % this.numKitSlides;
+        } else {
+            return;
+        }
+
+        console.log('prev', prevIdx, 'cur idx', this.currentCarouselIdx);
+        const curEle = this.kitContainerElement.nativeElement.getChildAt(prevIdx);
+        const nextEle = this.kitContainerElement.nativeElement.getChildAt(this.currentCarouselIdx);
+        console.log('cur:', curEle, "next", nextEle);
+        this.animateCarousel(curEle, nextEle, direction);
+    }
+
+    async animateCarousel(currSlide, nextSlide, direction) {
+        // TODO: check this.carouselAnimations.isPlaying
+
+        // Move the slide that will come into view, out of view first
+        nextSlide.translateX = (direction == 2 ? this.screenWidth : -this.screenWidth);
+        nextSlide.opacity = 1;
+        const definitions: AnimationDefinition[] = [];
+
+        // Current card that will move out of view
+        definitions.push({
+            target: currSlide,
+            translate: { x: (direction == 2 ? -this.screenWidth : this.screenWidth), y: 0 },
+            duration: CAROUSEL_SLIDE_DURATION
+        });
+
+        // Next card that will move into view
+        definitions.push({
+            target: nextSlide,
+            translate: { x: 0, y: 0 },
+            duration: CAROUSEL_SLIDE_DURATION
+        });
+
+        this.carouselAnimations = new Animation(definitions);
+
+        try {
+            await this.carouselAnimations.play();
+        } catch (error) {
+            if (-1 === error.message.indexOf('Animation cancelled')) {
+                console.error(`Provlem animating carousel`, error);
+            }
+        }
     }
 }

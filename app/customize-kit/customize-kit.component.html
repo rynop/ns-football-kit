@@ -9,6 +9,7 @@
             </GridLayout>
 
             <GridLayout columns="50,*" class="customize-chooser-container" *ngIf="!activeCustomizationButton">
+                <!-- Left NAV -->
                 <FlexboxLayout col="0" flexDirection="column" justifyContent="space-between" alignItems="center">
                     <GridLayout *ngFor="let action of customizationButtons">
                         <FlexboxLayout flexDirection="column" justifyContent="center" alignItems="center"
@@ -18,31 +19,34 @@
                         </FlexboxLayout>
                     </GridLayout>
                 </FlexboxLayout>
-                <FlexboxLayout col="1" #kitContainer (swipe)="toggleFrontBackKit()" (tap)="toggleFrontBackKit()"
-                    justifyContent="center">
-                    <AbsoluteLayout width="400" height="400">
-                        <Label width="400" textAlignment="center" [text]="currentName" class="customName"
-                            *ngIf="!kitFrontShowing" [color]="currentKit.font.color" [ngClass]="nameFontClass"></Label>
-                        <Image width="400" height="400" class="kit"
-                            src="{{kitFrontShowing?currentKit.imgSrcs[2]:currentKit.imgSrcs[0]}}">
-                        </Image>
-                    </AbsoluteLayout>
-                </FlexboxLayout>
+                <!-- Carousel -->
+                <GridLayout col="1" #kitContainer (swipe)="onCarouselSwipe($event)" justifyContent="center">
+                    <GridLayout class="carousel-card" [class.hidden]="0!==currentCarouselIdx">
+                        <Label text="{{currentName | uppercase}}" class="customName" [color]="currentKit.font.color"
+                            [ngClass]="nameFontClass"></Label>
+                        <Label text="{{currentNumber}}" class="customNumber" [color]="currentKit.font.color"
+                            [ngClass]="numberFontClass"></Label>
+                        <Image width="400" height="400" class="kit" [src]="currentKit.imgSrcs[0]"></Image>
+                    </GridLayout>
+                    <GridLayout class="carousel-card" [class.hidden]="1!==currentCarouselIdx">
+                        <Image width="400" height="400" class="kit" [src]="currentKit.imgSrcs[2]"></Image>
+                    </GridLayout>
+                </GridLayout>
             </GridLayout>
 
             <GridLayout rows="400,85,*" class="customize-container" *ngIf="activeCustomizationButton">
-                <AbsoluteLayout row="0" width="400" height="400">
+                <GridLayout row="0" width="400" height="400">
                     <ng-container *ngIf="!kitFrontShowing">
-                        <Label width="400" textAlignment="center" text="{{currentName | uppercase}}" class="customName"
-                            [color]="currentKit.font.color" [ngClass]="nameFontClass"></Label>
-                        <Label width="400" textAlignment="center" text="{{currentNumber}}" class="customNumber"
-                            [color]="currentKit.font.color" [ngClass]="numberFontClass"></Label>
+                        <Label text="{{currentName | uppercase}}" class="customName" [color]="currentKit.font.color"
+                            [ngClass]="nameFontClass"></Label>
+                        <Label text="{{currentNumber}}" class="customNumber" [color]="currentKit.font.color"
+                            [ngClass]="numberFontClass"></Label>
                     </ng-container>
 
                     <Image width="400" height="400" class="kit"
                         src="{{kitFrontShowing?currentKit.imgSrcs[2]:currentKit.imgSrcs[0]}}">
                     </Image>
-                </AbsoluteLayout>
+                </GridLayout>
                 <StackLayout row="1" class="active-icon">
                     <FlexboxLayout width="100" horizontalAlignment="left" flexDirection="column" justifyContent="center"
                         alignItems="center" class="main-action" (tap)="showCustomizationOptions()">
@@ -85,20 +89,19 @@
                             <TextField [text]="currentNumber" (textChange)="onNumberChange($event)" secure="false"
                                 keyboardType="number" returnKeyType="done" autocorrect="false" maxLength="2">
                             </TextField>
-                            <GridLayout *ngIf="!!currentNumber || !numberValid" class="validation-circle"
-                                verticalAlignment="bottom" horizontalAlignment="right">
+                            <GridLayout *ngIf="!!currentNumber || !numberValid" class="validation-circle">
                                 <Label text="{{!numberValid?'&#xf12a;':'&#xf00c;'}}" class="fas"
                                     textAlignment="center"></Label>
                             </GridLayout>
                         </GridLayout>
                         <GridLayout row="1" col="1" class="text-input" [class.invalid-input]="!nameValid"
-                            [class.valid-input]="!!currentName && nameValid">
+                            [class.valid-input]="!!currentName && nameValid" width="200">
                             <Label text="Name (10 Characters Max)" class="hint"></Label>
                             <TextField [text]="currentName" (textChange)="onNameChange($event)" secure="false"
                                 returnKeyType="done" autocorrect="false" maxLength="10">
                             </TextField>
                             <GridLayout *ngIf="!!currentName || !nameValid" class="validation-circle"
-                                verticalAlignment="bottom" horizontalAlignment="right">
+                                verticalAlignment="bottom">
                                 <Label text="{{!nameValid?'&#xf12a;':'&#xf00c;'}}" class="fas"
                                     textAlignment="center"></Label>
                             </GridLayout>
