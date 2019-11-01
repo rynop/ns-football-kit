@@ -24,7 +24,17 @@
                     <Image src="{{kit.imgSrcs[2]}}" horizontalAlignment="center"></Image>
                 </GridLayout>
                 <GridLayout class="card round-border" [class.hidden]="2!==currentCarouselIdx">
-                    <Image src="{{kit.imgSrcs[0]}}" horizontalAlignment="center"></Image>
+                    <Label textAlignment="center" horizontalAlignment="center" verticalAlignment="top"
+                        text="{{(currentName$ | async) | uppercase}}" class="customName"
+                        [color]="(currentKit$ | async).font.color"
+                        [ngClass]="(currentKit$ | async).font.nameFontClass"></Label>
+                    <Label textAlignment="center" horizontalAlignment="center" verticalAlignment="top"
+                        text="{{(currentNumber$ | async)}}" class="customNumber"
+                        [color]="(currentKit$ | async).font.color"
+                        [ngClass]="(currentKit$ | async).font.numberFontClass"></Label>
+
+                    <Image width="250" height="250" src="{{kit.imgSrcs[0]}}" horizontalAlignment="center">
+                    </Image>
                 </GridLayout>
             </GridLayout>
         </ng-container>

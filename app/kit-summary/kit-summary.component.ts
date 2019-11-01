@@ -58,11 +58,11 @@ export class KitSummaryComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     goBack() {
-        this.routerExtensions.back();
+        this.routerExtensions.navigate(['/home'], { clearHistory: true });
     }
 
     showCustomize() {
-        this.routerExtensions.navigate(['/customizekit'], { clearHistory: false });
+        this.routerExtensions.navigate(['/customizekit'], { clearHistory: true });
     }
 
     //

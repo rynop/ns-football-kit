@@ -190,9 +190,7 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
         const ks = this.kitsSvc;
         // We dont set this.current* to the observable becuase we don't want to 
         // set the new observable value until "Save and continue" is pressed
-        this.subscriptions = ks.currentClub$.subscribe(v => {
-            this.currentClub = v;
-        });
+        this.subscriptions = ks.currentClub$.subscribe(v => this.currentClub = v);
         this.subscriptions.add(ks.currentClubKit$.subscribe(v => this.currentKit = v));
         this.subscriptions.add(ks.currentSize$.subscribe(v => this.currentSize = v));
         this.subscriptions.add(ks.currentNumber$.subscribe(v => this.currentNumber = v));
@@ -213,7 +211,7 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
     }
 
     goBack() {
-        this.routerExtensions.back();
+        this.routerExtensions.navigate(['/kitsummary'], { clearHistory: true });
     }
 
     showCustomizationOptions() {

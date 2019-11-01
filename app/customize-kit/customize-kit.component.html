@@ -32,8 +32,13 @@
 
             <GridLayout rows="400,85,*" class="customize-container" *ngIf="activeCustomizationButton">
                 <AbsoluteLayout row="0" width="400" height="400">
-                    <Label width="400" textAlignment="center" text="{{currentName | uppercase}}" class="customName"
-                        *ngIf="!kitFrontShowing" [color]="currentKit.font.color" [ngClass]="nameFontClass"></Label>
+                    <ng-container *ngIf="!kitFrontShowing">
+                        <Label width="400" textAlignment="center" text="{{currentName | uppercase}}" class="customName"
+                            [color]="currentKit.font.color" [ngClass]="nameFontClass"></Label>
+                        <Label width="400" textAlignment="center" text="{{currentNumber}}" class="customNumber"
+                            [color]="currentKit.font.color" [ngClass]="numberFontClass"></Label>
+                    </ng-container>
+
                     <Image width="400" height="400" class="kit"
                         src="{{kitFrontShowing?currentKit.imgSrcs[2]:currentKit.imgSrcs[0]}}">
                     </Image>
@@ -47,18 +52,21 @@
                             textAlignment="center"></Label>
                     </FlexboxLayout>
                 </StackLayout>
-                <StackLayout orientation="horizontal" row="2" class="sub-action">
-                    <ng-container *ngIf="isSizeBtnActive">
-                        <GridLayout columns="auto" class="box" *ngFor="let size of sizes" (tap)="setSize(size)">
+                <ScrollView height="105" orientation="horizontal" row="2" class="sub-action">
+
+                    <FlexboxLayout flexDirection="row" *ngIf="isSizeBtnActive" justifyContent="space-between">
+                        <GridLayout class="box" *ngFor="let size of sizes" (tap)="setSize(size)">
                             <select-button text="{{size | uppercase}}" [selected]="currentSize === size">
                             </select-button>
                         </GridLayout>
-                    </ng-container>
-                    <ng-container *ngIf="isColorBtnActive">
-                        <GridLayout columns="auto" class="box" *ngFor="let kit of currentClub.kits" (tap)="setKit(kit)">
+                    </FlexboxLayout>
+
+                    <FlexboxLayout flexDirection="row" *ngIf="isColorBtnActive" justifyContent="space-between">
+                        <GridLayout class="box" *ngFor="let kit of currentClub.kits" (tap)="setKit(kit)">
                             <select-button [bkg]="kit.color" [selected]="currentKit === kit"></select-button>
                         </GridLayout>
-                    </ng-container>
+                    </FlexboxLayout>
+
                     <GridLayout *ngIf="isNameBtnActive" columns="130,*" rows="auto,auto" class="name-number-container">
                         <StackLayout row="0" col="0" orientation="horizontal" class="no-option" (tap)="setNumber('')"
                             style="margin-right: 20;">
@@ -96,15 +104,17 @@
                             </GridLayout>
                         </GridLayout>
                     </GridLayout>
-                    <ng-container *ngIf="isBadgesBtnActive">
-                        <GridLayout columns="auto" class="box" (tap)="toggleChestBadge()">
+
+                    <FlexboxLayout flexDirection="row" *ngIf="isBadgesBtnActive" justifyContent="flex-start">
+                        <GridLayout class="box m-r-15" (tap)="toggleChestBadge()">
                             <select-button [imgSrc]="chestBadgeSrc" [selected]="chestBadgeOn"></select-button>
                         </GridLayout>
-                        <GridLayout columns="auto" class="box" (tap)="toggleArmBadge()">
+                        <GridLayout class="box m-r-15" (tap)="toggleArmBadge()">
                             <select-button [imgSrc]="armBadgeSrc" [selected]="armBadgeOn"></select-button>
                         </GridLayout>
-                    </ng-container>
-                </StackLayout>
+                    </FlexboxLayout>
+
+                </ScrollView>
             </GridLayout>
         </StackLayout>
     </ScrollView>
