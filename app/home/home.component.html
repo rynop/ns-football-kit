@@ -29,17 +29,15 @@
         <ScrollView class="jersey-scroll" height="110" orientation="horizontal">
             <FlexboxLayout height="110" flexDirection="row" justifyContent="flex-start" alignItems="stretch"
                 flexWrap="nowrap">
-                <ng-container *ngFor="let j of trending">
-                    <GridLayout height="110" class="jersey-card round-border" (tap)="chooseClub(0)"
-                        [background]="j.background">
-                        <Image horizontalAlignment="right" [src]="j.src" class="club-jersey">
-                        </Image>
-                        <StackLayout class="jersey-card-content" horizontalAlignment="left" verticalAlignment="bottom">
-                            <Label [text]="j.name" class="team-name" textWrap="true"></Label>
-                            <Label text="Home '19'" class="jersey-name"></Label>
-                        </StackLayout>
-                    </GridLayout>
-                </ng-container>
+                <GridLayout *ngFor="let j of trending" height="110" class="jersey-card round-border"
+                    (tap)="chooseClub(0)" [background]="j.background">
+                    <Image horizontalAlignment="right" [src]="j.src" class="club-jersey">
+                    </Image>
+                    <StackLayout class="jersey-card-content" horizontalAlignment="left" verticalAlignment="bottom">
+                        <Label [text]="j.name" class="team-name" textWrap="true"></Label>
+                        <Label text="Home '19'" class="jersey-name"></Label>
+                    </StackLayout>
+                </GridLayout>
             </FlexboxLayout>
         </ScrollView>
 
@@ -68,7 +66,7 @@
                 flexWrap="nowrap">
                 <ng-container
                     *ngFor="let brand of ['adidas','nike','newbalance','ua','fila','lacoste','sketchers','jordan','levis']; let i = index">
-                    <GridLayout height="54" class="small-card round-border" backgroundColor="#F2F2F2">
+                    <GridLayout [@brandsflyIn] height="54" class="small-card round-border" backgroundColor="#F2F2F2">
                         <Image horizontalAlignment="center" verticalAlignment="center"
                             src="~/images/brands/{{brand}}.png" (tap)="doTrans(i)"></Image>
                     </GridLayout>

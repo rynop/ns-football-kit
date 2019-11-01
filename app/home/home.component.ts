@@ -3,6 +3,7 @@ import { Page } from 'tns-core-modules/ui/page';
 import { RouterExtensions } from 'nativescript-angular';
 import { android as androidApp } from 'tns-core-modules/application';
 import { device } from 'tns-core-modules/platform';
+import { trigger, style, transition, animate, group, query, state, stagger } from "@angular/animations";
 
 import { KitsService, Club } from '../shared/services/kits.service';
 
@@ -18,7 +19,21 @@ interface sliderImage {
     selector: 'Home',
     moduleId: module.id,
     templateUrl: './home.component.html',
-    styleUrls: ['./home.component.css']
+    styleUrls: ['./home.component.css'],
+    animations: [
+        trigger('clubsFlyIn', [
+            transition('void => *', [
+                style({ transform: 'translateX(500)' }),
+                animate('500ms 300ms ease-in', style({ transform: 'translateX(0)' }))
+            ]),
+        ]),
+        trigger('brandsflyIn', [
+            transition('void => *', [
+                style({ transform: 'translateX(500)' }),
+                animate('500ms 500ms ease-in', style({ transform: 'translateX(0)' }))
+            ]),
+        ]),
+    ]
 })
 export class HomeComponent implements OnInit, AfterViewInit {
     clubs: Club[];
