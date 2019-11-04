@@ -1,4 +1,4 @@
-<ScrollView class="page" iosOverflowSafeArea="false">
+<ScrollView class="page" iosOverflowSafeArea="false" (swipe)="onCarouselSwipe($event)">
     <StackLayout>
         <GridLayout columns="110,*" class="top-nav" height="40">
             <Label col="0" text="&#xf053;" class="back fas" horizontalAlignment="left" verticalAlignment="center"
@@ -11,7 +11,7 @@
         </GridLayout>
 
         <ng-container *ngIf="(currentKit$ | async) as kit">
-            <GridLayout #clubCarouselContent (swipe)="onCarouselSwipe($event)">
+            <GridLayout #clubCarouselContent>
                 <GridLayout class="card round-border back-and-front" [class.hidden]="0!==currentCarouselIdx">
                     <GridLayout width="325" height="305">
                         <GridLayout width="250" height="250" horizontalAlignment="left" verticalAlignment="top">
@@ -80,9 +80,9 @@
         </ng-container>
 
         <GridLayout columns="*,*" class="actions">
-            <FlexboxLayout col="0" flexDirection="row" justifyContent="center"
-                style="border-right-color: #C4C4C4; border-right-width: 1;">
-                <Label text="&#xf004;" class="far m-r-10"></Label>
+            <FlexboxLayout col="0" flexDirection="row" justifyContent="center" alignItems="center"
+                style="border-right-color: #C4C4C4; border-right-width: 1;" (tap)="onFavTap()" [class.on]="isFav">
+                <Label [@fav]="isFav?'on':'off'" text="&#xf004;" class="m-r-10" [ngClass]="isFav?'fas':'far'"></Label>
                 <Label text="Favorite"></Label>
             </FlexboxLayout>
             <FlexboxLayout col="1" orientation="horizontal" justifyContent="center" (tap)="showCustomize()">

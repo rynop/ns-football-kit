@@ -5,7 +5,7 @@
             <Label col="0" text="Home" class="nav-title" horizontalAlignment="left"></Label>
             <FlexboxLayout col="1" flexDirection="row" justifyContent="flex-end" class="nav-actions"
                 alignItems="center">
-                <Label text="&#xf002;" class="fas"></Label>
+                <Label text="&#xf4a5;" class="ion" style="font-size: 25;"></Label>
                 <Label text="&#xf004;" class="far"></Label>
                 <Label text="&#xf07a;" class="fas"></Label>
             </FlexboxLayout>
@@ -48,12 +48,11 @@
         <ScrollView height="54" orientation="horizontal">
             <FlexboxLayout height="54" flexDirection="row" justifyContent="flex-start" alignItems="stretch"
                 flexWrap="nowrap">
-                <ng-container *ngFor="let club of byClub; let i = index">
-                    <GridLayout height="54" class="small-card round-border" [background]="club.background">
-                        <Image horizontalAlignment="center" verticalAlignment="center" [src]="club.src">
-                        </Image>
-                    </GridLayout>
-                </ng-container>
+                <GridLayout [@clubsFlyIn]="startLoadAnimations?'in':'init'" *ngFor="let club of byClub; let i = index"
+                    height="54" class="small-card round-border" [background]="club.background">
+                    <Image horizontalAlignment="center" verticalAlignment="center" [src]="club.src">
+                    </Image>
+                </GridLayout>
             </FlexboxLayout>
         </ScrollView>
 
@@ -64,13 +63,12 @@
         <ScrollView height="54" orientation="horizontal">
             <FlexboxLayout height="54" flexDirection="row" justifyContent="flex-start" alignItems="stretch"
                 flexWrap="nowrap">
-                <ng-container
+                <GridLayout [@brandsflyIn]="startLoadAnimations?'in':'init'" height="54" class="small-card round-border"
+                    backgroundColor="#F2F2F2"
                     *ngFor="let brand of ['adidas','nike','newbalance','ua','fila','lacoste','sketchers','jordan','levis']; let i = index">
-                    <GridLayout [@brandsflyIn] height="54" class="small-card round-border" backgroundColor="#F2F2F2">
-                        <Image horizontalAlignment="center" verticalAlignment="center"
-                            src="~/images/brands/{{brand}}.png" (tap)="doTrans(i)"></Image>
-                    </GridLayout>
-                </ng-container>
+                    <Image horizontalAlignment="center" verticalAlignment="center" src="~/images/brands/{{brand}}.png"
+                        (tap)="doTrans(i)"></Image>
+                </GridLayout>
             </FlexboxLayout>
         </ScrollView>
 

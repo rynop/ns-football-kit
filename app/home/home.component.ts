@@ -21,81 +21,115 @@ interface sliderImage {
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css'],
     animations: [
+        // Ugly cuz Angular animations are broken on Android: https://github.com/NativeScript/nativescript-angular/issues/1518
+        // See hack in ngAfterViewInit()
         trigger('clubsFlyIn', [
-            transition('void => *', [
-                style({ transform: 'translateX(500)' }),
-                animate('500ms 300ms ease-in', style({ transform: 'translateX(0)' }))
+            state('init', style({
+                opacity: 0,
+                transform: 'translateX(500)'
+            })),
+            state('in', style({
+                opacity: 1,
+                transform: 'translateX(0)'
+            })),
+            transition('init => in', [
+                animate('1.1s ease-in')
             ]),
         ]),
         trigger('brandsflyIn', [
-            transition('void => *', [
-                style({ transform: 'translateX(500)' }),
-                animate('500ms 500ms ease-in', style({ transform: 'translateX(0)' }))
+            state('init', style({
+                opacity: 0,
+                transform: 'translateX(500)'
+            })),
+            state('in', style({
+                opacity: 1,
+                transform: 'translateX(0)'
+            })),
+            transition('init => in', [
+                animate('1.1s 100ms ease-in')
             ]),
         ]),
     ]
 })
 export class HomeComponent implements OnInit, AfterViewInit {
+    startLoadAnimations = false;
     clubs: Club[];
 
-    trending: sliderImage[] = [{
-        src: '~/images/trending/rm.png',
-        background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
-        name: 'Real Madrid',
-    }, {
-        src: '~/images/trending/juv.png',
-        background: 'linear-gradient(77.76deg, #FD707E 39.83%, #F8CC75 93.4%)', name: 'Juventus',
-    }, {
-        src: '~/images/trending/arsenal.png',
-        background: 'linear-gradient(77.76deg, #C80120 39.83%, #F8CC75 93.4%)', name: 'Arsenal',
-    }, {
-        src: '~/images/trending/nigeria.png',
-        background: 'linear-gradient(77.76deg, #97C875 39.83%, #F8CC75 93.4%)', name: 'Nigeria',
-    }, {
-        src: '~/images/trending/bayern.png',
-        background: 'linear-gradient(77.76deg, #F02B33 39.83%, #F8CC75 93.4%)', name: 'Nigeria',
-    },];
+    trending: sliderImage[] = [
+        {
+            src: '~/images/trending/rm.png',
+            background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
+            name: 'Real Madrid',
+        },
+        {
+            src: '~/images/trending/juv.png',
+            background: 'linear-gradient(77.76deg, #FD707E 39.83%, #F8CC75 93.4%)', name: 'Juventus',
+        },
+        {
+            src: '~/images/trending/arsenal.png',
+            background: 'linear-gradient(77.76deg, #C80120 39.83%, #F8CC75 93.4%)', name: 'Arsenal',
+        },
+        {
+            src: '~/images/trending/nigeria.png',
+            background: 'linear-gradient(77.76deg, #97C875 39.83%, #F8CC75 93.4%)', name: 'Nigeria',
+        },
+        {
+            src: '~/images/trending/bayern.png',
+            background: 'linear-gradient(77.76deg, #F02B33 39.83%, #F8CC75 93.4%)', name: 'Nigeria',
+        },
+    ];
 
-    byClub: sliderImage[] = [{
-        src: '~/images/logos/rm.png',
-        background: '#00529F',
-        name: '',
-    }, {
-        src: '~/images/logos/juv.png',
-        background: '#F5B400', name: '',
-    }, {
-        src: '~/images/logos/cbf.png',
-        background: '#008BFF',
-        name: '',
-    }, {
-        src: '~/images/logos/mu.png',
-        background: '#780004',
-        name: '',
-    }, {
-        src: '~/images/logos/france.png',
-        background: '#1A2657',
-        name: '',
-    }, {
-        src: '~/images/logos/acm.png',
-        background: '#393939',
-        name: '',
-    }, {
-        src: '~/images/logos/portugal.png',
-        background: '#691214',
-        name: '',
-    }, {
-        src: '~/images/logos/tot.png',
-        background: '#5A74AC',
-        name: '',
-    }, {
-        src: '~/images/logos/lei.png',
-        background: '#0A0D20',
-        name: '',
-    }, {
-        src: '~/images/logos/bel.png',
-        background: '#5A040E',
-        name: '',
-    }];
+    byClub: sliderImage[] = [
+        {
+            src: '~/images/logos/rm.png',
+            background: '#00529F',
+            name: '',
+        },
+        {
+            src: '~/images/logos/juv.png',
+            background: '#F5B400', name: '',
+        },
+        {
+            src: '~/images/logos/cbf.png',
+            background: '#008BFF',
+            name: '',
+        },
+        {
+            src: '~/images/logos/mu.png',
+            background: '#780004',
+            name: '',
+        },
+        {
+            src: '~/images/logos/france.png',
+            background: '#1A2657',
+            name: '',
+        },
+        {
+            src: '~/images/logos/acm.png',
+            background: '#393939',
+            name: '',
+        },
+        {
+            src: '~/images/logos/portugal.png',
+            background: '#691214',
+            name: '',
+        },
+        {
+            src: '~/images/logos/tot.png',
+            background: '#5A74AC',
+            name: '',
+        },
+        {
+            src: '~/images/logos/lei.png',
+            background: '#0A0D20',
+            name: '',
+        },
+        {
+            src: '~/images/logos/bel.png',
+            background: '#5A040E',
+            name: '',
+        },
+    ];
 
     constructor(
         private page: Page,
@@ -122,6 +156,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             );
         }
+
+        // Hack cuz Angular animations are broken on Android: https://github.com/NativeScript/nativescript-angular/issues/1518
+        setTimeout(() => {
+            this.startLoadAnimations = true;
+        }, 500);
     }
 
     chooseClub(idx: number) {

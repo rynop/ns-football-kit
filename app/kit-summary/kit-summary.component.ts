@@ -3,10 +3,11 @@ import { Page } from "tns-core-modules/ui/page";
 import { Observable } from "rxjs";
 import { Animation, AnimationDefinition } from "tns-core-modules/ui/animation";
 import { screen } from "platform";
-import { SwipeGestureEventData, SwipeDirection } from "tns-core-modules/ui/gestures";
+import { SwipeGestureEventData, SwipeDirection, PanGestureEventData } from "tns-core-modules/ui/gestures";
 import { RouterExtensions } from "nativescript-angular";
 
 import { KitsService, Club, Kit } from "../shared/services/kits.service";
+import { trigger, state, style, transition, animate, keyframes } from "@angular/animations";
 
 const CAROUSEL_SLIDE_DURATION = 250;
 
@@ -16,7 +17,21 @@ const CAROUSEL_SLIDE_DURATION = 250;
     templateUrl: "./kit-summary.component.html",
     styleUrls: ["./kit-summary.component.css"],
     animations: [
-    ],
+        trigger('fav', [
+            state('off', style({ transform: 'scale(1)' })),
+            state('on', style({ transform: 'scale(1.3)' })),
+            transition('off => on', [
+                animate('400ms ease-in-out', keyframes([
+                    style({ transform: 'scale(1.3)', offset: .5 }),
+                    style({ transform: 'scale(1)', offset: 1.0 })
+                ])),
+                // animate('300ms ease-out')
+            ]),
+            transition('on => off', [
+                animate('300ms ease-in-out')
+            ]),
+        ]),
+    ]
 })
 export class KitSummaryComponent implements OnInit, AfterViewInit, OnDestroy {
     private screenWidth;
@@ -28,6 +43,7 @@ export class KitSummaryComponent implements OnInit, AfterViewInit, OnDestroy {
     numImagesPerKit = 3;    //front,back,front over back
     currentCarouselIdx: number = 0;
     carouselAnimations: Animation;
+    isFav = false;
 
     @ViewChild('clubCarouselContent', { static: false }) clubCarouselEle: ElementRef;
 
@@ -61,6 +77,11 @@ export class KitSummaryComponent implements OnInit, AfterViewInit, OnDestroy {
 
     showCustomize() {
         this.routerExtensions.navigate(['/customizekit'], { clearHistory: true });
+    }
+
+    onFavTap() {
+        console.log('fav');
+        this.isFav = !this.isFav;
     }
 
     //
