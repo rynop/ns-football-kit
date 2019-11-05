@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from "@angular/core";
-import { trigger, style, transition, animate, group, query, state, stagger } from "@angular/animations";
+import { trigger, style, transition, animate, state, AnimationEvent } from "@angular/animations";
 import { Page } from "tns-core-modules/ui/page";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { alert } from "tns-core-modules/ui/dialogs";
@@ -24,119 +24,40 @@ interface CustomizationButton {
     templateUrl: "./customize-kit.component.html",
     styleUrls: ["./customize-kit.component.css"],
     animations: [
-        trigger('openClose', [
-            // ...
+        trigger('slideUpDown', [
             state('open', style({
-                // height: '200px',
-                transform: "scale(1.1)",
                 opacity: 1,
-                backgroundColor: 'yellow'
+                transform: 'translateY(0)'
             })),
             state('closed', style({
-                // height: '100px',
-                opacity: 0.5,
-                backgroundColor: 'green',
-                transform: "scale(1)"
+                opacity: 0,
+                transform: 'translateY(100)'
             })),
             transition('open => closed', [
-                animate('1s')
+                animate('500ms ease-out')
             ]),
             transition('closed => open', [
-                animate('0.5s')
+                animate('500ms ease-in')
             ]),
         ]),
-
-        trigger("flyInOut", [
-            state("in", style({ transform: "translateX(0)" })),
-            transition("void => *", [
-                style({ transform: "translateX(-100px)" }),
-                animate(300)
+        trigger('fadeToggle', [
+            state('open', style({
+                opacity: 1,
+            })),
+            state('closed', style({
+                opacity: 0,
+            })),
+            transition('open => closed', [
+                animate('500ms ease-out')
             ]),
-            transition("* => void", [
-                animate(100, style({ transform: "translateX(100px)" }))
-            ])
-        ]),
-
-        trigger("flyKitInOut", [
-            // state("in", style('*')),
-            transition("void => *", [
-                style({ opacity: 0, transform: "translateX(-200px)" }),
-                animate('2s ease-in', style({ opacity: 1 })),
+            transition('closed => open', [
+                animate('500ms ease-in')
             ]),
-            transition("* => void", [
-                animate(100, style({ transform: "translateX(100px)" }))
-            ])
+            transition('void => *', [
+                style({ opacity: 0 }),
+                animate('500ms ease-in')
+            ]),
         ]),
-
-
-        // trigger('slideAnimation', [
-        //     transition(':increment', group([
-        //         query("void => *", [
-        //             style({ opacity: 0, width: '0px' }),
-        //             stagger(50, [
-        //                 animate('300ms ease-out', style({ opacity: 1, width: '*' })),
-        //             ]),
-        //         ], { optional: true }),
-        //         query('* => void', [
-        //             animate('0.5s ease-out', style({
-        //                 opacity: 0
-        //             }))
-        //         ])
-        //     ])),
-        //     transition(':decrement', group([
-        //         query("void => *", [
-        //             // style({ opacity: 0,  transform: "scale(1)" }),
-        //             // stagger(50, [
-        //             //     animate('300ms ease-out', style({ opacity: 1, width: '*' })),
-        //             // ]),
-        //             style({ transform: 'translateX(-100px)' }),
-        //             animate(100)
-        //         ], { optional: true }),
-        //         query('* => void', [
-        //             animate(100, style({ transform: 'translateX(100px)' }))
-        //             // animate('0.5s ease-out', style({
-        //             //     opacity: 0
-        //             // }))
-        //         ])
-        //     ]))
-        // ]),
-
-        trigger('slideAnimation', [
-            transition(':increment', group([
-                query('void => *', [
-                    style({
-                        // transform: 'translateX(800px)'
-                        opacity: 0
-                    }),
-                    stagger(50, [
-                        animate('0.5s ease-out', style({ opacity: 1 }))
-                    ])
-                ], { optional: true }),
-                query('* => void', [
-                    animate('0.5s ease-out', style({
-                        transform: 'translateX(-800px)',
-                        opacity: 0
-                    }))
-                ])
-            ])),
-            transition(':decrement', group([
-                query('void => *', [
-                    style({
-                        // transform: 'translateX(-800px)'
-                        opacity: 0
-                    }),
-                    stagger(50, [
-                        animate('0.5s ease-out', style({ opacity: 1 }))
-                    ])
-                ], { optional: true }),
-                query('* => void', [
-                    animate('0.5s ease-out', style({
-                        transform: 'translateX(800px)',
-                        opacity: 0
-                    }))
-                ])
-            ]))
-        ])
     ],
 })
 export class CustomizeKitComponent implements OnInit, OnDestroy {
@@ -160,6 +81,8 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
 
     sizes: string[];
     kitFrontShowing = true;
+
+    growCarousel = false;
 
     activeCustomizationButton: CustomizationButton;
     customizationButtons: CustomizationButton[] = [
@@ -234,9 +157,18 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
         this.kitFrontShowing = !(this.isNameBtnActive);
     }
 
-    // toggleFrontBackKit() {
-    //     this.kitFrontShowing = !this.kitFrontShowing;
-    // }
+    onNavSlideStart(e: AnimationEvent) {
+        if ('closed' === e.fromState && 'open' === e.toState) {
+            this.growCarousel = false;
+        } else if ('open' === e.fromState && 'closed' === e.toState) {
+            // Hack cuz NS don't support all CSS styles in animations
+            // Keep in sync with slideUpDown
+            setTimeout(() => {
+                this.growCarousel = true;
+            }, 200);
+
+        }
+    }
 
     get nameFontClass() {
         return this.currentKit.font.nameFontClass;
@@ -350,10 +282,8 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
             return;
         }
 
-        console.log('prev', prevIdx, 'cur idx', this.currentCarouselIdx);
         const curEle = this.kitContainerElement.nativeElement.getChildAt(prevIdx);
         const nextEle = this.kitContainerElement.nativeElement.getChildAt(this.currentCarouselIdx);
-        console.log('cur:', curEle, "next", nextEle);
         this.animateCarousel(curEle, nextEle, direction);
     }
 

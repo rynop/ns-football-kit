@@ -8,9 +8,11 @@
                     style="font-size: 14; font-weight: 500;" (tap)="save()"></Label>
             </GridLayout>
 
-            <GridLayout columns="50,*" class="customize-chooser-container" *ngIf="!activeCustomizationButton">
+            <GridLayout class="customize-chooser-container">
                 <!-- Left NAV -->
-                <FlexboxLayout col="0" flexDirection="column" justifyContent="space-between" alignItems="center">
+                <FlexboxLayout [@slideUpDown]="activeCustomizationButton?'closed':'open'"
+                    (@slideUpDown.start)="onNavSlideStart($event)" class="action-nav" flexDirection="column"
+                    justifyContent="space-between" horizontalAlignment="left">
                     <GridLayout *ngFor="let action of customizationButtons">
                         <FlexboxLayout flexDirection="column" justifyContent="center" alignItems="center"
                             class="main-action" (tap)="showCustomization(action)">
@@ -20,58 +22,50 @@
                     </GridLayout>
                 </FlexboxLayout>
                 <!-- Carousel -->
-                <GridLayout col="1" #kitContainer (swipe)="onCarouselSwipe($event)" justifyContent="center">
+                <GridLayout #kitContainer class="kit-container kit-container-m" (swipe)="onCarouselSwipe($event)"
+                    justifyContent="center" [class.kit-container-m]="!growCarousel">
                     <GridLayout class="carousel-card" [class.hidden]="0!==currentCarouselIdx">
                         <Label text="{{currentName | uppercase}}" class="customName" [color]="currentKit.font.color"
                             [ngClass]="nameFontClass"></Label>
                         <Label text="{{currentNumber}}" class="customNumber" [color]="currentKit.font.color"
                             [ngClass]="numberFontClass"></Label>
-                        <Image width="400" height="400" class="kit" [src]="currentKit.imgSrcs[0]"></Image>
+                        <Image width="400" class="kit" [src]="currentKit.imgSrcs[0]"></Image>
                     </GridLayout>
                     <GridLayout class="carousel-card" [class.hidden]="1!==currentCarouselIdx">
-                        <Image width="400" height="400" class="kit" [src]="currentKit.imgSrcs[2]"></Image>
+                        <Image width="400" class="kit" [src]="currentKit.imgSrcs[2]"></Image>
                     </GridLayout>
                 </GridLayout>
             </GridLayout>
 
-            <GridLayout rows="400,85,*" class="customize-container" *ngIf="activeCustomizationButton">
-                <GridLayout row="0" width="400" height="400">
-                    <ng-container *ngIf="!kitFrontShowing">
-                        <Label text="{{currentName | uppercase}}" class="customName" [color]="currentKit.font.color"
-                            [ngClass]="nameFontClass"></Label>
-                        <Label text="{{currentNumber}}" class="customNumber" [color]="currentKit.font.color"
-                            [ngClass]="numberFontClass"></Label>
-                    </ng-container>
+            <StackLayout class="customize-container">
+                <FlexboxLayout [@fadeToggle] *ngIf="activeCustomizationButton" width="50" horizontalAlignment="left"
+                    flexDirection="column" justifyContent="center" alignItems="center" class="active-action main-action"
+                    (tap)="showCustomizationOptions()">
+                    <Label text="&#xf077;" class="up fas" (tap)="showCustomizationOptions()"></Label>
+                    <Label [text]="activeCustomizationButton?.icon" class="fas icon"></Label>
+                    <Label [text]="activeCustomizationButton?.label" class="label" textWrap="true"
+                        textAlignment="center"></Label>
+                </FlexboxLayout>
 
-                    <Image width="400" height="400" class="kit"
-                        src="{{kitFrontShowing?currentKit.imgSrcs[2]:currentKit.imgSrcs[0]}}">
-                    </Image>
-                </GridLayout>
-                <StackLayout row="1" class="active-icon">
-                    <FlexboxLayout width="100" horizontalAlignment="left" flexDirection="column" justifyContent="center"
-                        alignItems="center" class="main-action" (tap)="showCustomizationOptions()">
-                        <Label text="&#xf077;" class="up fas" (tap)="showCustomizationOptions()"></Label>
-                        <Label [text]="activeCustomizationButton.icon" class="fas icon"></Label>
-                        <Label [text]="activeCustomizationButton.label" class="label" textWrap="true"
-                            textAlignment="center"></Label>
-                    </FlexboxLayout>
-                </StackLayout>
-                <ScrollView height="105" orientation="horizontal" row="2" class="sub-action">
+                <ScrollView height="105" orientation="horizontal" class="sub-action">
 
-                    <FlexboxLayout flexDirection="row" *ngIf="isSizeBtnActive" justifyContent="space-between">
+                    <FlexboxLayout [@fadeToggle] flexDirection="row" *ngIf="isSizeBtnActive"
+                        justifyContent="space-between">
                         <GridLayout class="box" *ngFor="let size of sizes" (tap)="setSize(size)">
                             <select-button text="{{size | uppercase}}" [selected]="currentSize === size">
                             </select-button>
                         </GridLayout>
                     </FlexboxLayout>
 
-                    <FlexboxLayout flexDirection="row" *ngIf="isColorBtnActive" justifyContent="space-between">
+                    <FlexboxLayout [@fadeToggle] flexDirection="row" *ngIf="isColorBtnActive"
+                        justifyContent="space-between">
                         <GridLayout class="box" *ngFor="let kit of currentClub.kits" (tap)="setKit(kit)">
                             <select-button [bkg]="kit.color" [selected]="currentKit === kit"></select-button>
                         </GridLayout>
                     </FlexboxLayout>
 
-                    <GridLayout *ngIf="isNameBtnActive" columns="130,*" rows="auto,auto" class="name-number-container">
+                    <GridLayout [@fadeToggle] *ngIf="isNameBtnActive" columns="130,*" rows="auto,auto"
+                        class="name-number-container">
                         <StackLayout row="0" col="0" orientation="horizontal" class="no-option" (tap)="setNumber('')"
                             style="margin-right: 20;">
                             <GridLayout class="no-option-dot" [class.no-option-dot-active]="''==currentNumber">
@@ -108,7 +102,8 @@
                         </GridLayout>
                     </GridLayout>
 
-                    <FlexboxLayout flexDirection="row" *ngIf="isBadgesBtnActive" justifyContent="flex-start">
+                    <FlexboxLayout [@fadeToggle] flexDirection="row" *ngIf="isBadgesBtnActive"
+                        justifyContent="flex-start">
                         <GridLayout class="box m-r-15" (tap)="toggleChestBadge()">
                             <select-button [imgSrc]="chestBadgeSrc" [selected]="chestBadgeOn"></select-button>
                         </GridLayout>
@@ -118,9 +113,10 @@
                     </FlexboxLayout>
 
                 </ScrollView>
-            </GridLayout>
+            </StackLayout>
         </StackLayout>
     </ScrollView>
 
+    <!-- for iOS safe zone -->
     <GridLayout row="0" backgroundColor="White" opacity="0.4" height="0" verticalAlignment="top"></GridLayout>
 </GridLayout>

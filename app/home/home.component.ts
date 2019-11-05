@@ -49,7 +49,7 @@ interface sliderImage {
                 animate('1.1s 100ms ease-in')
             ]),
         ]),
-    ]
+    ],
 })
 export class HomeComponent implements OnInit, AfterViewInit {
     startLoadAnimations = false;
@@ -146,7 +146,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
         // Get rid of stats bar on android
         if (androidApp && device.sdkVersion >= '21') {
-            console.log('Disabling status bar');
+            console.log('Disabling Android status bar');
             const View = android.view.View;
             const window = androidApp.startActivity.getWindow();
             const decorView = window.getDecorView();
