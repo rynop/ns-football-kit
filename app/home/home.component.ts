@@ -23,30 +23,40 @@ interface sliderImage {
     animations: [
         // Ugly cuz Angular animations are broken on Android: https://github.com/NativeScript/nativescript-angular/issues/1518
         // See hack in ngAfterViewInit()
+        trigger('trendingFlyIn', [
+            transition('void => *', [
+                style({
+                    opacity: 0,
+                    transform: 'translateX(500)'
+                }),
+                animate('1.1s 200ms ease-in', style({
+                    opacity: 1,
+                    transform: 'translateX(0)'
+                }))
+            ]),
+        ]),
         trigger('clubsFlyIn', [
-            state('init', style({
-                opacity: 0,
-                transform: 'translateX(500)'
-            })),
-            state('in', style({
-                opacity: 1,
-                transform: 'translateX(0)'
-            })),
-            transition('init => in', [
-                animate('1.1s ease-in')
+            transition('void => *', [
+                style({
+                    opacity: 0,
+                    transform: 'translateX(500)'
+                }),
+                animate('1.1s 400ms ease-in', style({
+                    opacity: 1,
+                    transform: 'translateX(0)'
+                }))
             ]),
         ]),
         trigger('brandsflyIn', [
-            state('init', style({
-                opacity: 0,
-                transform: 'translateX(500)'
-            })),
-            state('in', style({
-                opacity: 1,
-                transform: 'translateX(0)'
-            })),
-            transition('init => in', [
-                animate('1.1s 100ms ease-in')
+            transition('void => *', [
+                style({
+                    opacity: 0,
+                    transform: 'translateX(500)'
+                }),
+                animate('1.1s 600ms ease-in', style({
+                    opacity: 1,
+                    transform: 'translateX(0)'
+                }))
             ]),
         ]),
     ],
