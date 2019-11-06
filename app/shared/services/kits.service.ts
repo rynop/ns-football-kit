@@ -43,7 +43,7 @@ export class KitsService {
                     color: '#8C734B',
                     nameFontClass: 'rm-name-font', numberFontClass: 'rm-number-font',
                 },
-                imgSrcs: ['~/images/rm-home/back.jpg', '~/images/rm-home/angle.jpg', '~/images/rm-home/front.png'],
+                imgSrcs: ['~/images/rm-home/back.png', '~/images/rm-home/angle.png', '~/images/rm-home/front.png'],
                 brand: 'Adidas',
             },
             {
@@ -55,7 +55,7 @@ export class KitsService {
                     color: '#F8F1C3',
                     nameFontClass: 'rm-name-font', numberFontClass: 'rm-number-font',
                 },
-                imgSrcs: ['~/images/rm-away/back.jpg', '~/images/rm-away/angle.jpg', '~/images/rm-away/front.jpg'],
+                imgSrcs: ['~/images/rm-away/back.png', '~/images/rm-away/angle.png', '~/images/rm-away/front.png'],
                 brand: 'Adidas',
             },
             {
@@ -67,7 +67,7 @@ export class KitsService {
                     color: '#21323A',
                     nameFontClass: 'rm-name-font', numberFontClass: 'rm-number-font',
                 },
-                imgSrcs: ['~/images/rm-third/back.jpg', '~/images/rm-third/angle.jpg', '~/images/rm-third/front.jpg'],
+                imgSrcs: ['~/images/rm-third/back.png', '~/images/rm-third/angle.png', '~/images/rm-third/front.png'],
                 brand: 'Adidas',
             }, {
                 color: '#D68B13',
@@ -78,7 +78,7 @@ export class KitsService {
                     color: '#372E29',
                     nameFontClass: 'rm-name-font', numberFontClass: 'rm-number-font',
                 },
-                imgSrcs: ['~/images/rm-home-gk/back.jpg', '~/images/rm-home-gk/angle.jpg', '~/images/rm-home-gk/front.jpg'],
+                imgSrcs: ['~/images/rm-home-gk/back.png', '~/images/rm-home-gk/angle.png', '~/images/rm-home-gk/front.png'],
                 brand: 'Adidas',
             }, {
                 color: '#324A4E',
@@ -89,72 +89,36 @@ export class KitsService {
                     color: '#FBF2AF',
                     nameFontClass: 'rm-name-font', numberFontClass: 'rm-number-font',
                 },
-                imgSrcs: ['~/images/rm-away-gk/back.jpg', '~/images/rm-away-gk/angle.jpg', '~/images/rm-away-gk/front.jpg'],
+                imgSrcs: ['~/images/rm-away-gk/back.png', '~/images/rm-away-gk/angle.png', '~/images/rm-away-gk/front.png'],
                 brand: 'Adidas',
             },],
         },
         {
-            name: 'Chelsea',
-            logo: '~/images/chelsea.png',
+            name: 'Juventus',
+            logo: '~/images/juv.png',
             background: '#4377a6',
             kits: [{
                 color: '#42C6B1',
-                background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
-                name: 'Stadium',
-                year: '\'19-\'20',
-                font: {
-                    color: '#FFFFFF',
-                },
-                imgSrcs: ['~/images/cfc-264397/back.jpg', '~/images/cfc-264397/angle.jpg', '~/images/cfc-264397/front.jpg'],
-                brand: 'Nike',
-            },
-            {
-                color: '#42C6B1',
-                background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
-                name: 'Vapor Match',
-                year: '\'19-\'20',
-                font: {
-                    color: '#013871',
-                },
-                imgSrcs: ['~/images/cfc-264394/back.jpg', '~/images/cfc-264394/angle.jpg', '~/images/cfc-264394/front.jpg'],
-                brand: 'Nike',
-            },
-            {
-                color: '#42C6B1',
-                background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
-                name: 'Stadium',
-                year: '\'19-\'20',
-                font: {
-                    color: '#FFFFFF',
-                },
-                imgSrcs: ['~/images/cfc-264497/back.jpg', '~/images/cfc-264497/angle.jpg', '~/images/cfc-264497/front.jpg'],
-                brand: 'Nike',
-            }],
-        },
-        {
-            name: 'Manchester United',
-            logo: '~/images/manchester.png',
-            background: '#4377a6',
-            kits: [{
-                color: '#42C6B1',
-                background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
+                background: 'linear-gradient(77.76deg, #FD707E 39.83%, #F8CC75 93.4%)',
                 name: 'Home',
                 year: '\'19-\'20',
                 font: {
                     color: '#FFFFFF',
+                    nameFontClass: 'juv-name-font', numberFontClass: 'juv-number-font',
                 },
-                imgSrcs: ['~/images/mufc-251562/back.jpg', '~/images/mufc-251562/angle.jpg', '~/images/mufc-251562/front.jpg'],
+                imgSrcs: ['~/images/juv-home/back.png', '~/images/juv-home/angle.png', '~/images/juv-home/front.png'],
                 brand: 'Adidas',
             },
             {
                 color: '#42C6B1',
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
-                name: 'Cup',
+                name: 'Away',
                 year: '\'19-\'20',
                 font: {
-                    color: '#000000',
+                    color: '#EA112C',
+                    nameFontClass: 'juv-name-font', numberFontClass: 'juv-number-font',
                 },
-                imgSrcs: ['~/images/mufc-251563/back.jpg', '~/images/mufc-251563/angle.jpg', '~/images/mufc-251563/front.jpg'],
+                imgSrcs: ['~/images/juv-away/back.png', '~/images/cfc-264394/angle.png', '~/images/cfc-264394/front.png'],
                 brand: 'Adidas',
             },
             {
@@ -163,12 +127,54 @@ export class KitsService {
                 name: 'Third',
                 year: '\'19-\'20',
                 font: {
-                    color: '#E7472F',
+                    color: '#FFFFFF',
+                    nameFontClass: 'juv-name-font', numberFontClass: 'juv-number-font',
                 },
-                imgSrcs: ['~/images/mufc-251565/back.jpg', '~/images/mufc-251565/angle.jpg', '~/images/mufc-251565/front.jpg'],
+                imgSrcs: ['~/images/juv-third/back.png', '~/images/cfc-264497/angle.png', '~/images/cfc-264497/front.png'],
                 brand: 'Adidas',
             }],
         },
+        {
+            name: 'Arsenal',
+            logo: '~/images/arsenal.png',
+            background: '#4377a6',
+            kits: [{
+                color: '#FFFFFF',
+                background: 'linear-gradient(77.76deg, #FD707E 39.83%, #F8CC75 93.4%)',
+                name: 'Home',
+                year: '\'19-\'20',
+                font: {
+                    color: '#FFFFFF',
+                    nameFontClass: 'arsenal-name-font', numberFontClass: 'arsenal-number-font',
+                },
+                imgSrcs: ['~/images/arsenal-home/back.png', '~/images/arsenal-home/angle.png', '~/images/arsenal-home/front.png'],
+                brand: 'Adidas',
+            },
+            {
+                color: '#42C6B1',
+                background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
+                name: 'Away',
+                year: '\'19-\'20',
+                font: {
+                    color: '#121C4F',
+                    nameFontClass: 'arsenal-name-font', numberFontClass: 'arsenal-number-font',
+                },
+                imgSrcs: ['~/images/arsenal-away/back.png', '~/images/cfc-264394/angle.png', '~/images/cfc-264394/front.png'],
+                brand: 'Adidas',
+            },
+            {
+                color: '#42C6B1',
+                background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
+                name: 'Third',
+                year: '\'19-\'20',
+                font: {
+                    color: '#FFEB0B',
+                    nameFontClass: 'arsenal-name-font', numberFontClass: 'arsenal-number-font',
+                },
+                imgSrcs: ['~/images/arsenal-third/back.png', '~/images/cfc-264497/angle.png', '~/images/cfc-264497/front.png'],
+                brand: 'Adidas',
+            }],
+        }
     ];
 
     private currentClubIdx = 0;

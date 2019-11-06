@@ -177,8 +177,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
 
     chooseClub(idx: number) {
-        console.log(`ChooseClub ${idx}`);
-
+        if (idx > 2) {
+            idx = 0;    // Only 3 kits supported right now
+        }
         this.kitsSvc.setCurrentClub(idx);
         this.routerExtensions.navigate(['/kitsummary'], { clearHistory: false, animated: true, transition: { name: 'slideTop' } });
     }

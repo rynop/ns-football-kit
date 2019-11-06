@@ -292,21 +292,23 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
 
         // Move the slide that will come into view, out of view first
         nextSlide.translateX = (direction == 2 ? this.screenWidth : -this.screenWidth);
-        nextSlide.opacity = 1;
+        nextSlide.opacity = 0;
         const definitions: AnimationDefinition[] = [];
 
         // Current card that will move out of view
         definitions.push({
             target: currSlide,
             translate: { x: (direction == 2 ? -this.screenWidth : this.screenWidth), y: 0 },
-            duration: CAROUSEL_SLIDE_DURATION
+            duration: CAROUSEL_SLIDE_DURATION,
+            opacity: 0,
         });
 
         // Next card that will move into view
         definitions.push({
             target: nextSlide,
             translate: { x: 0, y: 0 },
-            duration: CAROUSEL_SLIDE_DURATION
+            duration: CAROUSEL_SLIDE_DURATION,
+            opacity: 1,
         });
 
         this.carouselAnimations = new Animation(definitions);

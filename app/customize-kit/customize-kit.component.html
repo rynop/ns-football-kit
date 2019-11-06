@@ -4,7 +4,7 @@
             <GridLayout class="top-nav" height="40" style="color: white;">
                 <Label text="&#xf053;" class="back fas" horizontalAlignment="left" verticalAlignment="center"
                     (tap)="goBack()"></Label>
-                <Label text="Save and Continue" horizontalAlignment="right" verticalAlignment="center"
+                <Label text="Save" horizontalAlignment="right" verticalAlignment="center"
                     style="font-size: 14; font-weight: 500;" (tap)="save()"></Label>
             </GridLayout>
 
@@ -22,19 +22,27 @@
                     </GridLayout>
                 </FlexboxLayout>
                 <!-- Carousel -->
-                <GridLayout #kitContainer class="kit-container kit-container-m" (swipe)="onCarouselSwipe($event)"
-                    justifyContent="center" [class.kit-container-m]="!growCarousel">
-                    <GridLayout class="carousel-card" [class.hidden]="0!==currentCarouselIdx">
-                        <Label text="{{currentName | uppercase}}" class="customName" [color]="currentKit.font.color"
-                            [ngClass]="nameFontClass"></Label>
-                        <Label text="{{currentNumber}}" class="customNumber" [color]="currentKit.font.color"
-                            [ngClass]="numberFontClass"></Label>
-                        <Image width="400" class="kit" [src]="currentKit.imgSrcs[0]"></Image>
+                <StackLayout orientation="vertical" class="kit-container" [class.kit-container-m]="!growCarousel">
+                    <GridLayout #kitContainer (swipe)="onCarouselSwipe($event)" justifyContent="center">
+                        <GridLayout class="carousel-card" [class.hidden]="0!==currentCarouselIdx">
+                            <Label text="{{currentName | uppercase}}" class="customName" [color]="currentKit.font.color"
+                                [ngClass]="nameFontClass"></Label>
+                            <Label text="{{currentNumber}}" class="customNumber" [color]="currentKit.font.color"
+                                [ngClass]="numberFontClass"></Label>
+                            <Image width="400" class="kit" [src]="currentKit.imgSrcs[0]"></Image>
+                        </GridLayout>
+                        <GridLayout class="carousel-card" [class.hidden]="1!==currentCarouselIdx">
+                            <Image width="400" class="kit" [src]="currentKit.imgSrcs[2]"></Image>
+                        </GridLayout>
                     </GridLayout>
-                    <GridLayout class="carousel-card" [class.hidden]="1!==currentCarouselIdx">
-                        <Image width="400" class="kit" [src]="currentKit.imgSrcs[2]"></Image>
-                    </GridLayout>
-                </GridLayout>
+                    <FlexboxLayout class="carousel-dots" flexDirection="row" justifyContent="center"
+                        alignItems="center">
+                        <GridLayout class="carousel-dot" [class.carousel-dot-active]="0==currentCarouselIdx">
+                        </GridLayout>
+                        <GridLayout class="carousel-dot" [class.carousel-dot-active]="1==currentCarouselIdx">
+                        </GridLayout>
+                    </FlexboxLayout>
+                </StackLayout>
             </GridLayout>
 
             <StackLayout class="customize-container">
