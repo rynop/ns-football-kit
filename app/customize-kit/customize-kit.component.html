@@ -51,8 +51,10 @@
                     (tap)="showCustomizationOptions()">
                     <Label text="&#xf077;" class="up fas" (tap)="showCustomizationOptions()"></Label>
                     <Label [text]="activeCustomizationButton?.icon" class="fas icon"></Label>
+                    <!-- extra padding for 2 line 'Name & Number' -->
                     <Label [text]="activeCustomizationButton?.label" class="label" textWrap="true"
-                        textAlignment="center"></Label>
+                        textAlignment="center"
+                        [class.m-b-15]="customizationButtons[2] === activeCustomizationButton"></Label>
                 </FlexboxLayout>
 
                 <ScrollView height="105" orientation="horizontal" class="sub-action">

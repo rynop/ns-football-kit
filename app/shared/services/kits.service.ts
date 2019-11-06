@@ -98,7 +98,7 @@ export class KitsService {
             logo: '~/images/juv.png',
             background: '#4377a6',
             kits: [{
-                color: '#42C6B1',
+                color: '#000000',
                 background: 'linear-gradient(77.76deg, #FD707E 39.83%, #F8CC75 93.4%)',
                 name: 'Home',
                 year: '\'19-\'20',
@@ -110,7 +110,7 @@ export class KitsService {
                 brand: 'Adidas',
             },
             {
-                color: '#42C6B1',
+                color: '#FFFFFF',
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 name: 'Away',
                 year: '\'19-\'20',
@@ -122,7 +122,7 @@ export class KitsService {
                 brand: 'Adidas',
             },
             {
-                color: '#42C6B1',
+                color: '#026BA5',
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 name: 'Third',
                 year: '\'19-\'20',
@@ -139,7 +139,7 @@ export class KitsService {
             logo: '~/images/arsenal.png',
             background: '#4377a6',
             kits: [{
-                color: '#FFFFFF',
+                color: '#F02632',
                 background: 'linear-gradient(77.76deg, #FD707E 39.83%, #F8CC75 93.4%)',
                 name: 'Home',
                 year: '\'19-\'20',
@@ -151,19 +151,19 @@ export class KitsService {
                 brand: 'Adidas',
             },
             {
-                color: '#42C6B1',
+                color: '#FBE015',
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 name: 'Away',
                 year: '\'19-\'20',
                 font: {
-                    color: '#121C4F',
+                    color: '#FADD13',
                     nameFontClass: 'arsenal-name-font', numberFontClass: 'arsenal-number-font',
                 },
                 imgSrcs: ['~/images/arsenal-away/back.png', '~/images/cfc-264394/angle.png', '~/images/cfc-264394/front.png'],
                 brand: 'Adidas',
             },
             {
-                color: '#42C6B1',
+                color: '#1B2C3C',
                 background: 'linear-gradient(80.17deg, #8A7347 39.83%, #F8CC75 93.4%)',
                 name: 'Third',
                 year: '\'19-\'20',
