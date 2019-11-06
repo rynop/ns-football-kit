@@ -118,7 +118,7 @@ export class KitsService {
                     color: '#EA112C',
                     nameFontClass: 'juv-name-font', numberFontClass: 'juv-number-font',
                 },
-                imgSrcs: ['~/images/juv-away/back.png', '~/images/cfc-264394/angle.png', '~/images/cfc-264394/front.png'],
+                imgSrcs: ['~/images/juv-away/back.png', '~/images/juv-away/angle.png', '~/images/juv-away/front.png'],
                 brand: 'Adidas',
             },
             {
@@ -130,7 +130,7 @@ export class KitsService {
                     color: '#FFFFFF',
                     nameFontClass: 'juv-name-font', numberFontClass: 'juv-number-font',
                 },
-                imgSrcs: ['~/images/juv-third/back.png', '~/images/cfc-264497/angle.png', '~/images/cfc-264497/front.png'],
+                imgSrcs: ['~/images/juv-third/back.png', '~/images/juv-third/angle.png', '~/images/juv-third/front.png'],
                 brand: 'Adidas',
             }],
         },
@@ -156,10 +156,10 @@ export class KitsService {
                 name: 'Away',
                 year: '\'19-\'20',
                 font: {
-                    color: '#FADD13',
+                    color: '#121C4F',
                     nameFontClass: 'arsenal-name-font', numberFontClass: 'arsenal-number-font',
                 },
-                imgSrcs: ['~/images/arsenal-away/back.png', '~/images/cfc-264394/angle.png', '~/images/cfc-264394/front.png'],
+                imgSrcs: ['~/images/arsenal-away/back.png', '~/images/arsenal-away/angle.png', '~/images/arsenal-away/front.png'],
                 brand: 'Adidas',
             },
             {
@@ -171,7 +171,7 @@ export class KitsService {
                     color: '#FFEB0B',
                     nameFontClass: 'arsenal-name-font', numberFontClass: 'arsenal-number-font',
                 },
-                imgSrcs: ['~/images/arsenal-third/back.png', '~/images/cfc-264497/angle.png', '~/images/cfc-264497/front.png'],
+                imgSrcs: ['~/images/arsenal-third/back.png', '~/images/arsenal-third/angle.png', '~/images/arsenal-third/front.png'],
                 brand: 'Adidas',
             }],
         }
