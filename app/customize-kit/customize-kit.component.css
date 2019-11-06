@@ -1,0 +1,179 @@
+.page {
+    background-image: url('~/images/customize-bkg.png');
+    background-repeat: repeat; 
+}
+
+.main-action, .sub-action {
+    color: white;   
+}
+
+.main-action .icon {
+    font-size: 25;
+    margin-bottom: 10;
+}
+.main-action .label {
+    font-size: 10;
+}
+
+.customize-chooser-container {
+    margin-top: 30;
+} 
+
+.action-nav {
+    z-index: 2;
+    width: 50;
+}
+.kit-container {
+    z-index: 1;    
+}
+.kit-container-m {
+    margin-left: 50;
+}
+
+.carousel-dots {
+    margin-top: 10;
+}
+.carousel-dot {
+    background: #C4C4C4;
+}
+.carousel-dot-active {
+    background: #F8CC75;
+}
+
+.up {
+    margin-bottom: 5;
+    font-size: 18;
+    color: white;
+}
+
+.sub-action {
+    font-size: 10;
+}
+
+.customName, .customNumber {
+    z-index: 99;
+    vertical-align: top;
+    horizontal-align: center;
+    text-align: center;
+}
+
+/* .customize-chooser-container .customName {
+    margin-top: 50;    
+}
+.customize-chooser-container .customNumber {
+    margin-top: 90;    
+} */
+
+.customize-container {
+    margin-top: 20;
+    z-index: 3;
+}
+
+.no-option label {
+    color: white;
+    font-size: 14;
+}
+.no-option-dot {
+    border-radius: 5;
+    height: 10;
+    width: 10;
+    border-width: 1;
+    border-color: white;   
+    margin-right: 10;    
+}
+.no-option-dot-active {
+    background: #7FAA4D;
+}
+
+.text-input {
+    margin-top: 20;
+}
+
+.text-input .hint {
+    z-index: 99;
+    font-weight: 300;
+    font-size: 10;
+    color: white;
+    margin-top: 8;
+    margin-left: 10;
+    vertical-align: top; 
+    horizontal-align: left;
+    text-align: left;
+}
+
+.text-input textfield {
+    z-index: 1;
+    background: #80868F;
+    border-radius: 10;
+    height: 55;    
+    padding: 30 10 8 10;
+    font-size: 14;
+    font-weight: 500;
+    margin-right: 4;
+    margin-bottom: 4;
+    text-align: left;
+}
+
+.validation-circle {
+    z-index: 3;
+    height:16; 
+    width:16; 
+    border-radius:8; 
+    color: white;
+    background: #7FAA4D;
+    vertical-align: bottom; 
+    horizontal-align: right;
+}
+.validation-circle label {
+    font-size: 10;
+    vertical-align: center; 
+    horizontal-align: center;
+    text-align: center;
+}
+.valid-input textfield, .invalid-input textfield {
+    border-width: 1;
+}
+.valid-input textfield {
+    border-color: #7FAA4D;
+}
+.invalid-input textfield {
+    border-color: red;
+}
+.invalid-input .validation-circle{
+    background:red;    
+}
+
+/* Real Madrid */
+.rm-name-font {
+    margin-top: 50;  
+    font-size: 36;
+    font-weight: 700;
+}
+.rm-number-font {
+    margin-top: 90;  
+    font-size: 86;    
+}
+
+/* Juve */
+.juv-name-font {
+    margin-top: 30;  
+    font-size: 36;
+    font-weight: 700;
+}
+.juv-number-font {
+    margin-top: 40;  
+    font-size: 120;
+}
+
+/* Arsenal */
+.arsenal-name-font {
+    margin-top: 60;  
+    font-size: 36;
+    font-weight: 700;
+    margin-left: -14;
+}
+.arsenal-number-font {
+    margin-top: 100;  
+    font-size: 120;
+    margin-left: -14;
+}

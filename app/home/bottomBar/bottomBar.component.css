@@ -1,0 +1,17 @@
+.bottomNav label {
+    color: #8992ca;
+}
+
+.bottomNav .navIcon {
+    vertical-align: middle;
+    font-size: 20;
+}
+
+.bottomNav .navText {
+    font-size: 10;
+    vertical-align: bottom;
+}
+
+.active label {
+    color: white;
+}

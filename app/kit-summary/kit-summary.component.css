@@ -1,0 +1,136 @@
+.page {
+    margin: 0 20 20 20;
+}
+
+.card {
+    height: 335;   
+    background: #F8CC75;
+    padding: 15;
+    margin-top: 20;
+}
+
+.carousel-dots {
+    margin-top: 10;
+    margin-bottom: 30;
+}
+.carousel-dot {
+    background: #C4C4C4;
+}
+.carousel-dot-active {
+    background: #F8CC75;
+}
+
+.summary .title {
+    color: #808080;
+    font-size: 10;
+    margin-bottom: 5;
+}
+
+.summary .detail {
+    font-size: 14;   
+    color: #333333;
+    margin-bottom: 20;
+    font-weight: 600;
+}
+
+.actions  {
+    margin-top: 20;
+    color:#333333;
+}
+
+.actions  label {
+    font-size: 14;
+}
+
+.actions .on label {
+    color: #D75A4A;
+}
+
+.add { 
+    color: white;
+    font-size: 14;
+    height: 50;
+    margin-top: 16;  
+    margin-bottom: 30;  
+    font-weight: 500;
+    background: #7FAA4D;
+}
+
+.customName, .customNumber {
+    z-index: 99;
+    vertical-align: top;
+    horizontal-align: center;
+    text-align: center;
+}
+
+/* Real Madrid */
+.back-and-front .rm-name-font {    
+    margin-top: 45;
+    margin-left: -60;
+    font-size: 26;
+    font-weight: 700;
+}
+.back-and-front .rm-number-font {
+    margin-top: 75;
+    margin-left: -60;
+    font-size: 56;
+    font-weight: 700;
+}
+.full-back .rm-name-font {
+    margin-top: 65;
+    font-size: 26;
+    font-weight: 700;
+}
+.full-back .rm-number-font {
+    margin-top: 95;
+    font-size: 56;
+    font-weight: 700;
+}
+
+/* Juve */
+.back-and-front .juv-name-font {    
+    margin-top: 25;
+    margin-left: -60;
+    font-size: 26;
+    font-weight: 700;
+}
+.back-and-front .juv-number-font {
+    margin-top: 30;
+    margin-left: -60;
+    font-size: 96;
+}
+
+.full-back .juv-name-font {
+    margin-top: 45;
+    font-size: 26;
+    font-weight: 700;
+}
+.full-back .juv-number-font {
+    margin-top: 50;
+    font-size: 96;
+}
+
+/* Arsenal */
+.back-and-front .arsenal-name-font {    
+    margin-top: 45;
+    margin-left: -70;
+    font-size: 26;
+    font-weight: 700;
+}
+.back-and-front .arsenal-number-font {
+    margin-top: 72;
+    margin-left: -70;
+    font-size: 96;
+}
+
+.full-back .arsenal-name-font {
+    margin-top: 75;
+    font-size: 26;
+    font-weight: 700;
+    margin-left: -10;
+}
+.full-back .arsenal-number-font {
+    margin-top: 100;
+    font-size: 96;
+    margin-left: -10;
+}

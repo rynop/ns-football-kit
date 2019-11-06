@@ -1,0 +1,79 @@
+.page {
+    margin-left: 20;
+}
+
+.top-ad {
+    height: 150;    
+    /* margin-top: 20; */
+}
+
+.top-ad .text-container {
+    margin: 10;
+}
+
+.top-ad .attention {
+    color: #FFE600;
+    font-size: 12;
+    margin-bottom: 5;
+}
+.top-ad .text {    
+    color: #ffffff;
+    font-size: 14;
+}
+
+.top-details {
+    /* margin: 20 20 10 0; */
+    margin-bottom: 10;
+}
+.top-details .title {
+    font-size: 12;
+    font-weight: 600;
+    color: #333333;
+}
+.top-details .action {
+    font-size: 10;
+    color: #577A2C;
+}
+
+.jersey-card {
+    width: 138;
+    margin-right: 20;
+    padding: 6;
+}
+
+.jersey-card .club-jersey {
+    width: 80;
+}
+
+.jersey-card-content  {
+    font-size: 10;
+    color: #ffffff;
+}
+
+.small-card {
+    width: 54;
+    margin-right: 15;
+}
+
+.small-card image {
+    width: 40;
+    height: 40;
+}
+
+.customize {    
+    color: white;
+    font-size: 14;
+    height: 73;
+    margin-top: 30;  
+    margin-bottom: 30;  
+    font-weight: 600;
+}
+
+.customize image {
+    width: 141;
+    margin-right: 38;
+}
+
+.customize .chev-right  {
+    font-size: 25;
+}

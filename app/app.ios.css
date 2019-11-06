@@ -1,0 +1,6 @@
+@import './app.common.css';
+
+.top-nav .nav-title {    
+    font-size: 36;
+    font-weight: 400;
+}
