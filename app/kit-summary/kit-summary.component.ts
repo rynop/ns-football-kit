@@ -18,17 +18,28 @@ const CAROUSEL_SLIDE_DURATION = 250;
     styleUrls: ["./kit-summary.component.css"],
     animations: [
         trigger('fav', [
-            state('off', style({ transform: 'scale(1)' })),
-            state('on', style({ transform: 'scale(1.3)' })),
             transition('off => on', [
+                style({ transform: 'scale(1)' }),
                 animate('400ms ease-in-out', keyframes([
                     style({ transform: 'scale(1.3)', offset: .5 }),
                     style({ transform: 'scale(1)', offset: 1.0 })
                 ])),
-                // animate('300ms ease-out')
             ]),
             transition('on => off', [
-                animate('300ms ease-in-out')
+                style({ transform: 'scale(1)' }),
+                animate('300ms ease-in-out', keyframes([
+                    style({ transform: 'scale(1.3)', offset: .5 }),
+                    style({ transform: 'scale(1)', offset: 1.0 })
+                ])),
+            ]),
+        ]),
+        trigger('addToCart', [
+            transition(':increment', [
+                style({ transform: 'scale(1)' }),
+                animate('400ms ease-in-out', keyframes([
+                    style({ transform: 'scale(2.5)', offset: .5 }),
+                    style({ transform: 'scale(1)', offset: 1.0 })
+                ])),
             ]),
         ]),
     ]
@@ -40,6 +51,8 @@ export class KitSummaryComponent implements OnInit, AfterViewInit, OnDestroy {
     currentName$: Observable<string>;
     currentNumber$: Observable<string>;
     currentSize$: Observable<string>;
+    numInCart$: Observable<number>;
+
     numImagesPerKit = 3;    //front,back,front over back
     currentCarouselIdx: number = 0;
     carouselAnimations: Animation;
@@ -62,6 +75,7 @@ export class KitSummaryComponent implements OnInit, AfterViewInit, OnDestroy {
         this.currentName$ = this.kitsSvc.currentName$;
         this.currentNumber$ = this.kitsSvc.currentNumber$;
         this.currentSize$ = this.kitsSvc.currentSize$;
+        this.numInCart$ = this.kitsSvc.numInCart$;
     }
 
     ngAfterViewInit() {
@@ -82,6 +96,10 @@ export class KitSummaryComponent implements OnInit, AfterViewInit, OnDestroy {
     onFavTap() {
         console.log('fav');
         this.isFav = !this.isFav;
+    }
+
+    addToCart() {
+        this.kitsSvc.addToCart();
     }
 
     //

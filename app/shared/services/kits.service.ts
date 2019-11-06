@@ -177,6 +177,12 @@ export class KitsService {
     private currentClubKitIdx: number = 0;
     public currentClubKit$ = new BehaviorSubject<Kit>(this.clubs[this.currentClubIdx].kits[this.currentClubKitIdx]);
 
+    private numInCart = 0;
+    public numInCart$ = new BehaviorSubject<number>(this.numInCart);
+    addToCart() {
+        this.numInCart$.next(++this.numInCart);
+    }
+
     public sizes = ['S', 'M', 'L', 'XL', 'XXL'];
     public currentSize$ = new BehaviorSubject<string>(this.sizes[1]);
     setCurrentSize(v: string) {

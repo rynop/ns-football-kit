@@ -6,7 +6,10 @@
             <FlexboxLayout col="1" flexDirection="row" justifyContent="flex-end" class="nav-actions"
                 alignItems="center">
                 <Label text="&#xf004;" class="far"></Label>
-                <Label text="&#xf07a;" class="fas"></Label>
+                <GridLayout columns="auto">
+                    <Label text="&#xf07a;" class="fas"></Label>
+                    <Label [@addToCart]="(numInCart$ | async)" [text]="(numInCart$ | async)" id="cart-text"></Label>
+                </GridLayout>
             </FlexboxLayout>
         </GridLayout>
 
@@ -91,7 +94,7 @@
             </FlexboxLayout>
         </GridLayout>
 
-        <GridLayout columns="*,*" class="add round-border">
+        <GridLayout columns="*,*" class="add round-border" (tap)="addToCart()">
             <Label col="0" text="Add to Cart" class="title p-l-10" horizontalAlignment="left"
                 verticalAlignment="center"></Label>
             <Label col="1" text="$150" class="p-r-10" horizontalAlignment="right" verticalAlignment="center"></Label>

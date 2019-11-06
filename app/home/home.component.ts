@@ -6,6 +6,7 @@ import { device } from 'tns-core-modules/platform';
 import { trigger, style, transition, animate, group, query, state, stagger } from "@angular/animations";
 
 import { KitsService, Club } from '../shared/services/kits.service';
+import { Observable } from 'rxjs';
 
 declare var android: any;
 
@@ -29,7 +30,7 @@ interface sliderImage {
                     opacity: 0,
                     transform: 'translateX(500)'
                 }),
-                animate('1.1s 200ms ease-in', style({
+                animate('1.1s 200ms ease-out', style({
                     opacity: 1,
                     transform: 'translateX(0)'
                 }))
@@ -41,7 +42,7 @@ interface sliderImage {
                     opacity: 0,
                     transform: 'translateX(500)'
                 }),
-                animate('1.1s 400ms ease-in', style({
+                animate('1.1s 400ms ease-out', style({
                     opacity: 1,
                     transform: 'translateX(0)'
                 }))
@@ -53,7 +54,7 @@ interface sliderImage {
                     opacity: 0,
                     transform: 'translateX(500)'
                 }),
-                animate('1.1s 600ms ease-in', style({
+                animate('1.1s 600ms ease-out', style({
                     opacity: 1,
                     transform: 'translateX(0)'
                 }))
@@ -64,6 +65,7 @@ interface sliderImage {
 export class HomeComponent implements OnInit, AfterViewInit {
     startLoadAnimations = false;
     clubs: Club[];
+    numInCart$: Observable<number>;
 
     trending: sliderImage[] = [
         {
@@ -151,6 +153,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
         this.page.actionBarHidden = true;
         this.clubs = this.kitsSvc.getClubs();
+        this.numInCart$ = this.kitsSvc.numInCart$;
     }
 
     ngAfterViewInit(): void {
@@ -170,7 +173,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         // Hack cuz Angular animations are broken on Android: https://github.com/NativeScript/nativescript-angular/issues/1518
         setTimeout(() => {
             this.startLoadAnimations = true;
-        }, 500);
+        }, 200);
     }
 
     chooseClub(idx: number) {

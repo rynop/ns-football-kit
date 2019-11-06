@@ -7,7 +7,10 @@
                 alignItems="center">
                 <Label text="&#xf4a5;" class="ion" style="font-size: 25;"></Label>
                 <Label text="&#xf004;" class="far"></Label>
-                <Label text="&#xf07a;" class="fas"></Label>
+                <GridLayout columns="auto">
+                    <Label text="&#xf07a;" class="fas"></Label>
+                    <Label [text]="(numInCart$ | async)" id="cart-text"></Label>
+                </GridLayout>
             </FlexboxLayout>
         </GridLayout>
 
