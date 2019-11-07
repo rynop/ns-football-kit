@@ -1,8 +1,8 @@
 <ScrollView class="page" iosOverflowSafeArea="false" (swipe)="onCarouselSwipe($event)">
     <StackLayout>
         <GridLayout columns="110,*" class="top-nav" height="40">
-            <Label col="0" text="&#xf053;" class="back fas" horizontalAlignment="left" verticalAlignment="center"
-                (tap)="goBack()"></Label>
+            <GridLayout horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()"><Label col="0"
+                    text="&#xf053;" class="back fas"></Label></GridLayout>
             <FlexboxLayout col="1" flexDirection="row" justifyContent="flex-end" class="nav-actions"
                 alignItems="center">
                 <Label text="&#xf004;" class="far"></Label>
@@ -85,10 +85,11 @@
         <GridLayout columns="*,*" class="actions">
             <FlexboxLayout col="0" flexDirection="row" justifyContent="center" alignItems="center"
                 style="border-right-color: #C4C4C4; border-right-width: 1;" (tap)="onFavTap()" [class.on]="isFav">
-                <Label [@fav]="isFav?'on':'off'" text="&#xf004;" class="m-r-10" [ngClass]="isFav?'fas':'far'"></Label>
+                <Label [@fav]="isFav?'on':'off'" text="&#xf004;" width="25" [ngClass]="isFav?'fas':'far'"></Label>
                 <Label text="Favorite"></Label>
             </FlexboxLayout>
-            <FlexboxLayout col="1" orientation="horizontal" justifyContent="center" (tap)="showCustomize()">
+            <FlexboxLayout col="1" flexDirection="row" justifyContent="center" alignItems="center"
+                (tap)="showCustomize()">
                 <Label text="&#xf044;" class="far m-r-10"></Label>
                 <Label text="Customize"></Label>
             </FlexboxLayout>
