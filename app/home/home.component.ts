@@ -3,13 +3,12 @@ import { Page } from 'tns-core-modules/ui/page';
 import { RouterExtensions } from 'nativescript-angular';
 import { android as androidApp } from 'tns-core-modules/application';
 import { device } from 'tns-core-modules/platform';
-import { trigger, style, transition, animate, group, query, state, stagger } from "@angular/animations";
+import { trigger, style, transition, animate } from "@angular/animations";
 
 import { KitsService, Club } from '../shared/services/kits.service';
 import { Observable } from 'rxjs';
 
 declare var android: any;
-
 interface sliderImage {
     src: string;
     background: string;
@@ -195,26 +194,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
         this.kitsSvc.setCurrentClub(0);
         this.routerExtensions.navigate(['/kitsummary'], { clearHistory: false, animated: true, transition: { name: trans[idx % trans.length] } });
-    }
-
-    tabSelected(tabName: string) {
-        let route: string;
-        const clearHistory = true;
-        switch (tabName) {
-            // case bbCommon.LOGIN_TAB_NAME:
-            //     route = '/home/login';
-            //     // clearHistory = false;
-            //     break;
-            default:
-                route = `/home/${tabName.toLowerCase()}`;
-                break;
-        }
-
-        // console.log(
-        //     `HomeComponent: routing to ${route} clearHistory: ${clearHistory}`
-        // );
-
-        this.routerExtensions.navigate([route], { clearHistory });
     }
 
     showCustomize() {

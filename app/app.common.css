@@ -31,7 +31,6 @@ refer to http://docs.nativescript.org/ui/theme.
     font-family: "Font Awesome 5 Brands", "fa-brands-400";
 }
 
-/* hex codes @see https://github.com/NathanWalker/nativescript-fonticon/blob/041d63b25ff518053d4739a479cfc97d6d040f69/demo/app/ionicons.css */
 .ion {
     font-family: Ionicons, ionicons;
 }

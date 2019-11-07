@@ -4,19 +4,16 @@ import { NativeScriptFormsModule } from 'nativescript-angular/forms';
 
 import {
     HomeRoutingModule,
-    navigatableHomeComponents
 } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import { BottomBarModule } from './bottomBar/bottomBar.module';
 
 @NgModule({
     imports: [
         NativeScriptCommonModule,
         NativeScriptFormsModule,
         HomeRoutingModule,
-        BottomBarModule,
     ],
-    declarations: [HomeComponent, ...navigatableHomeComponents],
+    declarations: [HomeComponent],
     schemas: [NO_ERRORS_SCHEMA]
 })
 export class HomeModule { }

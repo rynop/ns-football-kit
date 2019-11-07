@@ -18,7 +18,3 @@ const routes: Routes = [
 })
 export class HomeRoutingModule { }
 
-export const navigatableHomeComponents = [
-    // ClubChooserComponent,
-    // CustomizeKitComponent,
-];

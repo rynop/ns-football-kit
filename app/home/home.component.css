@@ -4,7 +4,6 @@
 
 .top-ad {
     height: 150;    
-    /* margin-top: 20; */
 }
 
 .top-ad .text-container {
@@ -22,7 +21,6 @@
 }
 
 .top-details {
-    /* margin: 20 20 10 0; */
     margin-bottom: 10;
 }
 .top-details .title {

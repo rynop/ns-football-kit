@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { Page } from "tns-core-modules/ui/page";
 import { Observable } from "rxjs";
 import { Animation, AnimationDefinition } from "tns-core-modules/ui/animation";
 import { screen } from "platform";
-import { SwipeGestureEventData, SwipeDirection, PanGestureEventData } from "tns-core-modules/ui/gestures";
+import { SwipeGestureEventData, SwipeDirection } from "tns-core-modules/ui/gestures";
 import { RouterExtensions } from "nativescript-angular";
 
 import { KitsService, Club, Kit } from "../shared/services/kits.service";
-import { trigger, state, style, transition, animate, keyframes } from "@angular/animations";
+import { trigger, style, transition, animate, keyframes } from "@angular/animations";
 
 const CAROUSEL_SLIDE_DURATION = 250;
 
@@ -20,8 +20,10 @@ const CAROUSEL_SLIDE_DURATION = 250;
         trigger('fav', [
             transition('off => on', [
                 style({ transform: 'scale(1)' }),
-                animate('400ms ease-in-out', keyframes([
-                    style({ transform: 'scale(1.3)', offset: .5 }),
+                animate('1s', keyframes([
+                    style({ transform: 'scale(1.3)', offset: .25 }),
+                    style({ transform: 'scale(1)', offset: .5 }),
+                    style({ transform: 'scale(1.3)', offset: .75 }),
                     style({ transform: 'scale(1)', offset: 1.0 })
                 ])),
             ]),
@@ -44,7 +46,7 @@ const CAROUSEL_SLIDE_DURATION = 250;
         ]),
     ]
 })
-export class KitSummaryComponent implements OnInit, AfterViewInit, OnDestroy {
+export class KitSummaryComponent implements OnInit {
     private screenWidth;
     currentClub$: Observable<Club>;
     currentKit$: Observable<Kit>;
@@ -78,13 +80,6 @@ export class KitSummaryComponent implements OnInit, AfterViewInit, OnDestroy {
         this.numInCart$ = this.kitsSvc.numInCart$;
     }
 
-    ngAfterViewInit() {
-    }
-
-    ngOnDestroy(): void {
-        // this.subscriptions.unsubscribe();
-    }
-
     goBack() {
         this.routerExtensions.navigate(['/home'], { clearHistory: true, animated: true, transition: { name: 'slideBottom' } });
     }
@@ -94,7 +89,6 @@ export class KitSummaryComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     onFavTap() {
-        console.log('fav');
         this.isFav = !this.isFav;
     }
 
@@ -126,8 +120,6 @@ export class KitSummaryComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     async animateCarousel(currSlide, nextSlide, direction) {
-        // TODO: check this.carouselAnimations.isPlaying
-
         // Move the slide that will come into view, out of view first
         nextSlide.translateX = (direction == 2 ? this.screenWidth : -this.screenWidth);
         nextSlide.opacity = 1;
