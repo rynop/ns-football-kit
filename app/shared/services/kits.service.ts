@@ -204,16 +204,11 @@ export class KitsService {
         this.currentName$.next(v);
     }
 
-    public armBadgeOn$ = new BehaviorSubject<boolean>(true);
-    setArmBadgeOn(o: boolean) {
-        this.armBadgeOn$.next(o);
-    }
-    public chestBadgeOn$ = new BehaviorSubject<boolean>(true);
+    public chestBadgeOn$ = new BehaviorSubject<boolean>(false);
     setChestBadgeOn(o: boolean) {
         this.chestBadgeOn$.next(o);
     }
 
-    public armBadgeSrc = '~/images/laliga-badge.png';
     public chestBadgeSrc = '~/images/fifa-badge.png';
 
     getClubs(): Club[] {

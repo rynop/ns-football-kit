@@ -6,7 +6,7 @@
             <FlexboxLayout col="1" flexDirection="row" justifyContent="flex-end" class="nav-actions"
                 alignItems="center">
                 <Label text="&#xf004;" class="far"></Label>
-                <GridLayout columns="auto">
+                <GridLayout columns="auto" (tap)="showAbout()">
                     <Label text="&#xf07a;" class="fas"></Label>
                     <Label [@addToCart]="(numInCart$ | async)" [text]="(numInCart$ | async)" id="cart-text"></Label>
                 </GridLayout>

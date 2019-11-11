@@ -149,4 +149,8 @@ export class KitSummaryComponent implements OnInit {
             }
         }
     }
+
+    showAbout() {
+        this.routerExtensions.navigate(['/about'], { clearHistory: false, animated: true });
+    }
 }

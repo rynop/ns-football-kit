@@ -1,14 +1,14 @@
 <GridLayout rows="*">
     <ScrollView row="0" class="page" iosOverflowSafeArea="true">
-        <StackLayout style="margin: 0 20;">
-            <GridLayout class="top-nav" style="color: white;">
+        <GridLayout rows="40,auto,*" style="margin: 0 20;" height="100%">
+            <GridLayout row="0" class="top-nav" style="color: white;">
                 <Label height="40" text="&#xf053;" class="back fas" horizontalAlignment="left"
                     verticalAlignment="center" (tap)="goBack()"></Label>
                 <Label height="40" text="Done" horizontalAlignment="right" verticalAlignment="center"
                     style="font-size: 16; font-weight: 500;" (tap)="save()"></Label>
             </GridLayout>
 
-            <GridLayout class="customize-chooser-container">
+            <GridLayout row="1" class="customize-chooser-container">
                 <!-- Left NAV -->
                 <FlexboxLayout [@slideUpDown]="activeCustomizationButton?'closed':'open'"
                     (@slideUpDown.start)="onNavSlideStart($event)" class="action-nav" flexDirection="column"
@@ -24,6 +24,7 @@
                 <!-- Carousel -->
                 <StackLayout orientation="vertical" class="kit-container" [class.kit-container-m]="!growCarousel">
                     <GridLayout #kitContainer (swipe)="onCarouselSwipe($event)" justifyContent="center">
+                        <!-- Back -->
                         <GridLayout class="carousel-card" [class.hidden]="0!==currentCarouselIdx">
                             <Label text="{{currentName | uppercase}}" class="customName" [color]="currentKit.font.color"
                                 [ngClass]="nameFontClass"></Label>
@@ -31,7 +32,10 @@
                                 [ngClass]="numberFontClass"></Label>
                             <Image width="400" class="kit" [src]="currentKit.imgSrcs[0]"></Image>
                         </GridLayout>
+                        <!-- Front -->
                         <GridLayout class="carousel-card" [class.hidden]="1!==currentCarouselIdx">
+                            <!-- Didn't have time to impl. Too many kit image variations -->
+                            <!-- <Image *ngIf="chestBadgeOn" class="chest-badge" [src]="chestBadgeSrc"></Image> -->
                             <Image width="400" class="kit" [src]="currentKit.imgSrcs[2]"></Image>
                         </GridLayout>
                     </GridLayout>
@@ -45,86 +49,85 @@
                 </StackLayout>
             </GridLayout>
 
-            <StackLayout class="customize-container">
-                <FlexboxLayout [@fadeToggle] *ngIf="activeCustomizationButton" width="50" horizontalAlignment="left"
-                    flexDirection="column" justifyContent="center" alignItems="center" class="active-action main-action"
-                    (tap)="showCustomizationOptions()">
-                    <Label text="&#xf077;" class="up fas" (tap)="showCustomizationOptions()"></Label>
-                    <Label [text]="activeCustomizationButton?.icon" class="fas icon"></Label>
-                    <!-- extra padding for 2 line 'Name & Number' -->
-                    <Label [text]="activeCustomizationButton?.label" class="label" textWrap="true"
-                        textAlignment="center"
-                        [class.m-b-15]="customizationButtons[2] === activeCustomizationButton"></Label>
-                </FlexboxLayout>
-
-                <ScrollView height="105" orientation="horizontal" class="sub-action">
-
-                    <FlexboxLayout [@fadeToggle] flexDirection="row" *ngIf="isSizeBtnActive"
-                        justifyContent="space-between">
-                        <GridLayout class="box" *ngFor="let size of sizes" (tap)="setSize(size)">
-                            <select-button text="{{size | uppercase}}" [selected]="currentSize === size">
-                            </select-button>
-                        </GridLayout>
+            <GridLayout row="2" class="customize-container">
+                <StackLayout verticalAlignment="bottom">
+                    <FlexboxLayout [@fadeToggle] *ngIf="activeCustomizationButton" width="50" horizontalAlignment="left"
+                        flexDirection="column" justifyContent="center" alignItems="center"
+                        class="active-action main-action" (tap)="showCustomizationOptions()">
+                        <Label text="&#xf077;" class="up fas" (tap)="showCustomizationOptions()"></Label>
+                        <Label [text]="activeCustomizationButton?.icon" class="fas icon"></Label>
+                        <!-- extra padding for 2 line 'Name & Number' -->
+                        <Label [text]="activeCustomizationButton?.label" class="label" textWrap="true"
+                            textAlignment="center"
+                            [class.m-b-15]="customizationButtons[2] === activeCustomizationButton"></Label>
                     </FlexboxLayout>
 
-                    <FlexboxLayout [@fadeToggle] flexDirection="row" *ngIf="isColorBtnActive"
-                        justifyContent="space-between">
-                        <GridLayout class="box" *ngFor="let kit of currentClub.kits" (tap)="setKit(kit)">
-                            <select-button [bkg]="kit.color" [selected]="currentKit === kit"></select-button>
-                        </GridLayout>
-                    </FlexboxLayout>
+                    <ScrollView orientation="horizontal" class="sub-action" verticalAlignment="bottom">
+                        <FlexboxLayout [@fadeToggle] flexDirection="row" *ngIf="isSizeBtnActive"
+                            justifyContent="space-between">
+                            <GridLayout class="box" *ngFor="let size of sizes" (tap)="setSize(size)">
+                                <select-button text="{{size | uppercase}}" [selected]="currentSize === size">
+                                </select-button>
+                            </GridLayout>
+                        </FlexboxLayout>
 
-                    <GridLayout [@fadeToggle] *ngIf="isNameBtnActive" columns="130,*" rows="auto,auto"
-                        class="name-number-container">
-                        <StackLayout row="0" col="0" orientation="horizontal" class="no-option" (tap)="setNumber('')"
-                            style="margin-right: 20;">
-                            <GridLayout class="no-option-dot" [class.no-option-dot-active]="''==currentNumber">
+                        <FlexboxLayout [@fadeToggle] flexDirection="row" *ngIf="isColorBtnActive"
+                            justifyContent="space-between">
+                            <GridLayout class="box" *ngFor="let kit of currentClub.kits" (tap)="setKit(kit)">
+                                <select-button [bkg]="kit.color" [selected]="currentKit === kit"></select-button>
                             </GridLayout>
-                            <Label text="No Number"></Label>
-                        </StackLayout>
-                        <StackLayout row="0" col="1" orientation="horizontal" class="no-option" (tap)="setName('')">
-                            <GridLayout class="no-option-dot" [class.no-option-dot-active]="''==currentName">
-                            </GridLayout>
-                            <Label text="No Name"></Label>
-                        </StackLayout>
-                        <GridLayout row="1" col="0" class="text-input" style="margin-right: 20;"
-                            [class.invalid-input]="!numberValid" [class.valid-input]="!!currentNumber && numberValid">
-                            <Label text="Number (0-99)" class="hint"></Label>
-                            <TextField [text]="currentNumber" (textChange)="onNumberChange($event)" secure="false"
-                                keyboardType="number" returnKeyType="done" autocorrect="false" maxLength="2">
-                            </TextField>
-                            <GridLayout *ngIf="!!currentNumber || !numberValid" class="validation-circle">
-                                <Label text="{{!numberValid?'&#xf12a;':'&#xf00c;'}}" class="fas"
-                                    textAlignment="center"></Label>
-                            </GridLayout>
-                        </GridLayout>
-                        <GridLayout row="1" col="1" class="text-input" [class.invalid-input]="!nameValid"
-                            [class.valid-input]="!!currentName && nameValid" width="200">
-                            <Label text="Name (10 Characters Max)" class="hint"></Label>
-                            <TextField [text]="currentName" (textChange)="onNameChange($event)" secure="false"
-                                returnKeyType="done" autocorrect="false" maxLength="10">
-                            </TextField>
-                            <GridLayout *ngIf="!!currentName || !nameValid" class="validation-circle"
-                                verticalAlignment="bottom">
-                                <Label text="{{!nameValid?'&#xf12a;':'&#xf00c;'}}" class="fas"
-                                    textAlignment="center"></Label>
-                            </GridLayout>
-                        </GridLayout>
-                    </GridLayout>
+                        </FlexboxLayout>
 
-                    <FlexboxLayout [@fadeToggle] flexDirection="row" *ngIf="isBadgesBtnActive"
-                        justifyContent="flex-start">
-                        <GridLayout class="box m-r-15" (tap)="toggleChestBadge()">
-                            <select-button [imgSrc]="chestBadgeSrc" [selected]="chestBadgeOn"></select-button>
+                        <GridLayout [@fadeToggle] *ngIf="isNameBtnActive" columns="130,*" rows="auto,auto"
+                            class="name-number-container">
+                            <StackLayout row="0" col="0" orientation="horizontal" class="no-option"
+                                (tap)="setNumber('')" style="margin-right: 20;">
+                                <GridLayout class="no-option-dot" [class.no-option-dot-active]="''==currentNumber">
+                                </GridLayout>
+                                <Label text="No Number"></Label>
+                            </StackLayout>
+                            <StackLayout row="0" col="1" orientation="horizontal" class="no-option" (tap)="setName('')">
+                                <GridLayout class="no-option-dot" [class.no-option-dot-active]="''==currentName">
+                                </GridLayout>
+                                <Label text="No Name"></Label>
+                            </StackLayout>
+                            <GridLayout row="1" col="0" class="text-input" style="margin-right: 20;"
+                                [class.invalid-input]="!numberValid"
+                                [class.valid-input]="!!currentNumber && numberValid">
+                                <Label text="Number (0-99)" class="hint"></Label>
+                                <TextField [text]="currentNumber" (textChange)="onNumberChange($event)" secure="false"
+                                    keyboardType="number" returnKeyType="done" autocorrect="false" maxLength="2">
+                                </TextField>
+                                <GridLayout *ngIf="!!currentNumber || !numberValid" class="validation-circle">
+                                    <Label text="{{!numberValid?'&#xf12a;':'&#xf00c;'}}" class="fas"
+                                        textAlignment="center"></Label>
+                                </GridLayout>
+                            </GridLayout>
+                            <GridLayout row="1" col="1" class="text-input" [class.invalid-input]="!nameValid"
+                                [class.valid-input]="!!currentName && nameValid" width="200">
+                                <Label text="Name (10 Characters Max)" class="hint"></Label>
+                                <TextField [text]="currentName" (textChange)="onNameChange($event)" secure="false"
+                                    returnKeyType="done" autocorrect="false" maxLength="10">
+                                </TextField>
+                                <GridLayout *ngIf="!!currentName || !nameValid" class="validation-circle"
+                                    verticalAlignment="bottom">
+                                    <Label text="{{!nameValid?'&#xf12a;':'&#xf00c;'}}" class="fas"
+                                        textAlignment="center"></Label>
+                                </GridLayout>
+                            </GridLayout>
                         </GridLayout>
-                        <GridLayout class="box m-r-15" (tap)="toggleArmBadge()">
-                            <select-button [imgSrc]="armBadgeSrc" [selected]="armBadgeOn"></select-button>
-                        </GridLayout>
-                    </FlexboxLayout>
 
-                </ScrollView>
-            </StackLayout>
-        </StackLayout>
+                        <FlexboxLayout [@fadeToggle] flexDirection="row" *ngIf="isBadgesBtnActive"
+                            justifyContent="flex-start">
+                            <GridLayout class="box m-r-15" (tap)="toggleChestBadge()">
+                                <select-button [imgSrc]="chestBadgeSrc" [selected]="chestBadgeOn"></select-button>
+                            </GridLayout>
+                        </FlexboxLayout>
+
+                    </ScrollView>
+                </StackLayout>
+            </GridLayout>
+        </GridLayout>
     </ScrollView>
 
     <!-- for iOS safe zone -->

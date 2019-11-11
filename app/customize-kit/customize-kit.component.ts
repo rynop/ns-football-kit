@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, NgZone } from "@angular/core";
 import { trigger, style, transition, animate, state, AnimationEvent } from "@angular/animations";
 import { Page } from "tns-core-modules/ui/page";
 import { TextField } from "tns-core-modules/ui/text-field";
@@ -74,8 +74,6 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
     numberValid = true;
     currentName: string;
     nameValid = true;
-    armBadgeOn: boolean;
-    armBadgeSrc: string;
     chestBadgeOn: boolean;
     chestBadgeSrc: string
 
@@ -98,6 +96,7 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
             label: 'Name & Number',
             icon: String.fromCharCode(0xf031),
         },
+        // Didn't have time to impl. Too many kit image variations
         {
             label: 'Badges',
             icon: String.fromCharCode(0xf3ed),
@@ -112,6 +111,7 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
 
     constructor(
         private _page: Page,
+        private ngZone: NgZone,
         private routerExtensions: RouterExtensions,
         private kitsSvc: KitsService,
     ) {
@@ -129,14 +129,16 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
         this.subscriptions.add(ks.currentSize$.subscribe(v => this.currentSize = v));
         this.subscriptions.add(ks.currentNumber$.subscribe(v => this.currentNumber = v));
         this.subscriptions.add(ks.currentName$.subscribe(v => this.currentName = v));
-        this.subscriptions.add(ks.armBadgeOn$.subscribe(v => this.armBadgeOn = v));
         this.subscriptions.add(ks.chestBadgeOn$.subscribe(v => this.chestBadgeOn = v));
 
         this.sizes = ks.sizes;
         this.chestBadgeSrc = ks.chestBadgeSrc;
-        this.armBadgeSrc = ks.armBadgeSrc;
         this.numberValid = true;
         this.nameValid = true;
+
+        if (this.currentClub.name === "Real Madrid") {    //RM are current champs. shield baked into img
+            this.chestBadgeOn = false;
+        }
         // this.preloadImages();
     }
 
@@ -240,10 +242,9 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
     }
 
     toggleChestBadge() {
-        this.chestBadgeOn = !this.chestBadgeOn;
-    }
-    toggleArmBadge() {
-        this.armBadgeOn = !this.armBadgeOn;
+        if (this.currentClub.name !== "Real Madrid") {    //RM are current champs. shield baked into img
+            this.chestBadgeOn = !this.chestBadgeOn;
+        }
     }
 
     save() {
@@ -256,13 +257,14 @@ export class CustomizeKitComponent implements OnInit, OnDestroy {
             return;
         }
 
-        this.kitsSvc.setCurrentClubKit(this.currentKit);
-        this.kitsSvc.setCurrentSize(this.currentSize);
-        this.kitsSvc.setCurrentNumber(this.currentNumber);
-        this.kitsSvc.setCurrentName(this.currentName);
-        this.kitsSvc.setArmBadgeOn(this.armBadgeOn);
-        this.kitsSvc.setChestBadgeOn(this.chestBadgeOn);
-        this.goBack();
+        this.ngZone.run(() => {
+            this.kitsSvc.setCurrentClubKit(this.currentKit);
+            this.kitsSvc.setCurrentSize(this.currentSize);
+            this.kitsSvc.setCurrentNumber(this.currentNumber);
+            this.kitsSvc.setCurrentName(this.currentName);
+            this.kitsSvc.setChestBadgeOn(this.chestBadgeOn);
+            this.goBack();
+        });
     }
 
     //

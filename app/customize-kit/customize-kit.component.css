@@ -50,19 +50,18 @@
     font-size: 10;
 }
 
-.customName, .customNumber {
+.customName, .customNumber, .chest-badge {
     z-index: 99;
     vertical-align: top;
     horizontal-align: center;
     text-align: center;
 }
 
-/* .customize-chooser-container .customName {
-    margin-top: 50;    
+.chest-badge {
+    height: 25;
+    margin-top: 40;
+    margin-left: -90;
 }
-.customize-chooser-container .customNumber {
-    margin-top: 90;    
-} */
 
 .customize-container {
     margin-top: 20;

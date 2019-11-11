@@ -160,13 +160,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
         if (androidApp && device.sdkVersion >= '21') {
             console.log('Disabling Android status bar');
             const View = android.view.View;
-            const window = androidApp.startActivity.getWindow();
-            const decorView = window.getDecorView();
-            decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                View.SYSTEM_UI_FLAG_FULLSCREEN |
-                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            );
+            if (androidApp.startActivity) {
+                const window = androidApp.startActivity.getWindow();
+                const decorView = window.getDecorView();
+                decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                    View.SYSTEM_UI_FLAG_FULLSCREEN |
+                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                );
+            }
         }
 
         // Hack cuz Angular animations are broken on Android: https://github.com/NativeScript/nativescript-angular/issues/1518
@@ -192,8 +194,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             'slideTop',
             'slideBottom',];
 
-        this.kitsSvc.setCurrentClub(0);
-        this.routerExtensions.navigate(['/kitsummary'], { clearHistory: false, animated: true, transition: { name: trans[idx % trans.length] } });
+        this.routerExtensions.navigate(['/about'], { clearHistory: false, animated: true, transition: { name: trans[idx % trans.length] } });
     }
 
     showCustomize() {
